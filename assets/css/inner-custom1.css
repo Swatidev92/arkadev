@@ -1,0 +1,33 @@
+.transparent-menu{
+	background:#fff ;
+}
+.inner-banner-top{
+	margin-top:-90px;
+}
+
+nav > ul > li > a {
+    color: inherit;
+    float: left;
+    font-weight: 600;
+    color: #000;
+    line-height: 2;
+    font-size: 14px;
+    font-family: 'Proxima Nova Bold';
+    text-transform: capitalize;
+    padding: 58px;
+    padding-bottom: 0;
+    padding-top: 35px;
+    position: relative;
+}
+.logo-fixed{
+	display:block;
+}
+.on-banner {
+	display:none;
+}
+.nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover{
+	color:#000;
+}
+nav > ul > li a:hover, nav > ul > li a.active {
+	color:#000;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Highcharts Example</title>
+
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+<script src="../../code/highcharts.js"></script>
+<script src="../../code/modules/exporting.js"></script>
+<script src="../../code/modules/export-data.js"></script>
+<script src="jquery-3.3.1.min.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+		<script type="text/javascript">
+		
+
+
+
+
+Highcharts.setOptions({
+    colors: ['#c0504d', '#4f81bd']
+});
+const chart = Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'UPPSKATTAD PRODUKTIONSBERÄKNING'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+		tickInterval: 200,
+        title: {
+            text: ''
+        }
+    },
+	
+	/*
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+	*/
+    plotOptions: {
+        column: {
+            pointPadding: 0,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Consumption',
+        data: [1680, 1519, 1359, 1080, 680, 440, 360, 399, 600, 960, 1400, 1520]
+
+    }, {
+        name: 'Production',
+        data: [217, 363, 1373, 1593, 1758, 1703, 1648, 1538, 1264, 769, 330, 220]
+
+    }]
+});
+
+
+
+		  
+var imageURL = '';
+var svg = chart.getSVG();
+console.log(svg);
+var svg = encodeURIComponent(svg);
+var dataString = 'type=image/jpeg&filename=results&width=500&svg='+svg;
+$.ajax({
+    type: 'POST',
+    data: dataString,
+    url: 'http://localhost/arka/lib/Highcharts-6.1.1/examples/column-basic/arkachart.php',
+    async: false,
+    success: function(data){
+        imageURL = data;
+    }
+});
+
+
+ 
+		</script>
+	</body>
+</html>
