@@ -137,7 +137,8 @@ $k =1;
 											Antal växelriktare:
 										</td>
 										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
-											<?=$inverter_type2?'2':'1'?> 
+											<?//=$inverter_type2?'2':'1'?>
+											<?php if($inverter_type3){ echo '3'; }else{ if($inverter_type2){ echo '2'; } else{ echo '1';}} ?> 
 										</td>
 									</tr>
 									<tr>
