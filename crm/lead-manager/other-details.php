@@ -38,7 +38,7 @@
 			   $cms->sqlquery("rs","other_details",$otherDetails,'id',$_POST['other_id']);
 		}
 
-        $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal&start=&t=other_details&leadid='.$pid.'&id='.$parentId, true);
+        $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr&start=&t=other_details&leadid='.$pid.'&id='.$parentId, true);
         // die;
 		
 	}
