@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(3);
 session_start(); 
 include('funcs_lib.inc.php');
 include('adminfunction.inc.php');
@@ -8,10 +8,10 @@ include('adminfunction.inc.php');
 	}
  	if(LOCAL_MODE) {
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'arka_db'; 
+		$ARR_CFGS["db_name"] = 'arkaenergy_crm'; 
     	$ARR_CFGS["db_user"] = 'root';
 		$ARR_CFGS["db_pass"] = '';
-		define('SITE_SUB_PATH', '/arka/');		
+		define('SITE_SUB_PATH', '/arkadev/');		
 	} else { 
 		$ARR_CFGS["db_host"] = 'localhost';
 		$ARR_CFGS["db_name"] = 'arkaenergy_arkadb'; 
@@ -25,10 +25,10 @@ include('adminfunction.inc.php');
 	 
 	define('tb_Prefix', 'ae_');
 	define('ADMIN_DIR', 'crm/');  
-	define('SITE_PATH', 'https://'.$HTTP_HOST.SITE_SUB_PATH); 
-	define('SITE_PATH_ADM', 'https://'.$HTTP_HOST.SITE_SUB_PATH.ADMIN_DIR); 
+	define('SITE_PATH', 'http://'.$HTTP_HOST.SITE_SUB_PATH); 
+	define('SITE_PATH_ADM', 'http://'.$HTTP_HOST.SITE_SUB_PATH.ADMIN_DIR); 
 	define('USER_DIR', 'users/');  
-	define('SITE_PATH_USR', 'https://'.$HTTP_HOST.SITE_SUB_PATH.USER_DIR); 
+	define('SITE_PATH_USR', 'http://'.$HTTP_HOST.SITE_SUB_PATH.USER_DIR); 
 	 
  	define('THUMB_CACHE_DIR', 'thumb_cache');
 	define('IMAGE_PATH', SITE_FS_PATH.'/img/'); 
