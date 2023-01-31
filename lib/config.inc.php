@@ -1,5 +1,5 @@
 <?php
-error_reporting(3);
+//error_reporting(3);
 session_start(); 
 include('funcs_lib.inc.php');
 include('adminfunction.inc.php');
