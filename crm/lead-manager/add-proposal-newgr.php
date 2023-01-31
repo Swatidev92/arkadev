@@ -164,7 +164,7 @@ if($numRowsRoof>0){
 $roof_details_count = $numRowsRoof;
 }
 // other-details-07
-$otherDetailsQry = $cms->db_query("SELECT * FROM #_other_details where lead_id='$leadid' AND is_deleted=0 ");
+$otherDetailsQry = $cms->db_query("SELECT * FROM #_other_details where parent_id='$pid' AND is_deleted=0 ");
 $otherDetailsfetch = $otherDetailsQry->fetch_array(); 
 @extract($otherDetailsfetch);
 

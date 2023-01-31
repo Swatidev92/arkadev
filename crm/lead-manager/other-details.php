@@ -19,8 +19,8 @@
     // S:Roof Details
 	if(isset($_POST['save'])){
 		// if()
-		$otherDetails['lead_id']=$_POST['parent_id'];
-		$otherDetails['parent_id']=$_POST['lead_id'];
+		$otherDetails['lead_id']=$_POST['lead_id'];
+		$otherDetails['parent_id']=$_POST['parent_id'];
 		$otherDetails['surge_protc_ac']=$_POST['surge_protc_ac'];
 		$otherDetails['surge_protc_dc']=$_POST['surge_protc_dc'];
 		$otherDetails['cable_len_inv']=$_POST['cable_len_inv'];
