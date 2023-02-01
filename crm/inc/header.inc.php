@@ -57,6 +57,14 @@ if(!$_SESSION["ses_adm_id"]){ $cms->redir(SITE_PATH_ADM."login"); die; }
 							<img src="<?=SITE_PATH?>assets/images/footer-logo.png" alt="home" width="180">
 						</a>
 					</div>
+					<!-- S:mk-19 Search Bar -->
+					<form class="navbar-form navbar-left" action="<?=SITE_PATH_ADM?>lead-manager/" style="margin-left:25%;">
+        				<div class="form-group">
+          					<input type="text" name="name_search" id="name_search" title="Name" value="" class="form-control" id="inputName1" placeholder="Name" data-fv-regexp="true">
+        				</div>
+        				<button type="submit" name="submt" onClick="changeMethod()" value="Search" class="btn search-btn">Search</button>
+      				</form>
+					<!-- E:mk-19 -->
       
 					<ul class="nav navbar-top-links navbar-right pull-right">
 						<li class="dropdown"> 
