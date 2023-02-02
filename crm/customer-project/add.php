@@ -557,6 +557,45 @@ if($cms->is_post_back()){
 			
 	}
 	
+	// S:mk-19-inventory
+	if(isset($_POST['inventory'])){
+		// echo "<pre>";
+		// print_r($_POST);
+		// echo "</pre>";
+		// die;
+		$inventory=array();
+		if($_POST['ev_charger1']!=""){ $inventory['ev_charger']= $_POST['ev_charger1']; }  
+		if($_POST['ev_quan1']!=""){ $inventory['ev_quantity']= $_POST['ev_quan1']; } 
+		if($_POST['panel_name1']!=""){ $inventory['panel_name']= $_POST['panel_name1']; } 
+		if($_POST['panel_count1']!=""){ $inventory['panel_count']= $_POST['panel_count1']; }
+		if($_POST['inverter1_e']!=""){ $inventory['inverter1']= $_POST['inverter1_e']; }
+		if($_POST['inverter1_qty1']!=""){ $inventory['inverter1_qty']= $_POST['inverter1_qty1']; }//1 
+		if($_POST['inverter2_e']!=""){ $inventory['inverter2']= $_POST['inverter2_e']; } 
+		if($_POST['inverter2_qty2']!=""){ $inventory['inverter2_qty']= $_POST['inverter2_qty2']; } //2
+		if($_POST['inverter3_e']!=""){ $inventory['inverter3']= $_POST['inverter3_e']; } 
+		if($_POST['inverter3_qty3']!=""){ $inventory['inverter3_qty']= $_POST['inverter3_qty3']; } //3
+		if($_POST['battery1']!=""){ $inventory['battery']= $_POST['battery1']; } 
+		if($_POST['battery_qty']!=""){ $inventory['battery_quantity']= $_POST['battery_qty']; } 
+		if($_POST['smart_sensor_name1']!=""){ $inventory['smart_sensor_name']= $_POST['smart_sensor_name1']; } 
+		if($_POST['smart_senor_qty']!=""){ $inventory['smart_sensor_qty']= $_POST['smart_senor_qty']; } 
+		if($_POST['odrift_name1']!=""){ $inventory['odrift_name']= $_POST['odrift_name1']; }  
+		if($_POST['backup_box_qty']!=""){ $inventory['odrift_quantity']= $_POST['backup_box_qty']; } 
+		if($_POST['optimizer_name1']!=""){ $inventory['optimizer_name']= $_POST['optimizer_name1']; } 
+		if($_POST['optimizer_qty']!=""){ $inventory['optimizer_quantity']= $_POST['optimizer_qty']; } 
+		if($_POST['cable_len_inv']!=""){ $inventory['cable_len_inv']= $_POST['cable_len_inv']; } 
+		if($_POST['surg_ac']!=""){ $inventory['surge_protc_ac']= $_POST['surg_ac']; } 
+		if($_POST['surg_dc']!=""){ $inventory['surge_protc_dc']= $_POST['surg_dc']; } 
+		if($_POST['cable_len_ev']!=""){ $inventory['cable_len_inv']= $_POST['cable_len_ev']; }
+		// echo "<pre>";
+		// print_r($inventory);
+		// echo "</pre>";
+		// die;
+		$cms->sqlquery("rs","customer_project",$inventory,'id',$pid);
+		// echo $pid;
+		// die;
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=inventory&id='.$pid, true);
+	}
+	// E:mk-19-inventory
 	
 	if($t=='proj_info' || $t==''){
 		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=proj_info&id='.$pid, true);
@@ -590,7 +629,8 @@ if(isset($pid)){
 	$roof_details_count = $numRowsRoof;
 }
 // S:mk-19
-$customerProjectQry = $cms->db_query("SELECT * FROM #_customer_project where lead_id = '".$lead_id."'");
+//$customerProjectQry = $cms->db_query("SELECT * FROM #_customer_project where lead_id = '".$lead_id."'");//Doubt full of it...[MK]
+$customerProjectQry = $cms->db_query("SELECT * FROM #_customer_project where id = '".$pid."'");
 $customerProjectArr = $customerProjectQry->fetch_array();	
 
 // echo "1";die;
@@ -2102,85 +2142,143 @@ $leadsArr = $leadsQry->fetch_array();
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>EV Charger</td>
-								<td><?=$customerProjectArr['ev_charger']?></td>
-								<td><?=$customerProjectArr['ev_quantity']?></td>
+								<td id="ev_charger_show">
+									<span id="ev_charger1"><?=$customerProjectArr['ev_charger']?></span>
+									<a class="pull-right" id="ev_charger_edit" onclick="ev_charg()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="ev_quan_num">
+									<span id="ev_quan1"><?=$customerProjectArr['ev_quantity']?></span>
+									<a onclick="ev_quan()" class="pull-right" id="ev_quan_edit" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 							<?php } if($customerProjectArr['panel_name']!="" || $customerProjectArr['panel_name']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Panels</td>
-								<td><?=$customerProjectArr['panel_name']?></td>
-								<td><?=$leadsArr['panel_count']?></td>
+								<td id="panel_nam_show">
+									<span id="panel_nam1"><?=$customerProjectArr['panel_name']?></span>
+									<a class="pull-right" id="panel_nam_edit" onclick="panel_nam()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="panel_count_show">
+									<span id="panel_count1"><?=$leadsArr['panel_count']?></span>
+									<a class="pull-right" id="panel_count_edit" onclick="panel_count()">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+									</a>
+								</td>
 							</tr>
 							<?php } if($customerProjectArr['inverter1']!="" || $customerProjectArr['inverter1']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 1</td>
-								<td><?=$customerProjectArr['inverter1']?></td>
-								<td><?=$customerProjectArr['inverter1_qty']?></td>
+								<td id="inverter1_show">
+									<span id="inverter1_hide"><?=$customerProjectArr['inverter1']?></span>
+									<a class="pull-right" id="inverter1_edit" onclick="inverter1()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="inverter1_qty_show">
+									<span id="inverter1_qty_hide"><?=$customerProjectArr['inverter1_qty']?></span>
+									<a class="pull-right" id="inverter1_qty_edit" onclick="inverter1_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 							<?php }if($customerProjectArr['inverter2']!="" || $customerProjectArr['inverter2']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 2</td>
-								<td><?=$customerProjectArr['inverter2']?></td>
-								<td><?=$customerProjectArr['inverter2_qty']?></td>
+								<td id="inverter2_show">
+									<span id="inverter2_hide"><?=$customerProjectArr['inverter2']?></span>
+									<a class="pull-right" id="inverter2_edit" onclick="inverter2()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="inverter2_qty_show">
+									<span id="inverter2_qty_hide"><?=$customerProjectArr['inverter2_qty']?></span>
+									<a class="pull-right" id="inverter2_qty_edit" onclick="inverter2_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 							<?php }if($customerProjectArr['inverter3']!="" || $customerProjectArr['inverter3']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 3</td>
-								<td><?=$customerProjectArr['inverter3']?></td>
-								<td><?=$customerProjectArr['inverter3_qty']?></td>
+								<td id="inverter3_show">
+									<span id="inverter3_hide"><?=$customerProjectArr['inverter3']?></span>
+									<a class="pull-right" id="inverter3_edit" onclick="inverter3()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="inverter3_qty_show">
+									<span id="inverter3_qty_hide"><?=$customerProjectArr['inverter3_qty']?></span>
+									<a class="pull-right" id="inverter3_qty_edit" onclick="inverter3_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 							<?php } if($customerProjectArr['battery']!="" || $customerProjectArr['battery']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Battery</td>
-								<td><?=$customerProjectArr['battery']?></td>
-								<td><?=$customerProjectArr['battery_qty']?></td>
+								<td id="battery_show">
+									<span id="battery_hide"><?=$customerProjectArr['battery']?></span>
+									<a class="pull-right" id="battery_edit" onclick="battery()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="battery_qty_show">
+									<span id="battery_qty_hide"><?=$customerProjectArr['battery_quantity']?></span>
+									<a class="pull-right" id="battery_qty_edit" onclick="battery_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 							<?php }  if($customerProjectArr['smart_sensor_name']!="" || $customerProjectArr['smart_sensor_name']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Smart Senor</td>
-								<td><?=$customerProjectArr['smart_sensor_name']?></td>
-								<td><?=$customerProjectArr['smart_sensor_qty']?></td>
+								<td id="smart_senor_show">
+									<span id="smart_senor_hide"><?=$customerProjectArr['smart_sensor_name']?></span>
+								<a class="pull-right" id="smart_senor_edit" onclick="smart_senor()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+								<td id="smart_senor_qty_show">
+									<span id="smart_senor_qty_hide"><?=$customerProjectArr['smart_sensor_qty']?></span>
+									<a class="pull-right" id="smart_se_qty_edit" onclick="smart_senor_qty()">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+									</a>
+								</td>
 							</tr>
 							<?php } if($customerProjectArr['odrift_name']!="" || $customerProjectArr['odrift_name']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Backup Box</td>
-								<td><?=$customerProjectArr['odrift_name']?></td>
-								<td><?=$customerProjectArr['odrift_quantity']?></td>
+								<td id="backup_box_show">
+									<span id="backup_box_hide"><?=$customerProjectArr['odrift_name']?></span>
+									<a class="pull-right" id="backup_box_edit" onclick="backup_box()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="backup_box_qty_show">
+									<span id="backup_box_qty_hide"><?=$customerProjectArr['odrift_quantity']?></span>
+									<a class="pull-right" id="backup_box__qty_edit" onclick="backup_box_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php } if($customerProjectArr['optimizer_name']!="" || $customerProjectArr['optimizer_name']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Optimizer</td>
-								<td><?=$customerProjectArr['optimizer_name']?></td>
-								<td><?=$customerProjectArr['optimizer_quantity']?></td>
+								<td id="optimizer_show">
+									<span id="optimizer_hide"><?=$customerProjectArr['optimizer_name']?></span>
+									<a class="pull-right" id="optimizer_edit" onclick="optimizer()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+								<td id="optimizer_qty_show">
+									<span id="optimizer_qty_hide"><?=$customerProjectArr['optimizer_quantity']?></span>
+									<a class="pull-right" id="optimizer_qty_edit" onclick="optimizer_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php }  if($leadsArr['proposal_type']== 1 ||$leadsArr['proposal_type']== 8||$leadsArr['proposal_type']== 9||$leadsArr['proposal_type']== 11 ) { if($otherDetailsArr['cable_len_inv']!="" || $otherDetailsArr['cable_len_inv']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Cable length between</td>
 								<td> Växelriktare and Fasadmätarskåp / Elcentral</td>
-								<td><?=$otherDetailsArr['cable_len_inv']?> m</td>
+								<td id="len_inv_show">
+									<span id="len_inv_hide"><?php if($customerProjectArr['cable_len_inv']!="" || $customerProjectArr['cable_len_inv']!=null){echo $customerProjectArr['cable_len_inv']; }else {echo $otherDetailsArr['cable_len_inv'];}?> m</span><a class="pull-right" id="len_inv_edit" onclick="cable_len_inv()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php }else { ?>
 								<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Cable length between</td>
 								<td> Växelriktare and Fasadmätarskåp / Elcentral</td>
-								<td>10 m</td>
+								<td id="len_inv_show">
+									<span id="len_inv_hide"><?php if($customerProjectArr['cable_len_inv']!="" || $customerProjectArr['cable_len_inv']!=null){echo $customerProjectArr['cable_len_inv']; }else {echo "10";}?> m</span><a class="pull-right" id="len_inv_edit" onclick="cable_len_inv()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php } if($otherDetailsArr['surge_protc_ac']!=0 ){ ?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Överspänningsskydd AC</td>
 								<td>-</td>
-								<td><?=$otherDetailsArr['surge_protc_ac']?></td>
+								<td id="surg_ac_show">
+									<span id="surg_ac_hide"><?php if($customerProjectArr['surge_protc_ac']!="" || $customerProjectArr['surge_protc_ac']!=null){ echo $customerProjectArr['surge_protc_ac']; } else{ echo $otherDetailsArr['surge_protc_ac']; }?></span>
+									<!-- <a class="pull-right" id="surg_ac_edit" onclick="surg_ac()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td> -->
 							</tr> 
 							<?php } if($otherDetailsArr['surge_protc_dc']!=0 ){ ?>
 							<tr>
@@ -2196,18 +2294,23 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Cable length between</td>
 								<td> EV charger and Fasadmätarskåp / Elcentral</td>
-								<td><?=$otherDetailsArr['cable_len_ev']?> m</td>
+								<td id="len_ev_show">
+									<span id="len_ev_hide"><?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo $otherDetailsArr['cable_len_ev'];}?> m</span><a class="pull-right" id="len_ev_edit" onclick="cable_len_ev()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php }else { ?>
 								<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Cable length between</td>
 								<td>EV charger and Fasadmätarskåp / Elcentral</td>
-								<td>10 m</td>
+								<td id="len_ev_show">
+									<span id="len_ev_hide"><?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo "10";}?> m</span><a class="pull-right" id="len_ev_edit" onclick="cable_len_ev()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php } }?>
 
 						</table>
+						<div class="form-group col-sm-12">
+                            <button type="submit" class="btn add-submit-btn" name="inventory" value="1">Update</button>
+                        </div>
 					<div class="clearfix"></div>					
 					
 				</div>
@@ -2824,4 +2927,117 @@ $("#aforms").on("submit",function(e){
     }
 });
 
+</script>
+
+<script>
+	function ev_charg(){
+		$('#ev_charger1').hide();
+		$('#ev_charger_edit').hide();
+		$('#ev_charger_show').append('<select class="form-control" id="ev_charger" name="ev_charger1" required><option value="">Select EV Charger</option><?php $chargerTyeArray = json_decode($customerPriceArr['ev_charger_types'], true);usort($chargerTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($chargerTyeArray as $ckey => $cvalue) {if($cvalue["evstatus"]==1){if($ev_charger==$cvalue["name"]){$csel = "selected";}else{$csel = "";}echo '<option value="'.$cvalue["name"].'" '.$csel.'>'.$cvalue["name"].'</option>';} }?></select>');
+	}
+	function ev_quan(){
+		$('#ev_quan1').hide();
+		$('#ev_quan_edit').hide();
+		$('#ev_quan_num').append('<input name="ev_quan1" class="form-control" value="<?=$customerProjectArr['ev_quantity']?>"/>');
+	}
+	function panel_nam(){
+		$('#panel_nam1').hide();
+		$('#panel_nam_edit').hide();
+		$('#panel_nam_show').append('<select class="form-control select2" id="panel_name" name="panel_name1" id="panel_name"><option value="">Select Panel Type</option><?php $panelTyeArray = json_decode($customerPriceArr["panel_types"], true);usort($panelTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($panelTyeArray as $key => $value) {if($value["pstatus"]==1){if($panel_name==$value["name"]){$psel = 'selected';}else{$psel = '';}echo '<option value="'.$value["name"].'" '.$psel.'>'.$value["name"].' - '.$value["wattage"].' Wp</option>';} 	}?></select>');
+	}
+	function panel_count(){
+		$('#panel_count1').hide();
+		$('#panel_count_edit').hide();
+		$('#panel_count_show').append('<input name="panel_count1" class="form-control" value="<?=$leadsArr['panel_count']?>"/>');
+	}
+	function inverter1(){
+		$('#inverter1_hide').hide();
+		$('#inverter1_edit').hide();
+		$('#inverter1_show').append('<select class="form-control select2" id="inverter1" name="inverter1_e"><option value="">Select Inverter Type</option><?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);usort($inverterTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($inverterTyeArray as $ikey => $ivalue) {if($ivalue["invstatus"]){if($inverter1==$ivalue["name"]){$invsel = 'selected';}else{$invsel = '';}echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';} }?></select>');
+	}
+	function inverter1_qty(){
+		$('#inverter1_qty_hide').hide();
+		$('#inverter1_qty_edit').hide();
+		$('#inverter1_qty_show').append('<input name="inverter1_qty1" class="form-control" value="<?=$customerProjectArr['inverter1_qty']?>"/>');
+	}
+	function inverter2(){
+		$('#inverter2_hide').hide();
+		$('#inverter2_edit').hide();
+		$('#inverter2_show').append('<select class="form-control select2" id="inverter1" name="inverter2_e"><option value="">Select Inverter Type</option><?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);usort($inverterTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($inverterTyeArray as $ikey => $ivalue) {if($ivalue["invstatus"]){if($inverter2==$ivalue["name"]){$invsel = 'selected';}else{$invsel = '';}echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';} }?></select>');
+	}
+	function inverter2_qty(){
+		$('#inverter2_qty_hide').hide();
+		$('#inverter2_qty_edit').hide();
+		$('#inverter2_qty_show').append('<input name="inverter2_qty2" class="form-control" value="<?=$customerProjectArr['inverter2_qty']?>"/>');
+	}
+	function inverter3(){
+		$('#inverter3_hide').hide();
+		$('#inverter3_edit').hide();
+		$('#inverter3_show').append('<select class="form-control select2" id="inverter1" name="inverter3_e"><option value="">Select Inverter Type</option><?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);usort($inverterTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($inverterTyeArray as $ikey => $ivalue) {if($ivalue["invstatus"]){if($inverter3==$ivalue["name"]){$invsel = 'selected';}else{$invsel = '';}echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';} }?></select>');
+	}
+	function inverter3_qty(){
+		$('#inverter3_qty_hide').hide();
+		$('#inverter3_qty_edit').hide();
+		$('#inverter3_qty_show').append('<input name="inverter3_qty3" class="form-control" value="<?=$customerProjectArr['inverter3_qty']?>"/>');
+	}
+	function battery(){
+		$('#battery_hide').hide();
+		$('#battery_edit').hide();
+		$('#battery_show').append('<select class="form-control" id="battery" name="battery1" required><option value="">Select Battery</option><?php $batteryTyeArray = json_decode($customerPriceArr["battery_types"], true);usort($batteryTyeArray, function ($a, $b) {return $a['name'] <=> $b['name'];});foreach ($batteryTyeArray as $bkey => $bvalue) {if($bvalue["bstatus"]==1){if($battery==$bvalue["name"]){$bsel = 'selected';}else{$bsel = '';}echo '<option value="'.$bvalue["name"].'" '.$bsel.'>'.$bvalue["name"].'</option>';} }?></select>');
+	}
+	function battery_qty(){
+		$('#battery_qty_hide').hide();
+		$('#battery_qty_edit').hide();
+		$('#battery_qty_show').append('<input name="battery_qty" class="form-control" value="<?=$customerProjectArr['battery_quantity']?>"/>');
+	}
+	function smart_senor(){
+		$('#smart_senor_hide').hide();
+		$('#smart_senor_edit').hide();
+		$('#smart_senor_show').append('<select class="form-control" id="smart_sensor_name" name="smart_sensor_name1"><option value="">Select Smart Sensor</option><?php $sensorTypeArray = json_decode($customerPriceArr["sensor_type"], true);usort($sensorTypeArray, function ($a, $b) {return $a['sensor_name'] <=> $b['sensor_name'];});foreach ($sensorTypeArray as $snkey => $snvalue) {if($snvalue["sensor_status"]==1){if($smart_sensor_name==$snvalue["sensor_name"]){$snsel = 'selected';}else{$snsel = '';}echo '<option value="'.$snvalue["sensor_name"].'" '.$snsel.'>'.$snvalue["sensor_name"].'</option>';} }?></select>');
+	}
+	function smart_senor_qty(){
+		$('#smart_senor_qty_hide').hide();
+		$('#smart_se_qty_edit').hide();
+		$('#smart_senor_qty_show').append('<input name="smart_senor_qty" class="form-control" value="<?=$customerProjectArr['smart_sensor_qty']?>"/>');
+	}
+	function backup_box(){
+		$('#backup_box_hide').hide();
+		$('#backup_box_edit').hide();
+		$('#backup_box_show').append('<select class="form-control" id="odrift_name" name="odrift_name1"><option value="">Select Backup Box</option><?php $odriftTypeArray = json_decode($customerPriceArr["odrift_type"], true);usort($odriftTypeArray, function ($a, $b) {return $a['odrift_name'] <=> $b['odrift_name'];});foreach ($odriftTypeArray as $odkey => $odvalue) {if($odvalue["odrift_status"]==1){if($odrift_name==$odvalue["odrift_name"]){$snsel = 'selected';}else{$snsel = '';}echo '<option value="'.$odvalue["odrift_name"].'" '.$snsel.'>'.$odvalue["odrift_name"].'</option>';} }?></select>');
+	}
+	function backup_box_qty(){
+		$('#backup_box_qty_hide').hide();
+		$('#backup_box__qty_edit').hide();
+		$('#backup_box_qty_show').append('<input name="backup_box_qty" class="form-control" value="<?=$customerProjectArr['odrift_quantity']?>"/>');
+	}
+	function optimizer(){
+		$('#optimizer_hide').hide();
+		$('#optimizer_edit').hide();
+		$('#optimizer_show').append('<select class="form-control" id="optimizer_name" name="optimizer_name1"><option value="">Select Optimizer</option><?php $optimizerTypeArray = json_decode($customerPriceArr["optimizer_type"], true);usort($optimizerTypeArray, function ($a, $b) {return $a['optimizer_name'] <=> $b['optimizer_name'];});foreach ($optimizerTypeArray as $odkey => $odvalue) {if($odvalue["optimizer_status"]==1){if($optimizer_name==$odvalue["optimizer_name"]){$snsel = 'selected';}else{$snsel = '';}echo '<option value="'.$odvalue["optimizer_name"].'" '.$snsel.'>'.$odvalue["optimizer_name"].'</option>';} }?></select>');
+	}
+	function optimizer_qty(){
+		$('#optimizer_qty_hide').hide();
+		$('#optimizer_qty_edit').hide();
+		$('#optimizer_qty_show').append('<input name="optimizer_qty" class="form-control" value="<?=$customerProjectArr['optimizer_quantity']?>"/>');
+	}
+	function cable_len_inv(){
+		$('#len_inv_hide').hide();
+		$('#len_inv_edit').hide();
+		$('#len_inv_show').append('<input name="cable_len_inv" class="form-control" value="<?php if($customerProjectArr['cable_len_inv']!="" || $customerProjectArr['cable_len_inv']!=null){echo $customerProjectArr['cable_len_inv']; }else {echo $otherDetailsArr['cable_len_inv'];}?>"/>');
+	}
+	function cable_len_ev(){
+		$('#len_ev_hide').hide();
+		$('#len_ev_edit').hide();
+		$('#len_ev_show').append('<input name="cable_len_ev" class="form-control" value="<?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo $otherDetailsArr['cable_len_ev'];}?>"/>');
+	}
+	function surg_ac(){
+		$('#surg_ac_hide').hide();
+		$('#surg_ac_edit').hide();
+		$('#surg_ac_show').append('<input name="surg_ac" class="form-control" value="<?php if($customerProjectArr['surge_protc_ac']!="" || $customerProjectArr['surge_protc_ac']!=null){ echo $customerProjectArr['surge_protc_ac']; } else{ echo $otherDetailsArr['surge_protc_ac']; }?>"/>');
+	}
+	function surg_dc(){
+		$('#surg_dc_hide').hide();
+		$('#surg_dc_edit').hide();
+		$('#surg_dc_show').append('<input name="surg_dc" class="form-control" value="<?php if($customerProjectArr['surge_protc_dc']!="" || $customerProjectArr['surge_protc_dc']!=null){ echo $customerProjectArr['surge_protc_dc']; } else{ echo $otherDetailsArr['surge_protc_dc']; }?>"/>');
+	}
 </script>
