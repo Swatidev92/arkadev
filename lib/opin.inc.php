@@ -106,7 +106,7 @@
 	$customerTypeArr = array("1"=>"Factory","2"=>"Hotel","3"=>"Hospital","4"=>"Home","5"=>"Shopping Mall","6"=>"Govt Department","7"=>"Commercial & Residential","8"=>"Others");
 	$customerTypeArrSE = array("1"=>"Fabrik","2"=>"Hotell","3"=>"Sjukhus","4"=>"Hem","5"=>"Köpcentrum","6"=>"myndighet","7"=>"Kommersiellt & Bostäder","8"=>"Andra");
 	
-	$proosalCustomerTypeArr = array("1"=>"Privat","2"=>"Commercial");
+	$proosalCustomerTypeArr = array("1"=>"Privat","2"=>"Kommersiell");
 	$workStartArr = array("1"=>"ASAP","2"=>"3 month","3"=>"6 month","4"=>"1 year");
 	
 	//$proposalType = array("1"=>"Solar panel only","2"=>"Solar panel + EV charger","3"=>"Solar panel + EV charger + Battery", "4"=>"Solar panel + Battery", "5"=>"EV Charger only", "6"=>"Battery only", "7"=>"Battery + EV charger", "8"=>"Campaign (Solar + EV charger + Battery)", "9"=>"Campaign (Solar + EV charger)", "10"=>"Campaign (Solar + Battery)", "11"=>"Campaign (Solar + Battery) green rebate to 50000");
