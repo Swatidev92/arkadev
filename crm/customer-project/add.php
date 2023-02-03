@@ -306,7 +306,7 @@ if($cms->is_post_back()){
 		$email_msg=emailFormat($msg_body);
 
 
-		$to = "mukund.bluedigital@gmail.com";
+		$to = "mukund@bluedigital.co.in";
 		$resReturn = sendEmail($to, $subject,$email_msg);
 		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=communication&id='.$uids, true);
 	}
