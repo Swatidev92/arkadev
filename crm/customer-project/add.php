@@ -284,8 +284,34 @@ if($cms->is_post_back()){
 		}	
 	}*/
 	
-	
-	
+	// S:Send-mail mk-19
+	if(isset($_POST['mail'])){
+		// echo "<pre>";
+		// print_r($_POST);
+		// echo "</pre>";
+		// die;
+		$mail =array();
+		$mail['cust_id'] = $_POST['cust_id'];
+		$mail['mail_type'] = $_POST['mail_status'];
+		$mail['lead_id'] = $_POST['lead_id'];
+		$mail['subject'] = $_POST['subject'];
+		$mail['message'] = $_POST['message'];
+		$mail['user'] = $_POST['user'];
+		$cms->sqlquery("rs","mail_logs",$mail);
+		//$assignedQry = $cms->db_query("SELECT customer_name, email_id FROM #_users WHERE id='".$_POST['assigned_to']."'");
+		//$assignedRes = $assignedQry->fetch_array();
+		$subject=$_POST['subject'];			
+		$msg_body=$_POST['message'];
+		
+		$email_msg=emailFormat($msg_body);
+
+
+		$to = "mukund.bluedigital@gmail.com,mukund@bluedigital.co.in,mukund@arkaplatform.com";
+		$resReturn = sendEmail($to, $subject,$email_msg);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=communication&id='.$uids, true);
+	}
+// E:Send-mail mk-19
+					
 	if(isset($_POST['upload_files'])){
 		$PROJECTARR['lead_id'] = $cms->getSingleResult("SELECT lead_id FROM #_leads WHERE id=".$_POST['cust_id']." ");
 		$cms->sqlquery("rs","customer_project",$PROJECTARR,'id',$pid);
@@ -852,7 +878,7 @@ $leadsArr = $leadsQry->fetch_array();
 				// mk-19
 				$lnk6="?mode=add&t=roof_details&id=".$pid;
 				$lnk7="?mode=add&t=inventory&id=".$pid;
-
+				$lnk8="?mode=add&t=communication&id=".$pid;
 			}					
 			
 			if($t=='proj_info' || $t=='' ){
@@ -860,6 +886,10 @@ $leadsArr = $leadsQry->fetch_array();
 				$active1="active";
 			}
 			//mk-19
+			elseif($t=='communication'){
+				$active="active";
+				$active8="active";
+			}		 
 			elseif($t=='roof_details'){
 				$active="active";
 				$active6="active";
@@ -894,6 +924,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<input type="hidden" name="lead_id" id="lead_id" value="<?=$lead_id?>">
 				<li role="presentation" class="<?php echo $active1;?>"><a href="<?PHP echo $lnk1 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Project Info</span></a></li>
 				<!-- mk-19 -->
+				<li role="presentation" class="<?php echo $active8;?>"><a href="<?PHP echo $lnk8 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Communication</span></a></li>
 				<li role="presentation" class="<?php echo $active6;?>"><a href="<?PHP echo $lnk6 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Roof Details</span></a></li>
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
 				<!-- s:mk-19 -->
@@ -1729,6 +1760,114 @@ $leadsArr = $leadsQry->fetch_array();
 					<div class="clearfix"></div>
 				</div>
 				
+				<!-- s:communication mk-19 24-01-2023 -->
+				<div role="tabpanel" class="tab-pane <?php echo $active8;?>" id="communication">
+					<div class="row">
+						<div class="col-md-9">
+							<div class="form-group col-sm-3">
+								<label for="status" class="control-label">Status</label>
+								<!-- <input type="hidden" name="old_status" value="<?//=$status?>"> -->
+								<select name="mail_status" id="mail-status" class="form-control" onchange="mailval(this);">
+									<option value="">Select Mail Type</option>
+									<?php //foreach($proposalStatus as $pskey=>$psval){
+										//if($pskey==$status){
+										//	$psSel = 'selected';
+										//}else{
+										//	$psSel = '';
+										//}
+									?>
+									<option value="1">Welcome Email</option>
+									<option value="2">Installation Date Email</option>
+									<!-- <option value="3">Mail 3</option> -->
+									
+									<?php //} ?>
+								</select>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="to">To</label>
+									<input type="text" class="form-control" id="to" name="to" value="<?=$custRes['email']?>" readonly>
+								</div>
+								<div class="form-group">
+									<label for="subject">Subject</label>
+									<input type="text" class="form-control" id="subject" name="subject">
+								</div>
+								<div class="form-group">
+									<label for="message">Message</label>
+									<?=$adm->get_editor_s('message', $cms->removeSlash($message))?>
+										<div class="help-block with-errors"></div>
+								</div>
+								<input type="hidden" name="user" id="user" value="<?=$_SESSION['ses_adm_id']?>">
+								<button type="submit" id="mail" name="mail" class="btn btn-default">Send</button>
+								<div id="divkarea"></div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
+            					<div class="panel">
+              						<div class="panel-heading" id="exampleHeadingDefaultOne" role="tab"> 
+										<a class="panel-title" data-toggle="collapse" href="#exampleCollapseDefaultOne" data-parent="#exampleAccordionDefault" aria-expanded="true" aria-controls="exampleCollapseDefaultOne">Log </a> 
+								</div>
+								<div class="panel-collapse collapse in" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel">
+									<div class="panel-body" style="max-height:432px;overflow:auto;">
+										<p style="font-size:12px;"><b>To: </b><?=$custRes['email']?></p>
+										<b style="font-size:12px;">From:</b><hr style="border-color: rgb(0 0 0 / 13%);margin-top: 10px;margin-bottom: 10px;">
+										<?php $logQry=$cms->db_query("select *  from #_mail_logs where cust_id='$cust_id' order by created_at desc");
+										if($logQry->num_rows>0){
+												while($logRes=$logQry->fetch_array()){ 
+												$user_name = $cms->getSingleResult("select customer_name from #_users where id='".$logRes['user']."'");
+												$action_by_name= $cms->getSingleResult("select subject from #_mail_logs where cust_id='".$cust_id."'");
+												$date= strtotime($logRes["created_at"]);
+												?>
+												<p style="font-size:12px;" ><span class="pull-left text-info"><b> <?=$user_name?></span>
+												<span class="pull-right text-info" align="right">
+													<?=date("d-m-Y",$date)?>
+													<!-- <?//=date("d-m-Y",$date)."<br>".date("g:i A",$date)?> -->
+												</b></span></p>
+												<div class="clearfix"></div><p style="font-size:12px;" ><?=$logRes['subject']?></p>
+												<a  data-toggle="modal" data-target="#flipFlop<?=$logRes['id']?>"><i class="fa fa-eye" aria-hidden="true"></i></a>
+												<!-- The modal -->
+												<div class="modal fade" id="flipFlop<?=$logRes['id']?>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+																</button>
+																<h4 class="modal-title" id="modalLabel"><?=$logRes['subject']?></h4>
+															</div>
+															<div class="modal-body">
+																<?=$logRes['message']?>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- modal -->
+												
+												
+												
+												
+												<hr>
+
+
+
+
+										<?php } }else{ ?>
+											<p>No records found</p>
+										<?php } ?>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+					<div class="clearfix"></div>
+
+				</div>
+				<!-- e:communication mk-19-24-01-23 -->
 				<!--S:Roof Details Tab -->
                 <div role="tabpanel" class="tab-pane <?php echo $active6;?>" id="roof_details">
                     <div class="list_wrapper list_wrapper5">
@@ -2929,6 +3068,31 @@ $("#aforms").on("submit",function(e){
 
 </script>
 
+<script>
+	function mailval(sel){
+    var val = sel.value;
+	//alert(val);
+	//console.log(val);
+	$.ajax({
+			url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxmailsend.php",
+			//data: $('#aforms').serialize(),
+			type:"post",
+			
+			data: "val="+val,			
+			dataType: "json",
+			//cache: false,
+			//contentType: false,
+			//processData: false,
+			success:function(response){
+				$('#subject').val(response.subject);
+				CKEDITOR.instances['message'].setData(response.msg);
+				//$('#message').val(response.msg);
+				
+			}
+		});
+		
+}
+</script>
 <script>
 	function ev_charg(){
 		$('#ev_charger1').hide();
