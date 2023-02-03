@@ -49,7 +49,7 @@ if($_POST['val']==1){
          Växel: +46 (0)880 08 80<br>
          Birger Jarlsgatan 104E<br>
          114 20 Stockholm</td>
-         <td style='text-align: right;font-size: 20px;color:white;'>www.arka.se<br></td>
+         <td style='text-align: right;font-size: 20px;'><a href='www.arka.se' style='color:#FFFCFB  !important;'>www.arka.se</a><br></td>
          </tr> 
          </table>
         <br>
@@ -85,7 +85,7 @@ elseif($_POST['val']==2){
         Växel: +46 (0)880 08 80<br>
         Birger Jarlsgatan 104E<br>
         114 20 Stockholm</td>
-        <td style='text-align: right;font-size: 20px;color:white;'>www.arka.se<br></td>
+        <td style='text-align: right;font-size: 20px;'><a href='www.arka.se' style='color:#FFFCFB  !important;'>www.arka.se</a><br></td>
         </tr> 
         </table>
         <Br>
