@@ -157,7 +157,7 @@
 		}
 	}
 	
-	function sendEmail03022023($toEmailId=null, $subject=null, $mailBody=null, $attechment=null)
+	function sendEmail($toEmailId=null, $subject=null, $mailBody=null, $attechment=null)
 	{	
 		//$msg=file_get_contents("http://www.doubleclickexpert.com/demo/glen_mailers/air-purifier.html");
 		//$msg='HI123456789arka';
@@ -193,49 +193,6 @@
 			}
 			
 	}
-	
-	
-	function sendEmail($toEmailId=null, $subject=null, $mailBody=null, $attechment=null)
-	{	
-		$mail = new PHPMailer();
-			try {
-				$mail->IsSMTP(); // enable SMTP
-				$mail->CharSet = "UTF-8";
-				$mail->Debugoutput = 'html';
-				$mail->SMTPAuth = true; // authentication enabled
-				$mail->SMTPSecure = 'ssl'; //Set the SMTP port number - likely to be 25, 465 or 587
-				$mail->Port = 465; //Set the encryption system to use - ssl (deprecated) or tls
-				$mail->Username = EMAIL_USER;
-				$mail->Password = EMAIL_PASSWORD;
-				$mail->setFrom(EMAIL_USER, 'Arka Energy');
-				
-				foreach($adminemails as $to1)
-				$mail->AddAddress($to1, "");
-				//$mail->AddAttachment($uploaded_path);    // optional name
-				}	
-				$mail->addBCC("anil.dua@arkaenergy.se", "Anil Dua");			   
-				$mail->Subject = $subject;
-				$mail->Body    = $mailBody;
-				$mail->IsHTML(true);
-				$mail->SMTPOptions = array(
-					'ssl' => array(
-					'verify_peer' => false,
-					'verify_peer_name' => false,
-					'allow_self_signed' => true
-					)
-				);
-				if($mail->Send()){
-				return true;
-				}else{
-					return $mail->ErrorInfo;
-				}
-			}
-			catch (Exception $e) {
-				echo 'Message could not be sent. Mailer Error: '. $mail->ErrorInfo;
-			}
-			
-	}
-	
 	
 //echo $m1 = sendEmail('sneha.techblue@gmail.com', 'hi', 'Thankyou');die;
 
