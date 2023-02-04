@@ -45,8 +45,8 @@ if($_POST['val']==1){
          <table style='background-color:green;width:100%;padding: 10px;'>
          <tr style='color:white;'>
          <td style='fon-size:10px;padding-left: 20px;padding-top: 5px;padding-bottom: 5px;color:white;'> 
-         Mobil: +46 (0)70 975 00 31<br>
-         Växel: +46 (0)880 08 80<br>
+         Mobil: +46 (0)709750031<br>
+         Växel: +46 (0)8800880<br>
          Birger Jarlsgatan 104E<br>
          114 20 Stockholm</td>
          <td style='text-align: right;font-size: 20px;'><a href='www.arka.se' style='color:#FFFCFB  !important;'>www.arka.se</a><br></td>
@@ -81,8 +81,8 @@ elseif($_POST['val']==2){
         <table style='background-color:green;width:100%;padding: 10px;'>
         <tr style='color:white;'>
         <td style='fon-size:10px;padding-left: 20px;padding-top: 5px;padding-bottom: 5px;color:white;'> 
-        Mobil: +46 (0)70 975 00 31<br>
-        Växel: +46 (0)880 08 80<br>
+        Mobil: +46 (0)709750031<br>
+        Växel: +46 (0)8800880<br>
         Birger Jarlsgatan 104E<br>
         114 20 Stockholm</td>
         <td style='text-align: right;font-size: 20px;'><a href='www.arka.se' style='color:#FFFCFB  !important;'>www.arka.se</a><br></td>
