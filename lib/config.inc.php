@@ -8,7 +8,7 @@ include('adminfunction.inc.php');
 	}
  	if(LOCAL_MODE) {
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'arkaenergy_crm'; 
+		$ARR_CFGS["db_name"] = 'arkaenergy_crm1'; 
     	$ARR_CFGS["db_user"] = 'root';
 		$ARR_CFGS["db_pass"] = '';
 		define('SITE_SUB_PATH', '/arkadev/');		
