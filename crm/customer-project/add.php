@@ -928,7 +928,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<li role="presentation" class="<?php echo $active6;?>"><a href="<?PHP echo $lnk6 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Roof Details</span></a></li>
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
 				<!-- s:mk-19 -->
-				<li role="presentation" class="<?php echo $active7;?>"><a href="<?PHP echo $lnk7 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Inventory</span></a></li>
+				<li role="presentation" class="<?php echo $active7;?>"><a href="<?PHP echo $lnk7 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Product List</span></a></li>
 				<!-- e:mk-19 -->
 				<li role="presentation" class="<?php echo $active2;?>"><a href="<?PHP echo $lnk2 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Uploads</span></a></li>				
 				<li role="presentation" class="<?php echo $active3;?>"><a href="<?PHP echo $lnk3 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Steps</span></a></li>				
