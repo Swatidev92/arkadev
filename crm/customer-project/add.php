@@ -1142,7 +1142,8 @@ $leadsArr = $leadsQry->fetch_array();
 					<div class="col-sm-12"><h2 class="form-section-heading">Other Info -</h2></div>
 					<div class="form-group col-sm-3">
 						<label class="control-label">Panel Type</label>
-						<select class="form-control select2" id="panel_name" name="panel_name" id="panel_name" disabled readonly>
+						<input type="text" class="form-control" name="panel_name" id="panel_name" readonly value="<?=$panel_name?>">
+						<!-- <select class="form-control select2" id="panel_name" name="panel_name" id="panel_name" disabled readonly>
 							<option value="">Select Panel Type</option>
 							<?php $panelTyeArray = json_decode($customerPriceArr["panel_types"], true);
 							usort($panelTyeArray, function ($a, $b) {
@@ -1158,7 +1159,7 @@ $leadsArr = $leadsQry->fetch_array();
 									echo '<option value="'.$value["name"].'" '.$psel.'>'.$value["name"].' - '.$value["wattage"].' Wp</option>';
 							} 	}
 							?>
-						</select>
+						</select> -->
 					</div>
 					<div class="form-group col-sm-3">
 						<label for="short_circuit" class="control-label">Kortslutningsström</label>
