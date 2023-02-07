@@ -1868,6 +1868,7 @@ $leadsArr = $leadsQry->fetch_array();
 
 				</div>
 				<!-- e:communication mk-19-24-01-23 -->
+				
 				<!--S:Roof Details Tab -->
                 <div role="tabpanel" class="tab-pane <?php echo $active6;?>" id="roof_details">
                     <div class="list_wrapper list_wrapper5">
