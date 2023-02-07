@@ -1142,7 +1142,7 @@ $leadsArr = $leadsQry->fetch_array();
 					<div class="col-sm-12"><h2 class="form-section-heading">Other Info -</h2></div>
 					<div class="form-group col-sm-3">
 						<label class="control-label">Panel Type</label>
-						<select class="form-control select2" id="panel_name" name="panel_name" id="panel_name">
+						<select class="form-control select2" id="panel_name" name="panel_name" id="panel_name" readonly>
 							<option value="">Select Panel Type</option>
 							<?php $panelTyeArray = json_decode($customerPriceArr["panel_types"], true);
 							usort($panelTyeArray, function ($a, $b) {
