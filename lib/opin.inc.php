@@ -209,7 +209,7 @@
 				$mail->Password = EMAIL_PASSWORD;
 				$mail->setFrom(EMAIL_USER, 'Arka Energy');
 				
-				foreach($adminemails as $to1)
+				foreach($adminemails as $to1){
 				$mail->AddAddress($to1, "");
 				//$mail->AddAttachment($uploaded_path);    // optional name
 				}	
