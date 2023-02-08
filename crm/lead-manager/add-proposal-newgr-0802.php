@@ -164,7 +164,7 @@ if($numRowsRoof>0){
 $roof_details_count = $numRowsRoof;
 }
 // other-details-07
-$otherDetailsQry = $cms->db_query("SELECT * FROM #_other_details where lead_id='$leadid' AND is_deleted=0 ");
+$otherDetailsQry = $cms->db_query("SELECT * FROM #_other_details where parent_id='$pid' AND is_deleted=0 ");
 $otherDetailsfetch = $otherDetailsQry->fetch_array(); 
 @extract($otherDetailsfetch);
 
@@ -868,7 +868,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					<div class="form-group col-md-3 show-solar-margin" style="<?=$stylesm?>">
 						<label class="control-label" style="color:red;">Solar panel margin (%) <span style="<?=$sinfo?>"><i class="fa fa-info-circle" title="Minimum <?=$obj_smrg[0]->min?>%" style="color:red;"></i><br>(Min : <?=$obj_smrg[0]->min?>% and Max : <?=$obj_smrg[0]->max?>%)</span></label>
 
-						<input type="number" class="form-control" name="solar_margin" value="<?=($leadid!='' && $pid!='')?($solar_margin?$solar_margin:$smin):$smin?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION["ses_adm_role"]==1)?-50:$smin?>" max="<?php if(($_SESSION["ses_adm_role"]!=1)){ echo $smax; } ?>">
+						<input type="number" class="form-control" name="solar_margin" value="<?=($leadid!='' && $pid!='')?($solar_margin?$solar_margin:$smin):$smin?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION["ses_adm_role"]==1)?0:$smin?>" max="<?php if(($_SESSION["ses_adm_role"]!=1)) { echo $smax; } ?>">
 					</div>
 					<?php if($proposal_type==2 || $proposal_type==3 || $proposal_type==5 || $proposal_type==7 || $proposal_type==8 || $proposal_type==9){
 						$stylem = '';
