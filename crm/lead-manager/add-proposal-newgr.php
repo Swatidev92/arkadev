@@ -888,7 +888,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					<div class="form-group col-md-3 show-charger-margin" style="<?=$stylem?>">
 					<label class="control-label" style="color:red;">Charger margin (%) <span style="<?=$evinfo?>"><i class="fa fa-info-circle" title="Minimum <?=$obj_evmrg[0]->min?>%" style="color:red;"></i><br>(Min : <?=$obj_evmrg[0]->min?>% and Max : <?=$obj_evmrg[0]->max?>%)</span></label>
 						
-						<input type="number" class="form-control" name="charger_margin" value="<?=($leadid!='' && $pid!='')?($charger_margin?$charger_margin:$cmin):$cmin?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION["ses_adm_role"]==1)?0:$cmin?>" max="<?if(($_SESSION["ses_adm_role"]!=1)){ echo $cmax;}?>">
+						<input type="number" class="form-control" name="charger_margin" value="<?=($leadid!='' && $pid!='')?($charger_margin?$charger_margin:$cmin):$cmin?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION['ses_adm_role']==1)?0:$cmin?>" max="<?if(($_SESSION['ses_adm_role']!=1)){ echo $cmax;}?>">
 					</div>
 					<?php  if($proposal_type==3 || $proposal_type==4 || $proposal_type==6 || $proposal_type==7 || $proposal_type==8 || $proposal_type==10 || $proposal_type==11){
 						$stylebm = '';
@@ -909,7 +909,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					<div class="form-group col-md-3 show-battery-margin" style="<?=$stylebm?>">
 						<label class="control-label" style="color:red;">Battery margin (%) <span style="<?=$binfo?>"><i class="fa fa-info-circle" title="Minimum <?=$obj_btmrg[0]->min?>%" style="color:red;"></i><br>(Min: <?=$obj_btmrg[0]->min?>% and Max: <?=$obj_btmrg[0]->max?>% )</span></label>
 						
-						<input type="number" class="form-control" name="battery_margin" value="<?=($leadid!='' && $pid!='')?($battery_margin?$battery_margin:$bmin):$bmax?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION["ses_adm_role"]==1)?0:$bmin?>" max="<?if(($_SESSION["ses_adm_role"]!=1)){ echo $bmax; }?>">
+						<input type="number" class="form-control" name="battery_margin" value="<?=($leadid!='' && $pid!='')?($battery_margin?$battery_margin:$bmin):$bmax?>" <?=$_SESSION["ses_adm_role"]==1?'':''?> min="<?=($_SESSION['ses_adm_role']==1)?0:$bmin?>" max="<?if(($_SESSION['ses_adm_role']!=1)){ echo $bmax; }?>">
 					</div>		
 					<?php //if($obj_btmrg[0]->status==1){
 						//$bmargin = $obj_btmrg[0]->margin;
