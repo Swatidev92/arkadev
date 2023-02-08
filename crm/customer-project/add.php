@@ -1145,19 +1145,19 @@ $leadsArr = $leadsQry->fetch_array();
 						<input type="text" class="form-control" name="panel_name" id="panel_name" readonly value="<?=$panel_name?>">
 						<!-- <select class="form-control select2" id="panel_name" name="panel_name" id="panel_name" disabled readonly>
 							<option value="">Select Panel Type</option>
-							<?php $panelTyeArray = json_decode($customerPriceArr["panel_types"], true);
-							usort($panelTyeArray, function ($a, $b) {
-								return $a['name'] <=> $b['name'];
-							});
-							foreach ($panelTyeArray as $key => $value) {
-								if($value["pstatus"]==1){
-									if($panel_name==$value["name"]){
-										$psel = 'selected';
-									}else{
-										$psel = '';
-									}
-									echo '<option value="'.$value["name"].'" '.$psel.'>'.$value["name"].' - '.$value["wattage"].' Wp</option>';
-							} 	}
+							<?php //$panelTyeArray = json_decode($customerPriceArr["panel_types"], true);
+							// usort($panelTyeArray, function ($a, $b) {
+							// 	return $a['name'] <=> $b['name'];
+							// });
+							// foreach ($panelTyeArray as $key => $value) {
+							// 	if($value["pstatus"]==1){
+							// 		if($panel_name==$value["name"]){
+							// 			$psel = 'selected';
+							// 		}else{
+							// 			$psel = '';
+							// 		}
+							// 		echo '<option value="'.$value["name"].'" '.$psel.'>'.$value["name"].' - '.$value["wattage"].' Wp</option>';
+							// } 	}
 							?>
 						</select> -->
 					</div>
