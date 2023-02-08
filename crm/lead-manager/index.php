@@ -81,7 +81,13 @@ $act_arr = explode(',',$submoduleAction);
 		<ol class="breadcrumb pull-right">
 			<li class="active">
 			<?php
-			if($_GET['mode']=='proposal-list'){
+				if(!isset($_GET['mode'])){
+				if(in_array(2,$act_arr) || $_SESSION["ses_adm_id"]==1){ ?>
+					<a href="<?=SITE_PATH_ADM.CPAGE.'/?mode=upload-lead'?>" class="ub">
+						<img  src="<?=SITE_PATH_ADM?>images/add_1.svg" width="25" alt=""> Upload Lead File
+					</a> 
+				<?php }}
+			 	if($_GET['mode']=='proposal-list'){
 				if($_SESSION['REFERER_page']!=''){
 					$redirect = $_SESSION['REFERER_page'];
 				}else{
@@ -117,7 +123,7 @@ $accessUser = $cms->getSingleResult("SELECT GROUP_CONCAT(user_id) FROM #_permiss
 $dimensioningUserArr = explode(',',$accessUser);
 ?>								
   
-<?php if($mode =='add'){include("add.php");}else if($mode =='add-proposal'){include("add-proposal.php");}else if($mode =='add-proposal-newgr'){include("add-proposal-newgr.php");}else if($mode =='proposal-list'){include("proposal-list.php");}else if($mode =='view'){include("view.php");}else if($mode =='view-proposal'){include("view-proposal.php");}else if($mode =='import') { include("import.php"); }else{include("manage.php");}?>
+<?php if($mode =='add'){include("add.php");}else if($mode =='add-proposal'){include("add-proposal.php");}else if($mode =='add-proposal-newgr'){include("add-proposal-newgr.php");}else if($mode =='proposal-list'){include("proposal-list.php");}else if($mode =='view'){include("view.php");}else if($mode =='view-proposal'){include("view-proposal.php");}else  if($mode == 'upload-lead'){ include('upload-lead.php');}else{include("manage.php");}?>
 <!--<script>
 function changeAction(){
 	$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/download.php");

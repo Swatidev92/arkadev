@@ -337,9 +337,9 @@
 		//echo "test";
 		$start = intval($_GET['start']);
 		$pagesize = intval($pagesize)==0?$pagesize=DEF_PAGE_SIZE:$pagesize;
-		$columns = "SELECT l.id, l.status, l.post_date, l.customer_name, l.proposal_address, l.assigned_to, l.form_type, l.post_by, l.city ";
+		$columns = "SELECT l.id, l.status, l.post_date, l.customer_name, l.proposal_address, l.assigned_to, l.form_type, l.post_by, l.city,l.update_date ";
 		$sql = " FROM #_leads l WHERE 1=1 AND l.is_deleted=0 AND l.lead_id=0 $adminRole ";
-		$order_by == '' ? $order_by = 'l.id' : true;
+		$order_by == '' ? $order_by = 'l.update_date' : true;
 		$order_by2 == '' ? $order_by2 = 'DESC' : true;
 		$sql_count = "SELECT count(*) ".$sql; 
 		$sql .= " order by $order_by $order_by2 ";
