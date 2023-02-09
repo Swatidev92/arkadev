@@ -15,20 +15,20 @@ if($cms->is_post_back()){
 			$duplicate_id = array();
 				fgetcsv($csvFile);
 				while(($column = fgetcsv($csvFile)) !== FALSE){
-					$email = $column[2];
+					$email = $column[13];
 					
 					$q_data  = $cms->db_query("select id from #_leads where is_deleted='0' AND  email = '".$email."'");
 					if($q_data->num_rows  == 0 && $email !='')
 					{
             		
 						//echo "<pre>";
-						if($column[0]=='fb'){ $lead_data['form_type'] =  "5"; }else { $lead_data['form_type'] = "5"; }
-						$lead_data['customer_name'] = $column[1];
+						if($column[11]=='fb'){ $lead_data['form_type'] =  "5"; }else { $lead_data['form_type'] = "5"; }
+						$lead_data['customer_name'] = $column[12];
 						$lead_data['email'] = $email;
-						$lead_data['phone'] = trim($column[3],"p:");
-						$lead_data['address_input'] = $column[4];
-						$lead_data['proposal_address'] = $column[4];
-						$lead_data['city'] = $column[5];
+						$lead_data['phone'] = $column[14];
+						$lead_data['address_input'] = $column[15];
+						$lead_data['proposal_address'] = $column[15];
+						$lead_data['city'] = $column[16];
 						$lead_data['post_by'] = $_SESSION['ses_adm_id'];
 						$lead_data['post_date'] = date("Y-m-d");
 						$lead_data['update_date'] = date("Y-m-d H:i:s");
@@ -97,7 +97,8 @@ if(isset($_POST['lead-update'])){
 		$str_adm_ids = implode(",",$arr_ids);
 		// echo $oldStatus= $_POST['status-id'];
 		// die;
-		$sel= $cms->db_query("update #_leads set post_by='".$_SESSION['ses_adm_id']."', update_date='".date("Y-m-d HH:MI:SS")."' ,post_date='".date("Y-m-d")."' where id in ($str_adm_ids)");
+		$update_date=date("Y-m-d H:i:s");  
+		$sel= $cms->db_query("update #_leads set post_by='".$_SESSION['ses_adm_id']."', update_date='".$update_date."' ,post_date='".date("Y-m-d")."' where id in ($str_adm_ids)");
 		if(!empty($sel)){
 			$str_adm_idsArr = explode(',',$str_adm_ids);
 			// print_r($str_adm_idsArr);die;
@@ -154,7 +155,7 @@ if(isset($_POST['lead-update'])){
 				<div class="form-group col-sm-5">
 					<label for="file_upload" class="control-label">Upload File*</label>
 					<input type="file" id="file_upload" name="file_upload" required>
-					<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/format/sample.csv'?>" style="font-size:12px;"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Sample CSV file.</a>
+					<!-- <a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/format/sample.csv'?>" style="font-size:12px;"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Sample CSV file.</a> -->
 				</div>	
 				
 				<div class="clearfix"></div>
