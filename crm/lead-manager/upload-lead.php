@@ -152,7 +152,7 @@ if(isset($_POST['lead-update'])){
     <div class="col-sm-12">
         <div class="white-box panel-body">
 			<div class="file_wrapper">
-				<div class="form-group col-sm-5">
+				<div class="form-group col-sm-12">
 					<label for="file_upload" class="control-label">Upload File*</label>
 					<input type="file" id="file_upload" name="file_upload" required>
 					<br>
