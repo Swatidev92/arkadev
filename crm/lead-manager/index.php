@@ -25,6 +25,10 @@ else if($_GET['mode']=='add-proposal' || $_GET['mode']=='add-proposal-newgr'){
 	$hedtitle = "<i class='fa fa-envelope-o fa-fw '></i> Proposal Manager for ".'"'.$cms->getSingleResult("SELECT customer_name FROM #_leads where id=".$_GET['leadid']." ").'"'.' <a href="'.SITE_PATH_ADM.CPAGE.'/?mode=add&start=&id='.$lid.'">(LEAD-'.$lid.')</a>';
 	$back_btn = SITE_PATH_ADM.CPAGE.'/?mode=proposal-list&start=&id='.$lid;
 }
+else if($_GET['mode']=='upload-lead'){
+	$hedtitle = "<i class='fa fa-envelope-o fa-fw '></i> Upload Lead ";
+	$back_btn = SITE_PATH_ADM.CPAGE;
+}
 else{
 	$hedtitle = "<i class='fa fa-envelope-o fa-fw '></i> Lead Manager";
 }	
