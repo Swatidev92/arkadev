@@ -155,7 +155,15 @@ if(isset($_POST['lead-update'])){
 				<div class="form-group col-sm-5">
 					<label for="file_upload" class="control-label">Upload File*</label>
 					<input type="file" id="file_upload" name="file_upload" required>
-					<!-- <a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/format/sample.csv'?>" style="font-size:12px;"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Sample CSV file.</a> -->
+					<br>
+					<p class="list-group-item list-group-item-danger">
+					<span><b>Don't forget to follow following steps:</b></span><br>
+						1:&nbsp;&nbsp;File should be uploaded in CSV UTF8 format only.<br>
+						2:&nbsp;&nbsp;Don't forget to add City in the table after the street address and in cloumn Q.<br>
+						3:&nbsp;&nbsp;Don't forget to check sample file.
+					<br>
+					<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/format/sample.csv'?>" style="font-size:12px;"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;<b>Sample CSV file.</b></a>
+					</p>
 				</div>	
 				
 				<div class="clearfix"></div>
