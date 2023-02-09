@@ -1,0 +1,28 @@
+Panel type: - , Quantity:, Price: 
+
+Inverter type1: , Quantity:, Price: 
+
+MMS cost (kr):
+
+Installation Days:, Price: 
+
+Total Discount:
+
+Roof Material:, Price: 
+
+Solar margins (%):
+Solar margins (kr):0
+Solar VAT (%):
+Solar VAT (kr):0
+Total Margin (kr):0
+Percentage Margin (%):NAN
+
+Solar system with installation 
+	 customer price excluding VAT:0
+	 customer price including VAT:0
+
+Green Rebate 
+	 Total Green Rebate:0
+	 Solar Green Rebate :0
+	 Charger Green Rebate :0
+	 Battery Green Rebate :0
