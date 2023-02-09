@@ -31,6 +31,7 @@ if($cms->is_post_back()){
 						$lead_data['city'] = $column[5];
 						$lead_data['post_by'] = $_SESSION['ses_adm_id'];
 						$lead_data['post_date'] = date("Y-m-d");
+						$lead_data['update_date'] = date("Y-m-d H:i:s");
 						$lead_data['status'] = "1";
 						// print_r($lead_data);
 						// echo "</pre>";
