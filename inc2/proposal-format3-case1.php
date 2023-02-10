@@ -155,7 +155,7 @@ $k =1;
 									<tr>
 										<?php include("roof_format_details.php"); ?>
 									</tr>
-									
+									<tr><td></td></tr>
 									<tr><td height="10" colspan="2" style="background-color:#fff;"></td></tr>
 									<!-- <tr>
 										<td valign="middle" colspan="4" style="text-align:center;font-size:16px;border:none; padding:15px;">
@@ -172,7 +172,7 @@ $k =1;
 						</td>
 						<br>
 					</tr>
-					<?php $j=8-$k; for($b=0; $b<$j; $b++ ) {?>
+					<?php $j=6-$k; for($b=0; $b<$j; $b++ ) {?>
 					<tr><td></td></tr>
 					<?php }?>
 					<hr>
@@ -201,12 +201,12 @@ $k =1;
 									</tr>
 									<tr>
 										<td width="50%"style="color:#fff; text-align:center;">
-										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$installation_image?>" height="200">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$installation_image?>" height="180">
 										   <br>
 										   <p style="color:black; line-height:1; text-align:left;font-size:10px;">Dimensioneringen visar ett förslag på placering av era paneler. Vi reserverar oss för att eventuella förändringar kan komma att ske utifrån de förutsättningar som upptäcks under installationens gång. I de fall paneler behöver tas bort kommer priset justeras därefter.</p>
 										</td>
 										<td width="50%" style="text-align:center;">
-											<img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$chart_image?>" height="270">
+											<img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$chart_image?>" height="250">
 										</td>
 									</tr>
 									<?php if($inverter_type3=='' && $inverter_img3=='' && $inverter_type2=='' && $inverter_img2==''){?>
@@ -273,7 +273,7 @@ $k =1;
 									</tr>
 									<tr>
 										<td style="color:#fff; text-align:center;">
-										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/solar-panel/'.$panel_img?>" style="height:131px;">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/solar-panel/'.$panel_img?>" style="height:128px;">
 										</td>
 									</tr>
 									<?php if($inverter_type3=='' && $inverter_img3=='' && $inverter_type2=='' && $inverter_img2==''){?>
@@ -296,7 +296,7 @@ $k =1;
 									</tr>
 									<tr>
 										<td style="color:#fff; text-align:center;">
-										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img1?>" style="height:131px;">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img1?>" style="height:128px;">
 										</td>
 									</tr>
 									<?php if($inverter_type3=='' && $inverter_img3=='' && $inverter_type2=='' && $inverter_img2==''){?>
@@ -336,7 +336,7 @@ $k =1;
 									</tr>
 									<tr>
 										<td style="color:#fff; text-align:center;">
-										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img2?>" style="height:131px;">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img2?>" style="height:128px;">
 										</td>
 									</tr>
 									<?php if($proposal_type==1){?>
@@ -356,7 +356,7 @@ $k =1;
 									</tr>
 									<tr>
 										<td style="color:#fff; text-align:center;">
-										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img3?>" style="height:131px;">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/inverter/'.$inverter_img3?>" style="height:128px;">
 										</td>
 									</tr>
 									<?php if($proposal_type==1){?>
