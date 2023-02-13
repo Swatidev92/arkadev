@@ -146,7 +146,7 @@ $customerRes =  $customerQry->fetch_array();
 							Storleken på system(kWp):
 						</td>
 						<td style="width: 50%; text-align:left;">
-							<?=$projectRes['system_size']?$projectRes['system_size']:'NA'?>
+							<?=$projectRes['system_size']?$projectRes['system_size']/1000:'NA'?>
 						</td>
 					</tr>
 					<tr>
