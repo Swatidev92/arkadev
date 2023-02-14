@@ -413,7 +413,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 						<label class="control-label">Quotation valid till (Y-m-d)</label>
 						<?php if($_SESSION["ses_adm_role"]==1){?>
 						<div class="input-group">
-							<input class="form-control" id="quotation_valid_till" type="text" name="quotation_valid_till" autocomplete="off" value="<?=date('Y-m-d',strtotime(date("Y-m-d", strtotime(date('Y-m-d'))) . " +15 day"))?>">
+							<input class="form-control" id="quotation_valid_till" type="text" name="quotation_valid_till" autocomplete="off" value="<?=date('Y-m-d',strtotime(date("Y-m-d", strtotime(date('Y-m-d'))) . " +7 day"))?>">
 							<span class="input-group-addon"><i class="icon-calender"></i></span> 
 						</div>
 						<?php }else{?>
