@@ -879,6 +879,7 @@ $leadsArr = $leadsQry->fetch_array();
 				$lnk6="?mode=add&t=roof_details&id=".$pid;
 				$lnk7="?mode=add&t=inventory&id=".$pid;
 				$lnk8="?mode=add&t=communication&id=".$pid;
+				$lnk9="?mode=add&t=documentation&id=".$pid;
 			}					
 			
 			if($t=='proj_info' || $t=='' ){
@@ -915,7 +916,10 @@ $leadsArr = $leadsQry->fetch_array();
 			elseif($t=='project_checklist'){
 				$active="active";
 				$active5="active";
-			}
+			}elseif($t=='documentation'){
+				$active="active";
+				$active9="active";
+			}	
 			else{
 				
 			}
@@ -924,6 +928,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<input type="hidden" name="lead_id" id="lead_id" value="<?=$lead_id?>">
 				<li role="presentation" class="<?php echo $active1;?>"><a href="<?PHP echo $lnk1 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Project Info</span></a></li>
 				<!-- mk-19 -->
+				<li role="presentation" class="<?php echo $active9;?>"><a href="<?PHP echo $lnk9 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Documentation</span></a></li>
 				<li role="presentation" class="<?php echo $active8;?>"><a href="<?PHP echo $lnk8 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Communication</span></a></li>
 				<li role="presentation" class="<?php echo $active6;?>"><a href="<?PHP echo $lnk6 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Roof Details</span></a></li>
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
@@ -1761,6 +1766,91 @@ $leadsArr = $leadsQry->fetch_array();
 					<div class="clearfix"></div>
 				</div>
 				
+				
+				<div role="tabpanel" class="tab-pane <?php echo $active9;?>" id="documentation">
+					<div class="row">
+						<div class="col-md-2" align="right">Egenkontroll</div>
+						
+						<?php if(!$egenkontroll_document){?>
+					<div class="form-group col-sm-1 text-center">						
+						<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_Egenkontroll.'/'.$egenkontroll_document?>" class="btn btn-success btn-circle" download><i class="fa fa-file-pdf-o"></i> </a>
+					</div>
+					<?php } ?>
+					
+					
+						<div class="col-md-3">
+							<div class="form-group col-sm-3">
+								<a class="fcbtn btn btn-primary btn-outline btn-1c" href="javascript:void()" onclick="generate()">Generate </a>
+							</div>
+						
+						</div>
+						<div class="col-md-3">
+							<div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
+            					<div class="panel">
+              						<div class="panel-heading" id="exampleHeadingDefaultOne" role="tab"> 
+										<a class="panel-title" data-toggle="collapse" href="#exampleCollapseDefaultOne" data-parent="#exampleAccordionDefault" aria-expanded="true" aria-controls="exampleCollapseDefaultOne">Log </a> 
+								</div>
+								<div class="panel-collapse collapse in" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel">
+									<div class="panel-body" style="max-height:432px;overflow:auto;">
+										<p style="font-size:12px;"><b>To: </b><?=$custRes['email']?></p>
+										<b style="font-size:12px;">From:</b><hr style="border-color: rgb(0 0 0 / 13%);margin-top: 10px;margin-bottom: 10px;">
+										<?php $logQry=$cms->db_query("select *  from #_mail_logs where cust_id='$cust_id' order by created_at desc");
+										if($logQry->num_rows>0){
+												while($logRes=$logQry->fetch_array()){ 
+												$user_name = $cms->getSingleResult("select customer_name from #_users where id='".$logRes['user']."'");
+												$action_by_name= $cms->getSingleResult("select subject from #_mail_logs where cust_id='".$cust_id."'");
+												$date= strtotime($logRes["created_at"]);
+												?>
+												<p style="font-size:12px;" ><span class="pull-left text-info"><b> <?=$user_name?></span>
+												<span class="pull-right text-info" align="right">
+													<?=date("d-m-Y",$date)?>
+													<!-- <?//=date("d-m-Y",$date)."<br>".date("g:i A",$date)?> -->
+												</b></span></p>
+												<div class="clearfix"></div><p style="font-size:12px;" ><?=$logRes['subject']?></p>
+												<a  data-toggle="modal" data-target="#flipFlop<?=$logRes['id']?>"><i class="fa fa-eye" aria-hidden="true"></i></a>
+												<!-- The modal -->
+												<div class="modal fade" id="flipFlop<?=$logRes['id']?>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+																</button>
+																<h4 class="modal-title" id="modalLabel"><?=$logRes['subject']?></h4>
+															</div>
+															<div class="modal-body">
+																<?=$logRes['message']?>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- modal -->
+												
+												
+												
+												
+												<hr>
+
+
+
+
+										<?php } }else{ ?>
+											<p>No records found</p>
+										<?php } ?>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+					<div class="clearfix"></div>
+
+				</div>
+				
+				
 				<!-- s:communication mk-19 24-01-2023 -->
 				<div role="tabpanel" class="tab-pane <?php echo $active8;?>" id="communication">
 					<div class="row">
@@ -2474,53 +2564,12 @@ $leadsArr = $leadsQry->fetch_array();
 
 
 <script>
-function generate(){
-	var grid_template = $("#grid_template").val();
-	if(grid_template){
-		if(grid_template==2){ //EON
-			$("#plant_id").attr("required", true);
-			$("#project_address").attr("required", true);
-			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/eon.php");
-			//alert($(".filter_form").attr("action"));
-			$("#aforms").submit();
-		}
-		else if(grid_template==1){	//Ellevio
-			if($("#enskild_firma").is(":checked")) {
-				$("#company_name").attr("required", false);
-				$("#org_number").attr("required", false);
-			}else{			
-				$("#company_name").attr("required", true);
-				$("#org_number").attr("required", true);
-			}
-			$("#plant_id").attr("required", true);
-			$("#project_address").attr("required", true);
-			if($("#personnummer").val()==''){
-				$("#personnummer").attr("readonly", false);
-				$("#personnummer_error").addClass("has-error");
-				$("#personnummer").attr("required", true);
-			}
-			$("#project_postal_code").attr("required", true);
-			$("#project_city").attr("required", true);
-			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/ellivio.php");
-			//alert($(".filter_form").attr("action"));
-			$("#aforms").submit();
-		}
-		else if(grid_template==3){ //Föranmälan.nu
-			$("#battery_size").attr("required", true);
-			$("#effektfaktor").attr("required", true);
-			$("#short_circuit").attr("required", true);
-			$("#main_fuse").attr("required", true);
-			$("#plant_id").attr("required", true);
-			$("#project_address").attr("required", true);
-			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/foranmlan.php");
-			//alert($(".filter_form").attr("action"));
-			$("#aforms").submit();
-		}else{
-			alert("Something went wrong");
-		}
-	}else{
-		alert("Please select grid template");
-	}
+function generate_egenkontroll(){
+		$("#plant_id").attr("required", true);
+		$("#project_address").attr("required", true);
+		$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/egenkontroll/egenkontroll.php");
+		//alert($(".filter_form").attr("action"));
+		$("#aforms").submit();
 	
 	/*$.ajax({
 		url:"<?=SITE_PATH_ADM.CPAGE?>/certificate/index.php",

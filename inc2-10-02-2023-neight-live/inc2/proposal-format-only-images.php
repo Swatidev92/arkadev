@@ -14,7 +14,6 @@ $customerPriceArr = $customerPriceQry->fetch_array();
 
 <html>
 	<head>
-		<meta charset="utf-8">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Arka</title>
@@ -56,7 +55,7 @@ $customerPriceArr = $customerPriceQry->fetch_array();
          table[class=devicewidth] {width: 440px!important;text-align:left!important;}
          table[class=devicewidthinner] {width: 420px!important;text-align:left!important;}
          table[class="sthide"]{display: none!important;}
-         img[class="bigimage"]{width: 420px!important;height:212px!important;}
+         img[class="bigimage"]{width: 420px!important;height:219px!important;}
          img[class="col2img"]{width: 420px!important;height:258px!important;}
          img[class="image-banner"]{width: 440px!important;height:106px!important;}
          td[class="menu"]{text-align:center !important; padding: 0 0 10px 0 !important;}
@@ -89,98 +88,77 @@ $customerPriceArr = $customerPriceQry->fetch_array();
          img[class="image-banner"]{width: 280px!important;height:68px!important;}
          
          }
-		 .page6-heading{
-			 text-align:left;
-			 font-size:11px;
-			 border:none; 
-			 color:#22914f; 
-			 line-height:1.2;
-		 }
-		 .page6-heading-desc{
-			 font-size:11.5px;
-			 line-height:1.4;
-		 }
 		</style>
 	</head>
 	<body style="background:#ffffff">
+		<?php include('proposal-format-logo.php');?>
+		
 		<div class="block">
 			<!-- image + text -->
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="bigimage">
 				<tbody>
 					<tr>
-						<td>
-							<table width="100%" align="center" cellspacing="0" cellpadding="2" border="0" class="devicewidth" modulebg="edit" style="background:#fff">
+						<td style="width: 100%;">
+							<table class="" cellpadding="10" style="border-collapse: collapse; width: 100%; background-color:#000;" border="0">
 								<tbody>
 									<tr>
-										<td style="width: 100%;">
-											<table class="" cellpadding="10" style="border-collapse: collapse; width: 100%; background-color:#000;" border="0">
-												<tbody>
-													<tr>
-														<td valign="middle" style="text-align:center;font-size:20px;border:none; color:#fff;">
-															VILLKOR
-														</td>
-													</tr>
-												</tbody>
-											</table>
+										<td valign="middle" style="text-align:left;font-size:20px;border:none; color:#fff;">
+											Dimensionering
 										</td>
 									</tr>
-								</tbody>					
+								</tbody>
 							</table>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-			
-						<?php
-							$cStepQry = $cms->db_query("select content_page_2 from #_tnc_content where id=1 AND is_deleted=0 ");
-							$cStepRes = $cStepQry->fetch_array();
-							echo $cStepRes['content_page_2'];
-						?>
-
-			
-			<?php if($tnc_title1 && $tnc_content1){?>
-			<table width="100%" cellpadding="0" cellspacing="3" border="0" id="backgroundTable" st-sortable="bigimage">
-				<tbody>
+					<tr><td height="10" style="background-color:#fff;"></td></tr>
+					<tr><td height="10" style="background-color:#fff;"></td></tr>
+					
 					<tr>
 						<td>
-							<table width="100%" align="center" cellspacing="0" cellpadding="2" border="0" class="devicewidth" modulebg="edit" style="background:#fff">
+							<table width="100%" align="center" cellspacing="0" cellpadding="4" class="devicewidth" modulebg="edit" style="background:#ffffff;">
 								<tbody>
 									<tr>
-										<td valign="middle" class="page6-heading">
-											<?=$tnc_title1?>
+										<td width="100%" style="color:#fff; text-align:center;">
+										   <img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$installation_image?>" width="500">
 										</td>
 									</tr>
-									<tr>
-										<td class="page6-heading-desc"><?=$tnc_content1?></td>
-									</tr>
-								</tbody>					
+								</tbody>
 							</table>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-			<?php }if($tnc_title2 && $tnc_content2){?>
-			<table width="100%" cellpadding="0" cellspacing="3" border="0" id="backgroundTable" st-sortable="bigimage">
-				<tbody>
+					<tr><td height="10" style="background-color:#fff;"></td></tr>
+					
+					<tr>
+						<td style="width: 100%;">
+							<table class="" cellpadding="10" style="border-collapse: collapse; width: 100%; background-color:#000;" border="0">
+								<tbody>
+									<tr>
+										<td valign="middle" style="text-align:left;font-size:20px;border:none; color:#fff;">
+											Uppskattad Produktionsberäkning
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr><td height="10" style="background-color:#fff;"></td></tr>
+					<tr><td height="10" style="background-color:#fff;"></td></tr>
+					
 					<tr>
 						<td>
-							<table width="100%" align="center" cellspacing="0" cellpadding="2" border="0" class="devicewidth" modulebg="edit" style="background:#fff">
+							<table width="100%" align="center" cellspacing="0" cellpadding="4" class="devicewidth" modulebg="edit" style="background:#ffffff;">
 								<tbody>
 									<tr>
-										<td valign="middle" class="page6-heading">
-											<?=$tnc_title2?>
+										<td width="100%" style="color:#fff; text-align:center;">
+											<img src="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$chart_image?>" width="500">
 										</td>
 									</tr>
-									<tr>
-										<td class="page6-heading-desc"><?=$tnc_content2?></td>
-									</tr>
-								</tbody>					
+								</tbody>
 							</table>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<?php } ?>
 		</div>
 	</body>
 </html>

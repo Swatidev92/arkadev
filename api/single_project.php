@@ -1,0 +1,17 @@
+<?php
+
+include 'db.php';
+
+$response=array();
+
+$user_id=$_GET['id'];
+$query_single="SELECT `cust_id`,`project_name`,`project_address`,`lead_id`,`project_address`,`project_postal_code`,`project_city`,`project_country`,`roof_material`,`num_of_panels`,`status`,`is_deleted`,`grid_provider`,`plant_id`,`pre_registration_date`,`acknowledgement`,`acknowledgement_file`,`same_address`,`raw_mortgage`,`kortling`,`number_of_roof`,`facade_meter_location`,`elcentral_location`,`inverter_placement`,`battery_placement`,`ev_placement`,`digging_ground`,`distance_panel_inverter`,`distance_inverter_connection_point`,`distance_ev_connection_point`,`panel_vendor_id`,`panel_resource`,`panel_planned_start_date`,`panel_planned_end_date`,`panel_finish_start_date`,`panel_finish_end_date`,`electrical_vendor_id`,`electrical_resource`,`electrical_planned_start_date`,`electrical_planned_end_date`,`electrical_finish_start_date`,`electrical_finish_end_date`,`site_image`,`main_fuse`,`island_operation`,`short_circuit`,`system_size`,`effektfaktor`,`ev_charger`,`ev_quantity`,`sale_rep_id`,`project_manager_id`,`uploaded_files`,`project_report_name`,`project_date`,`modified_date`,`panel_name`,`inverter1`,`inverter1_qty`,`inverter2`,`inverter2_qty`,`inverter3`,`inverter3_qty`,`battery`,`battery_quantity`,`smart_sensor_name`,`smart_sensor_qty`,`odrift_name`,`odrift_quantity`,`optimizer_name`,`optimizer_quantity`,`battery_size`,`inverter1_effect`,`inverter2_effect`,`inverter3_effect`,`enskild_firma`,`company_name`,`org_number`,`grid_provider_template`,`grid_template`,`grid_provider_name`,(SELECT `ae_leads`.`roofing_material` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `roofing_mat`,(SELECT `ae_leads`.`color` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `color`,(SELECT `ae_leads`.`installation_days` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `days_install`,(SELECT `ae_leads`.`panel_area_dimension` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `dimension`,(SELECT `ae_leads`.`reference` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `ref_name`,(SELECT `ae_leads`.`ref_phone` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `refPhone`,(SELECT `ae_leads`.`ref_email` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `refEmail`,(SELECT `ae_leads`.`annual_electricity_consumption` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `eConsume`,(SELECT `ae_leads`.`annual_production` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `eProduce`,(SELECT `ae_leads`.`self_use_solar` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `eSolar`,(SELECT `ae_leads`.`panels_angles` FROM `ae_leads` WHERE `ae_leads`.`id`=`ae_customer_project`.`lead_id`) AS `eAngle`,(SELECT `ae_uploads`.`file_upload` FROM `ae_uploads` WHERE `ae_uploads`.`lead_id`=`ae_customer_project`.`lead_id` AND `ae_uploads`.`file_type`=2 LIMIT 1 ) AS `ePic` FROM `ae_customer_project` WHERE `id`=$user_id";
+$run_query_single=mysqli_query($connect,$query_single);
+while($row=mysqli_fetch_array($run_query_single))
+{
+    array_push($response,$row);
+}
+
+echo json_encode($response);
+
+?>

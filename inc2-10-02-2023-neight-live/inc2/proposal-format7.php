@@ -130,14 +130,27 @@ $customerPriceArr = $customerPriceQry->fetch_array();
 					</tr>
 				</tbody>
 			</table>
-			
-						<?php
-							$cStepQry = $cms->db_query("select content_page_2 from #_tnc_content where id=1 AND is_deleted=0 ");
-							$cStepRes = $cStepQry->fetch_array();
-							echo $cStepRes['content_page_2'];
-						?>
-
-			
+			<table width="100%" cellpadding="0" cellspacing="3" border="0" id="backgroundTable" st-sortable="bigimage">
+				<tbody>
+					<tr>
+						<td>
+							<table width="100%" align="center" cellspacing="0" cellpadding="2" border="0" class="devicewidth" modulebg="edit" style="background:#fff">
+								<tbody>
+									<tr>
+										<td valign="middle" class="page6-heading">
+											Avbrutna avtal
+										</td>
+									</tr>
+									<tr>
+										<td class="page6-heading-desc">Om kund av någon anledning väljer att avbryta avtalet efter att tiden för ångerrätt (två veckor) har gått ut kommer Arka Energy fakturera 10 000kr som ersättningskostnad. Detta gäller normalstora projekt (3-25kW) som ej har blivit inplanerade för installation. 
+										För större projekt (>25kW) eller projekt som kommit längre fram i installationsfasen kommer debiteringen räknas ut för varje enskilt projekt.</td>
+									</tr>
+								</tbody>					
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<?php if($tnc_title1 && $tnc_content1){?>
 			<table width="100%" cellpadding="0" cellspacing="3" border="0" id="backgroundTable" st-sortable="bigimage">
 				<tbody>
