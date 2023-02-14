@@ -44,6 +44,7 @@ include('adminfunction.inc.php');
 	define('UP_FILES_MEDIA', '938465media271');
 	define('UP_FILES_REPORTS', '938465reports271');
 	define('UP_FILES_GRID_PROVIDERS', '938465grid-provider271');
+	define('UP_FILES_Egenkontroll', '938465egenkontroll271');
 	
 	ini_set('session.gc_maxlifetime', 3600);
 	 

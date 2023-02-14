@@ -35,6 +35,11 @@
 					
 					<li><a href="<?=SITE_PATH_ADM?>contracted-customer" class="waves-effect"><i class="fa fa-group" aria-hidden="true"></i> <span class="hide-menu">Contracted Customer</span></a></li>
 					
+					<?php if($_SESSION["ses_adm_id"]==1)
+						{
+						?>
+						<li><a href="<?=SITE_PATH_ADM?>praposal-t-n-c/?mode=edit&courseId=1" class="waves-effect"><i class="fa fa-th-list"></i> <span class="hide-menu">Proposal T & C</span></a></li>
+						<? } ?>
 				</ul>
 			</li>
 			
