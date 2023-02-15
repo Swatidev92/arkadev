@@ -178,7 +178,7 @@
 					/*$invoice_Arr = array("report_no"=>$uids);
 					$name  = generateReport($invoice_Arr);*/
 
-		
+			/*
 					$customerQry = $cms->db_query("SELECT customer_name, quotation_number FROM #_leads where id=".$_POST['cust_id']." AND status=4 and is_deleted=0 ");
 					$customerArr = $customerQry->fetch_array();
 					$project_customer = $customerArr['customer_name'];
