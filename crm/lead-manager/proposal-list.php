@@ -324,6 +324,9 @@ if($proposalQry->num_rows==0){
 		if($arrRoof['roofing_material'] == null || $arrRoof['roofing_material'] == ''){ $b=1; break; }
 		if($arrRoof['roof_support'] == null || $arrRoof['roof_support'] == ''){ $c=1; break; }
 		if($arrRoof['roof_angle'] == null ||  $arrRoof['roof_angle'] == '' || $arrRoof['roof_angle'] == 0){ $d=1; break; }
+		if($arrRoof['roof_length'] == null ||  $arrRoof['roof_length'] == '' || $arrRoof['roof_length'] == 0){ $e=1; break; }
+		if($arrRoof['roof_height'] == null ||  $arrRoof['roof_height'] == '' ){ $f=1; break; }
+		if($arrRoof['roof_breath'] == null ||  $arrRoof['roof_breath'] == '' ){ $g=1; break; }
 	}}else{
 		$a = 1;
 	}
@@ -458,7 +461,7 @@ if($proposalQry->num_rows==0){
 									}
 									
 									if($propId == "no"){ 
-										if($a==1 || $b==1 || $c==1 || $d==1 ){
+										if($a==1 || $b==1 || $c==1 || $d==1 || $e==1 || $f==1|| $g==1  ){
 										?>
 									<a href="#" title="Generate Proposal" onclick="alert('Complete Roof Details')">
 										<i class="fa fa-download" aria-hidden="true"></i>

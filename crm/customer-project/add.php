@@ -448,8 +448,10 @@ if($cms->is_post_back()){
                     $roofDetails['roofing_material'] = $_POST['roofing_material'][$i];
                     $roofDetails['roof_support'] = $_POST['roof_support'][$i];
                     if($_POST['roof_angle'][$i] == 0){ $roofDetails['roof_angle'] = '';}else{
-					$roofDetails['roof_angle'] = $_POST['roof_angle'][$i];}
-                    $roofDetails['lead_id'] = $_POST['lead_id'];
+					$roofDetails['roof_angle'] = $_POST['roof_angle'][$i];}$roofDetails['roof_breath'] =$_POST['roof_breath'][$i];
+					$roofDetails['roof_length'] =$_POST['roof_length'][$i];
+					$roofDetails['roof_height'] = $_POST['roof_height'][$i];	
+					$roofDetails['lead_id'] = $_POST['lead_id'];
                     $roofDetails['form_type'] = 'customer';
                     $roofDetails['status'] = 0;
                     if(empty($_POST['rec_id'][$i]))
@@ -478,7 +480,9 @@ if($cms->is_post_back()){
 				$roofDetails['roofing_material'] = $_POST['roofing_material'];
 				$roofDetails['roof_support'] = $_POST['roof_support'];
 				$roofDetails['roof_angle'] = $_POST['roof_angle'];
-				$roofDetails['lead_id'] = $_POST['lead_id'];;
+				$roofDetails['roof_breath'] =$_POST['roof_breath'];
+				$roofDetails['roof_length'] =$_POST['roof_length'];
+				$roofDetails['roof_height'] = $_POST['roof_height'];$roofDetails['lead_id'] = $_POST['lead_id'];;
 				$roofDetails['form_type'] = 'customer';
 				$roofDetails['status'] = 0;
 				if(empty($_POST['rec_id'][$i]))
@@ -1977,7 +1981,7 @@ $leadsArr = $leadsQry->fetch_array();
                                 <label for="total-pannel" class="control-label">Total Panel</label>
                                 <input type="number" class="form-control" name="total_panel[<?=$i?>]" id="total_panel[<?=$i?>]" value="<?=$total_panel?>" min="1">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-1">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
                                 <select class="form-control" id="roofing_material[<?=$i?>]" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
                                     <option value="">Select Roof type</option>
@@ -1996,6 +2000,7 @@ $leadsArr = $leadsQry->fetch_array();
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
+																					
                                 <label for="roof-support" class="control-label">Roof Support</label><br>
                                 <select class="form-control" id="roof_support[<?=$i?>]" name="roof_support[<?=$i?>]">
                                     <option value="">Select Roof Support</option>
@@ -2003,9 +2008,21 @@ $leadsArr = $leadsQry->fetch_array();
                                         <option value="2" <?php if($roof_support == 2){ echo 'Selected';}?>>No Råspont</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label for="roof_angle" class="control-label">Roof Angle</label>
                                 <input type="number" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" value="<?= $roof_angle ?>" <?= $readonly_field ?> min="1">
+                            </div>
+							<div class="form-group col-md-2">
+                                <label for="roof_height" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
+                            </div>
+							<div class="form-group col-md-1">
+                                <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_length[<?=$i?>]" id="roof_length<?=$i?>" value="<?= $roof_length ?>" <?= $readonly_field ?>>
+                            </div>
+							<div class="form-group col-md-1">
+                                <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_breath[<?=$i?>]" id="roof_breath<?=$i?>" value="<?= $roof_breath ?>" <?= $readonly_field ?>>
                             </div>
                             <input type="hidden" name="rec_id[<?=$i?>]" value="<?= $id ?>">
                             
@@ -2021,11 +2038,11 @@ $leadsArr = $leadsQry->fetch_array();
 
                         <!-- S:create new -->
                         <div class="row" id="btrow<?=$i?>">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label for="total-pannel" class="control-label">Total Panel</label>
                                 <input type="number" class="form-control" name="total_panel[<?=$i?>]" id="total_panel[<?=$i?>]">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
                                 <select class="form-control" id="roofing_material[<?=$i?>]" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
                                     <option value="">Select Roof type</option>
@@ -2043,7 +2060,7 @@ $leadsArr = $leadsQry->fetch_array();
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="roof-support" class="control-label">Roof Support</label><br>
                                 <select class="form-control" id="roof_support[<?=$i?>]" name="roof_support[<?=$i?>]">
                                     <option value="">Select Roof Support</option>
@@ -2051,12 +2068,22 @@ $leadsArr = $leadsQry->fetch_array();
                                         <option value="2">No Råspont</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-1">
                                 <label for="roof_angle" class="control-label">Roof Angle</label>
-                                <input type="text" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" <?= $readonly_field ?>>
-                            </div> 
-                        </div>
-                                    
+                                <input type="number" min="1" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" <?= $readonly_field ?>>
+                            </div>
+							<div class="form-group col-md-2">
+                                <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
+							</div>
+							<div class="form-group col-md-1">
+                                <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_length[<?=$i?>]" id="roof_length<?=$i?>" <?= $readonly_field ?>>
+                            </div>
+							<div class="form-group col-md-1">
+                                <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
+                                <input type="text" class="form-control" name="roof_breath[<?=$i?>]" id="roof_breath<?=$i?>" <?= $readonly_field ?>>
+                            </div>
                         <!-- E:create new -->
                         <?php } ?>
                     </div>
@@ -3042,7 +3069,7 @@ function revrcrd(rid){
 	    //Check maximum number of input fields
 	    if(x5 < list_maxField){ 
 	        x5++; //Increment field counter
-	        var list_fieldHTML = '<div class="row"><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="total-panel" class="control-label">Total Panel</label> <input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"> </div><div class="form-group col-md-4 col-sm-4 col-xs-6"> <label for="roofing_material" class="control-label">Roof Type</label> <select class="form-control" id="roofing_material['+x5+']" name="roofing_material['+x5+']" <?=$readonly_field ?>> <option value="">Select Roof type</option> <?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true); foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?> </select> </div><div class="form-group col-md-3 col-sm-4 col-xs-6"> <label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"> <label for="roof_angle" class="control-label">Roof Angle</label> <input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" value="" > </div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger ">-</a></div></div>'; //New input field html 
+	        var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true);foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){ if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" ></div><div class="form-group col-md-2"><label for="roof_length" class="control-label">Roof Height</label><input type="text" class="form-control" name="roof_height['+x5+']" id="roof_height['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Breath</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
 	        $('.list_wrapper5').append(list_fieldHTML); //Add field html
             //var total_rec= $("#total_rec").val();
             var total_rec = parseInt($("#total_rec").val());
