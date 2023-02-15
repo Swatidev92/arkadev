@@ -26,6 +26,8 @@
 					$ActionPOSTS["activity_for"] = $_POST['project_manager'];
 					$cms->sqlquery("rs","lead_tracker",$ActionPOSTS);
 					
+					
+			/*		
 					$_POST['project_date'] = date("Y-m-d");
 					$_POST['status'] = 1; //project created
 					$_POST['project_manager_id'] = $_POST['project_manager'];
@@ -184,7 +186,7 @@
 					//print_r($data_Arr);die;
 					$ReportArr['project_report_name'] = generateReport($data_Arr);
 					$cms->sqlquery("rs","customer_project",$ReportArr,'id',$proj_id);
-					
+				*/
 					
 					//insert steps for projects
 					/*if($proj_id){
