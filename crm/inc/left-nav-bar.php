@@ -39,7 +39,7 @@
 						{
 						?>
 						<li><a href="<?=SITE_PATH_ADM?>praposal-t-n-c/?mode=edit&courseId=1" class="waves-effect"><i class="fa fa-th-list"></i> <span class="hide-menu">Proposal T & C</span></a></li>
-						<? } ?>
+						<?php } ?>
 				</ul>
 			</li>
 			
