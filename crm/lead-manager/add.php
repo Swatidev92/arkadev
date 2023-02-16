@@ -746,7 +746,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
 			?>
 			<div class="form-group col-sm-4 show-reason" style="<?=$rstyle?>">
 				<label for="title" class="control-label">Select Reason*</label>
-				<select class="form-control-new select2" name="selected_reasons[]" multiple required <?=$readonly_field?>>
+				<select class="form-control-new select2" name="selected_reasons[]" id="select1" onChange="select()"  multiple required <?=$readonly_field?>>
 					<?php $reasonsArr = $cms->getSingleResult("SELECT reasons FROM #_lead_type_status where id=5 and lead_type=1 ");
 					$obj = json_decode($reasonsArr);
 					if(count($obj)>0){
@@ -758,12 +758,19 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
 							}else{
 								$rsel = '';
 							}
+							if(in_array("Others",$selected_reasonsArr)){
 					?>
 					<option value="<?=$val->name?>" <?=$rsel?>><?=$val->name?></option>
 					<?php } } } ?>
 				</select>
 				<div class="help-block with-errors"></div>
 			</div>
+				 <!-- mk-19 -->
+			<div class="form-group col-sm-4" id="others" style="<?php if($cls == 'Others' ){echo 'display:block;';}else{ echo 'display:none;';}?>">
+				<label for="others" class="control-label" >Others</label><br>
+				<textarea class="form-control" cols="30" rows="2" name="faculty" placeholder="Your resaon here." <?=$readonly_field?>><?=$faculty?></textarea>
+			</div>
+			<!-- mk19 -->
 			<div class="clearfix"></div>
 			
 			<div class="form-group col-sm-4">
@@ -1153,6 +1160,27 @@ $("#leadstatus").change(function(){
 	}
 });
 </script>
+<!-- s:show-box -->
+<script>
+	// $(document).ready(function() {
+	// 	$("#others").hide();
+	// });
+	function select(){
+		var sel = document.getElementById("select1");
+		var text= sel.options[sel.selectedIndex].text;
+		if(text == 'Others'){
+			console.log(text);
+			$("#others").show();
+			// $("#show-dimensioning-priority").show();
+		}else{
+			$("#others").hide();
+			//$("#show-dimensioning-priority").hide();
+	
+		}
+		//var boxValue = $(this).val();
+	}
+</script>
+<!-- e:show-box -->
 <script>
 $("#leadstatus").change(function(){
 	var lstatus = $(this).val();
