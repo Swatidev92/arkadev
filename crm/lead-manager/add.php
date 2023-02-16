@@ -1009,7 +1009,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                             </div>
 							<div class="form-group col-md-2">
                                 <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
-                                <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
+                                <input type="text" class="form-control" name="roof_height[<?=$j?>]" id="roof_height<?=$j?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
                                 <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>
@@ -1068,7 +1068,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                             </div>
 							<div class="form-group col-md-2">
                                 <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
-                                <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
+                                <input type="text" class="form-control" name="roof_height[<?=$j?>]" id="roof_height<?=$j?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
                                 <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>

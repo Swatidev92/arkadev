@@ -1093,15 +1093,15 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                                 <input type="text" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" value="<?= $roof_angle ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-2">
-                                <label for="roof_length" class="control-label">Roof Height</label>
+                                <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
-                                <label for="roof_length" class="control-label">Length</label>
+                                <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_length[<?=$i?>]" id="roof_length<?=$i?>" value="<?= $roof_length ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
-                                <label for="roof_breath" class="control-label">Breath</label>
+                                <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_breath[<?=$i?>]" id="roof_breath<?=$i?>" value="<?= $roof_breath ?>" <?= $readonly_field ?>>
                             </div>
                             <input type="hidden" name="rec_id[<?=$i?>]" value="<?= $id ?>">
@@ -1155,15 +1155,15 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                                 <input type="text" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" <?= $readonly_field ?>>
 							</div>
 							<div class="form-group col-md-2">
-                                <label for="roof_length" class="control-label">Roof Height</label>
+                                <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_height[<?=$i?>]" id="roof_height<?=$i?>" value="<?= $roof_height ?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
-                                <label for="roof_length" class="control-label">Length</label>
+                                <label for="roof_length" class="control-label">Length<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_length[<?=$i?>]" id="roof_length<?=$i?>" <?= $readonly_field ?>>
                             </div>
 							<div class="form-group col-md-1">
-                                <label for="roof_breath" class="control-label">Breath</label>
+                                <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_breath[<?=$i?>]" id="roof_breath<?=$i?>" <?= $readonly_field ?>>
                             </div>
                         </div>
