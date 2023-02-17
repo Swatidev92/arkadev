@@ -441,7 +441,7 @@ if($proposalQry->num_rows==0){
 								<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$proposal_txt?>" title="Download TXT" download><i class="fa fa-file"></i></a>&nbsp;&nbsp;
 								<?php } ?>
 								<?php if($status!=4){?>								
-								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=proposal-list&id=<?=$pid?>&propId=<?=$propid?>&action=del" onclick="return confirm('Do you want delete this record?');" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i></a>
+								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=proposal-list&id=<?=$pid?>&propId=<?=$propid?>&action=del" onclick="return confirm('Please remember that unsigning of contract will delete the project created for this contract. Do you still want to delete ?');" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i></a>
 								<?php 
 								 ?>
 								<br>
