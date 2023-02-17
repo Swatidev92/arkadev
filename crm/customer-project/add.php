@@ -3273,12 +3273,13 @@ $("#aforms").on("submit",function(e){
 	function dongle1(){
 		$('#dongle1_hide').hide();
 		$('#dongle1_edit').hide();
-		$('#dongle1_show').append('<select class="form-control select2" id="dongle1" name="dongle1_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle1[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle1_e[0][qty]" value="<?=$dongle1[0]['qty']?>">');		  
+		$('#dongle1_show').append('<select class="form-control select2" id="dongle1" name="dongle1_e[0][dongle_model]"><option value="">Select Dongle Type</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle1[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle1_e[0][qty]" value="<?=$dongle1[0]['qty']?>">');		  
 	}
 	function dongle1_qty(){
 		$('#dongle1_qty_hide').hide();
 		$('#dongle1_qty_edit').hide();
 		$('#dongle1_qty_show').append('<input type="hidden" name="dongle1_e[0][dongle_model]" value="<?=$dongle1[0]['dongle_model']?>"><input type="number" name="dongle1_e[0][qty]" class="form-control" value="<?=$dongle1[0]['qty']?>"/>');
+	}
 	function inverter2(){
 		$('#inverter2_hide').hide();
 		$('#inverter2_edit').hide();
@@ -3293,7 +3294,7 @@ $("#aforms").on("submit",function(e){
 	function dongle2(){
 		$('#dongle2_hide').hide();
 		$('#dongle2_edit').hide();
-		$('#dongle2_show').append('<select class="form-control select2" id="dongle2" name="dongle2_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle2[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle2_e[0][qty]" value="<?=$dongle2[0]['qty']?>">');
+		$('#dongle2_show').append('<select class="form-control select2" id="dongle2" name="dongle2_e[0][dongle_model]"><option value="">Select Dongle Type</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle2[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle2_e[0][qty]" value="<?=$dongle2[0]['qty']?>">');
 	}
 	function dongle2_qty(){
 		$('#dongle2_qty_hide').hide();
@@ -3309,11 +3310,12 @@ $("#aforms").on("submit",function(e){
 		$('#inverter3_qty_hide').hide();
 		$('#inverter3_qty_edit').hide();
 		$('#inverter3_qty_show').append('<input type="number" name="inverter3_qty3" class="form-control" value="<?=$customerProjectArr['inverter3_qty']?>"/>');
-  // dongle edit:
+	}
+		// dongle edit:
 	function dongle3(){
 		$('#dongle3_hide').hide();
 		$('#dongle3_edit').hide();
-		$('#dongle3_show').append('<select class="form-control select2" id="dongle3" name="dongle3_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle3[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle3_e[0][qty]" value="<?=$dongle3[0]['qty']?>">');
+		$('#dongle3_show').append('<select class="form-control select2" id="dongle3" name="dongle3_e[0][dongle_model]"><option value="">Select Dongle Type</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle3[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle3_e[0][qty]" value="<?=$dongle3[0]['qty']?>">');
 	}
 	function dongle3_qty(){
 		$('#dongle3_qty_hide').hide();
