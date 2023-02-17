@@ -1,5 +1,6 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
-<?php 
+<?php //error_reporting(E_ALL);
+
 $pid = $_GET["id"];
 $roof_details_count = 0;
 
@@ -310,7 +311,7 @@ if($cms->is_post_back()){
 		$resReturn = sendEmail($to, $subject,$email_msg);
 		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=communication&id='.$uids, true);
 	}
-// E:Send-mail mk-19
+	// E:Send-mail mk-19
 					
 	if(isset($_POST['upload_files'])){
 		$PROJECTARR['lead_id'] = $cms->getSingleResult("SELECT lead_id FROM #_leads WHERE id=".$_POST['cust_id']." ");
@@ -482,7 +483,8 @@ if($cms->is_post_back()){
 				$roofDetails['roof_angle'] = $_POST['roof_angle'];
 				$roofDetails['roof_breath'] =$_POST['roof_breath'];
 				$roofDetails['roof_length'] =$_POST['roof_length'];
-				$roofDetails['roof_height'] = $_POST['roof_height'];$roofDetails['lead_id'] = $_POST['lead_id'];;
+				$roofDetails['roof_height'] = $_POST['roof_height'];
+				$roofDetails['lead_id'] = $_POST['lead_id'];
 				$roofDetails['form_type'] = 'customer';
 				$roofDetails['status'] = 0;
 				if(empty($_POST['rec_id'][$i]))
@@ -604,7 +606,7 @@ if($cms->is_post_back()){
 			$_POST['dongle1_e'][0];
 			// print_r($_POST['dongle1_e'][0]);
 			$inventory['inverter1_dongle']= json_encode($_POST["dongle1_e"]); 
-			// die;
+			}
 		if($_POST['inverter2_e']!=""){ $inventory['inverter2']= $_POST['inverter2_e']; } 
 		if($_POST['inverter2_qty2']!=""){ $inventory['inverter2_qty']= $_POST['inverter2_qty2']; } //2
 			if($_POST['dongle2_e']!=""){ 
@@ -612,6 +614,7 @@ if($cms->is_post_back()){
 			// print_r($_POST['dongle1_e'][0]);
 			$inventory['inverter2_dongle']= json_encode($_POST["dongle2_e"]); 
 			// die;
+			}
 		if($_POST['inverter3_e']!=""){ $inventory['inverter3']= $_POST['inverter3_e']; } 
 		if($_POST['inverter3_qty3']!=""){ $inventory['inverter3_qty']= $_POST['inverter3_qty3']; } //3
 			if($_POST['dongle3_e']!=""){ 
@@ -620,11 +623,8 @@ if($cms->is_post_back()){
 			$inventory['inverter3_dongle']= json_encode($_POST["dongle3_e"]); 
 			// die;
 		} 				   
-						  
-									  
-																	 
-		  
-	
+		
+
 		if($_POST['battery1']!=""){ $inventory['battery']= $_POST['battery1']; } 
 		if($_POST['battery_qty']!=""){ $inventory['battery_quantity']= $_POST['battery_qty']; } 
 		if($_POST['smart_sensor_name1']!=""){ $inventory['smart_sensor_name']= $_POST['smart_sensor_name1']; } 
@@ -781,12 +781,12 @@ $leadsArr = $leadsQry->fetch_array();
 		border: 2px solid #03a9f3;
 	}
 
-.arrow-steps .step.progress_st {
+	.arrow-steps .step.progress_st {
 	color: #fff !important;
 	background-color: #f38232;
 	font-weight:600;
-}
-.arrow-steps .step.progress_st:after {
+	}
+	.arrow-steps .step.progress_st:after {
     content: " ";
     position: absolute;
     top: 0;
@@ -798,7 +798,7 @@ $leadsArr = $leadsQry->fetch_array();
     border-left: 17px solid #f38232;
     z-index: 2;
     transition: border-color 0.2s ease;
-}
+	}
 </style>
 
 <!-- .row -->
@@ -1998,11 +1998,11 @@ $leadsArr = $leadsQry->fetch_array();
                             <div class="form-group col-md-12">
                                 <h3>Roof Details:&nbsp;<?= $i+1;?></h3>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label for="total-pannel" class="control-label">Total Panel</label>
                                 <input type="number" class="form-control" name="total_panel[<?=$i?>]" id="total_panel[<?=$i?>]" value="<?=$total_panel?>" min="1">
                             </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-3">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
                                 <select class="form-control" id="roofing_material[<?=$i?>]" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
                                     <option value="">Select Roof type</option>
@@ -2020,7 +2020,7 @@ $leadsArr = $leadsQry->fetch_array();
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
 																					
                                 <label for="roof-support" class="control-label">Roof Support</label><br>
                                 <select class="form-control" id="roof_support[<?=$i?>]" name="roof_support[<?=$i?>]">
@@ -2474,7 +2474,7 @@ $leadsArr = $leadsQry->fetch_array();
 									<a class="pull-right" id="dongle1_qty_edit" onclick="dongle1_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 							</tr>
-							<?php } }if($customerProjectArr['inverter2']!="" || $customerProjectArr['inverter2']!=null ) {?>
+							<?php } } }if($customerProjectArr['inverter2']!="" || $customerProjectArr['inverter2']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 							 	<td>Inverter 2</td>
