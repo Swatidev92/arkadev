@@ -10,6 +10,8 @@ $arrAdmin = $rsAdmin->fetch_array();
 $customerPriceQry = $cms->db_query("SELECT * FROM #_customer_price where id=1 ");
 $customerPriceArr = $customerPriceQry->fetch_array();
 
+$obj_inverter = json_decode($customerPriceArr['inverter_types'],true);
+
 ?>
 
 <html>
@@ -221,7 +223,18 @@ $customerPriceArr = $customerPriceQry->fetch_array();
 										<td style="text-align:left; font-size:14px;">Växelriktare: <?=$inverter_brand?> (eller en motsvarig)</td>
 										<td style="text-align:center; font-size:14px;"><?=$inverter_type1_qty?></td>
 										<td style="text-align:center; font-size:14px;">st</td>
-									</tr>
+									</tr><?php 
+										foreach ($obj_inverter as $ikey => $ivalue) {
+											if($ivalue["name"] == $inverter_type){
+												if($ivalue["dongle_model"]!="dongle_include"){
+									?>				
+									<tr>
+										<td style="text-align:left;font-size:12px;">Wifi Dongle: <?=$ivalue["dongle_model"]?></td>
+										<td style="text-align:center;font-size:12px;"><?=$inverter_type1_qty?></td>
+										<td style="text-align:center;font-size:12px;">st</td>		
+									</tr>					
+									<?php 
+											} } } ?>
 									<?php } ?>
 									<?php if($sensor_type_name){?>
 									<tr>

@@ -477,6 +477,9 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 									}else{
 										$invsel = '';
 									}
+								  if($ivalue["dongle"]==1){
+									  $dongle='(dongle included)';	
+									  }else{ $dongle=' '; }
 									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
 								} }
 								?>
@@ -506,9 +509,10 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 									if($ivalue["invstatus"]){
 									if($inverter_type2==$ivalue["name"] && ($leadid!='' && $pid!='')){
 										$invsel = 'selected';
-									}else{
-										$invsel = '';
-									}
+									}else{ $invsel = ''; }
+									if($ivalue["dongle"]==1){
+										$dongle='(dongle included)';	
+									  }else{ $dongle=''; }
 									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
 								} }
 								?>
@@ -541,6 +545,8 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 									}else{
 										$invsel = '';
 									}
+								  if($ivalue["dongle"]==1){
+								  $dongle='(dongle included)'; }else { $dongle='';}
 									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
 								} }
 								?>
@@ -568,7 +574,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 								<?php $installationArray = json_decode($customerPriceArr["installation_charges"], true);
 								
 								foreach ($installationArray as $ikey => $invalue) {
-									$installationJsonArray[$ikey] = floatval(str_replace(',', '.', $invalue[day]));
+									$installationJsonArray[$ikey] = floatval(str_replace(',', '.', $invalue['day']));
 								}
 								asort($installationJsonArray);
 								foreach ($installationJsonArray as $daykey => $dayVal) {
@@ -1152,7 +1158,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                             </div>
                             <div class="form-group col-md-1">
                                 <label for="roof_angle" class="control-label">Roof Angle</label>
-                                <input type="text" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" <?= $readonly_field ?>>
+                                <input type="number" min="1" class="form-control" name="roof_angle[<?=$i?>]" id="roof_angle<?=$i?>" <?= $readonly_field ?>>
 							</div>
 							<div class="form-group col-md-2">
                                 <label for="roof_length" class="control-label">Roof Height<span style="font-size:9px;">[in m]</span></label>

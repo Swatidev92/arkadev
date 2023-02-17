@@ -600,10 +600,31 @@ if($cms->is_post_back()){
 		if($_POST['panel_count1']!=""){ $inventory['panel_count']= $_POST['panel_count1']; }
 		if($_POST['inverter1_e']!=""){ $inventory['inverter1']= $_POST['inverter1_e']; }
 		if($_POST['inverter1_qty1']!=""){ $inventory['inverter1_qty']= $_POST['inverter1_qty1']; }//1 
+		if($_POST['dongle1_e']!=""){ 
+			$_POST['dongle1_e'][0];
+			// print_r($_POST['dongle1_e'][0]);
+			$inventory['inverter1_dongle']= json_encode($_POST["dongle1_e"]); 
+			// die;
 		if($_POST['inverter2_e']!=""){ $inventory['inverter2']= $_POST['inverter2_e']; } 
 		if($_POST['inverter2_qty2']!=""){ $inventory['inverter2_qty']= $_POST['inverter2_qty2']; } //2
+			if($_POST['dongle2_e']!=""){ 
+			$_POST['dongle2_e'][0];
+			// print_r($_POST['dongle1_e'][0]);
+			$inventory['inverter2_dongle']= json_encode($_POST["dongle2_e"]); 
+			// die;
 		if($_POST['inverter3_e']!=""){ $inventory['inverter3']= $_POST['inverter3_e']; } 
 		if($_POST['inverter3_qty3']!=""){ $inventory['inverter3_qty']= $_POST['inverter3_qty3']; } //3
+			if($_POST['dongle3_e']!=""){ 
+			$_POST['dongle3_e'][0];
+			// print_r($_POST['dongle3_e'][0]);
+			$inventory['inverter3_dongle']= json_encode($_POST["dongle3_e"]); 
+			// die;
+		} 				   
+						  
+									  
+																	 
+		  
+	
 		if($_POST['battery1']!=""){ $inventory['battery']= $_POST['battery1']; } 
 		if($_POST['battery_qty']!=""){ $inventory['battery_quantity']= $_POST['battery_qty']; } 
 		if($_POST['smart_sensor_name1']!=""){ $inventory['smart_sensor_name']= $_POST['smart_sensor_name1']; } 
@@ -2437,10 +2458,26 @@ $leadsArr = $leadsQry->fetch_array();
 									<a class="pull-right" id="inverter1_qty_edit" onclick="inverter1_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 							</tr>
-							<?php }if($customerProjectArr['inverter2']!="" || $customerProjectArr['inverter2']!=null ) {?>
+							<?php  $dongle1 = json_decode($customerProjectArr['inverter1_dongle'],true); 
+								if($customerProjectArr['inverter1_dongle']!=null){ if($dongle1[0]['dongle_model']!='dongle_include'){
+									// print_r($dongle1);die;
+							?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
-								<td>Inverter 2</td>
+								<td>Wifi Dongle 1</td>
+								<td id="dongle1_show">
+									<span id="dongle1_hide"><?=$dongle1[0]["dongle_model"]?></span>
+									<a class="pull-right" id="dongle1_edit" onclick="dongle1()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="dongle1_qty_show">
+									<span id="dongle1_qty_hide"><?=$dongle1[0]['qty']?></span>
+									<a class="pull-right" id="dongle1_qty_edit" onclick="dongle1_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+							</tr>
+							<?php } }if($customerProjectArr['inverter2']!="" || $customerProjectArr['inverter2']!=null ) {?>
+							<tr>
+								<td><?php $i=$i+1; echo $i;?></td>
+							 	<td>Inverter 2</td>
 								<td id="inverter2_show">
 									<span id="inverter2_hide"><?=$customerProjectArr['inverter2']?></span>
 									<a class="pull-right" id="inverter2_edit" onclick="inverter2()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -2450,7 +2487,22 @@ $leadsArr = $leadsQry->fetch_array();
 									<a class="pull-right" id="inverter2_qty_edit" onclick="inverter2_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 							</tr>
-							<?php }if($customerProjectArr['inverter3']!="" || $customerProjectArr['inverter3']!=null ) {?>
+							<?php  $dongle2 = json_decode($customerProjectArr['inverter2_dongle'],true); 
+								if($dongle2[0]['dongle_model']!='dongle_include'){
+							?>
+							<tr>
+								<td><?php $i=$i+1; echo $i;?></td>
+								<td>Wifi Dongle 2</td>
+								<td id="dongle2_show">
+									<span id="dongle2_hide"><?=$dongle2[0]["dongle_model"]?></span>
+									<a class="pull-right" id="dongle2_edit" onclick="dongle2()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="dongle2_qty_show">
+									<span id="dongle2_qty_hide"><?=$dongle2[0]['qty']?></span>
+									<a class="pull-right" id="dongle2_qty_edit" onclick="dongle2_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+							</tr>
+							<?php } }if($customerProjectArr['inverter3']!="" || $customerProjectArr['inverter3']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 3</td>
@@ -2463,7 +2515,22 @@ $leadsArr = $leadsQry->fetch_array();
 									<a class="pull-right" id="inverter3_qty_edit" onclick="inverter3_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 							</tr>
-							<?php } if($customerProjectArr['battery']!="" || $customerProjectArr['battery']!=null ) {?>
+							<?php  $dongle3 = json_decode($customerProjectArr['inverter3_dongle'],true); 
+								if($dongle3[0]['dongle_model']!='dongle_include'){
+							?>
+							<tr>
+								<td><?php $i=$i+1; echo $i;?></td>
+								<td>Wifi Dongle 3</td>
+								<td id="dongle3_show">
+									<span id="dongle3_hide"><?=$dongle3[0]['dongle_model']?></span>
+									<a class="pull-right" id="dongle3_edit" onclick="dongle3()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+								<td id="dongle3_qty_show">
+									<span id="dongle3_qty_hide"><?=$dongle3[0]['qty']?></span>
+									<a class="pull-right" id="dongle3_qty_edit" onclick="dongle3_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								</td>
+							</tr>
+							<?php } } if($customerProjectArr['battery']!="" || $customerProjectArr['battery']!=null ) {?>
 							<tr>
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Battery</td>
@@ -3180,7 +3247,7 @@ $("#aforms").on("submit",function(e){
 	function ev_quan(){
 		$('#ev_quan1').hide();
 		$('#ev_quan_edit').hide();
-		$('#ev_quan_num').append('<input name="ev_quan1" class="form-control" value="<?=$customerProjectArr['ev_quantity']?>"/>');
+		$('#ev_quan_num').append('<input type="number" name="ev_quan1" class="form-control" value="<?=$customerProjectArr['ev_quantity']?>"/>');
 	}
 	function panel_nam(){
 		$('#panel_nam1').hide();
@@ -3190,7 +3257,7 @@ $("#aforms").on("submit",function(e){
 	function panel_count(){
 		$('#panel_count1').hide();
 		$('#panel_count_edit').hide();
-		$('#panel_count_show').append('<input name="panel_count1" class="form-control" value="<?=$leadsArr['panel_count']?>"/>');
+		$('#panel_count_show').append('<input type="number" name="panel_count1" class="form-control" value="<?=$leadsArr['panel_count']?>"/>');
 	}
 	function inverter1(){
 		$('#inverter1_hide').hide();
@@ -3200,8 +3267,18 @@ $("#aforms").on("submit",function(e){
 	function inverter1_qty(){
 		$('#inverter1_qty_hide').hide();
 		$('#inverter1_qty_edit').hide();
-		$('#inverter1_qty_show').append('<input name="inverter1_qty1" class="form-control" value="<?=$customerProjectArr['inverter1_qty']?>"/>');
+		$('#inverter1_qty_show').append('<input type="number" name="inverter1_qty1" class="form-control" value="<?=$customerProjectArr['inverter1_qty']?>"/>');
+  }
+	// dongle edit:
+	function dongle1(){
+		$('#dongle1_hide').hide();
+		$('#dongle1_edit').hide();
+		$('#dongle1_show').append('<select class="form-control select2" id="dongle1" name="dongle1_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle1[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle1_e[0][qty]" value="<?=$dongle1[0]['qty']?>">');		  
 	}
+	function dongle1_qty(){
+		$('#dongle1_qty_hide').hide();
+		$('#dongle1_qty_edit').hide();
+		$('#dongle1_qty_show').append('<input type="hidden" name="dongle1_e[0][dongle_model]" value="<?=$dongle1[0]['dongle_model']?>"><input type="number" name="dongle1_e[0][qty]" class="form-control" value="<?=$dongle1[0]['qty']?>"/>');
 	function inverter2(){
 		$('#inverter2_hide').hide();
 		$('#inverter2_edit').hide();
@@ -3210,7 +3287,18 @@ $("#aforms").on("submit",function(e){
 	function inverter2_qty(){
 		$('#inverter2_qty_hide').hide();
 		$('#inverter2_qty_edit').hide();
-		$('#inverter2_qty_show').append('<input name="inverter2_qty2" class="form-control" value="<?=$customerProjectArr['inverter2_qty']?>"/>');
+		$('#inverter2_qty_show').append('<input type="number" name="inverter2_qty2" class="form-control" value="<?=$customerProjectArr['inverter2_qty']?>"/>');
+  }
+	// dongle edit:
+	function dongle2(){
+		$('#dongle2_hide').hide();
+		$('#dongle2_edit').hide();
+		$('#dongle2_show').append('<select class="form-control select2" id="dongle2" name="dongle2_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle2[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle2_e[0][qty]" value="<?=$dongle2[0]['qty']?>">');
+	}
+	function dongle2_qty(){
+		$('#dongle2_qty_hide').hide();
+		$('#dongle2_qty_edit').hide();
+		$('#dongle2_qty_show').append('<input type="hidden" name="dongle2_e[0][dongle_model]" value="<?=$dongle2[0]['dongle_model']?>"><input type="number" name="dongle2_e[0][qty]" class="form-control" value="<?=$dongle2[0]['qty']?>"/>');
 	}
 	function inverter3(){
 		$('#inverter3_hide').hide();
@@ -3220,7 +3308,17 @@ $("#aforms").on("submit",function(e){
 	function inverter3_qty(){
 		$('#inverter3_qty_hide').hide();
 		$('#inverter3_qty_edit').hide();
-		$('#inverter3_qty_show').append('<input name="inverter3_qty3" class="form-control" value="<?=$customerProjectArr['inverter3_qty']?>"/>');
+		$('#inverter3_qty_show').append('<input type="number" name="inverter3_qty3" class="form-control" value="<?=$customerProjectArr['inverter3_qty']?>"/>');
+  // dongle edit:
+	function dongle3(){
+		$('#dongle3_hide').hide();
+		$('#dongle3_edit').hide();
+		$('#dongle3_show').append('<select class="form-control select2" id="dongle3" name="dongle3_e[0][dongle_model]"><option value="dongle_include">Dongle Included</option><?php $dongleTyeArray = json_decode($customerPriceArr["wifi_dongle"], true); usort($dongleTyeArray, function ($a, $b) {return $a['dongle_model'] <=> $b['dongle_model'];});foreach ($dongleTyeArray as $dkey => $dvalue) {if($dvalue["dongle_status"]){if($dongle3[0]['dongle_model']==$dvalue['dongle_model']){$dsel = 'selected';}else{$dsel = '';}echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_model"].'</option>';} }?></select><input type="hidden" name="dongle3_e[0][qty]" value="<?=$dongle3[0]['qty']?>">');
+	}
+	function dongle3_qty(){
+		$('#dongle3_qty_hide').hide();
+		$('#dongle3_qty_edit').hide();
+		$('#dongle3_qty_show').append('<input type="hidden" name="dongle3_e[0][dongle_model]" value="<?=$dongle3[0]['dongle_model']?>"><input type="number" name="dongle3_e[0][qty]" class="form-control" value="<?=$dongle3[0]['qty']?>"/>');
 	}
 	function battery(){
 		$('#battery_hide').hide();
@@ -3230,7 +3328,7 @@ $("#aforms").on("submit",function(e){
 	function battery_qty(){
 		$('#battery_qty_hide').hide();
 		$('#battery_qty_edit').hide();
-		$('#battery_qty_show').append('<input name="battery_qty" class="form-control" value="<?=$customerProjectArr['battery_quantity']?>"/>');
+		$('#battery_qty_show').append('<input type="number" name="battery_qty" class="form-control" value="<?=$customerProjectArr['battery_quantity']?>"/>');
 	}
 	function smart_senor(){
 		$('#smart_senor_hide').hide();
@@ -3240,7 +3338,7 @@ $("#aforms").on("submit",function(e){
 	function smart_senor_qty(){
 		$('#smart_senor_qty_hide').hide();
 		$('#smart_se_qty_edit').hide();
-		$('#smart_senor_qty_show').append('<input name="smart_senor_qty" class="form-control" value="<?=$customerProjectArr['smart_sensor_qty']?>"/>');
+		$('#smart_senor_qty_show').append('<input type="number" name="smart_senor_qty" class="form-control" value="<?=$customerProjectArr['smart_sensor_qty']?>"/>');
 	}
 	function backup_box(){
 		$('#backup_box_hide').hide();
@@ -3250,7 +3348,7 @@ $("#aforms").on("submit",function(e){
 	function backup_box_qty(){
 		$('#backup_box_qty_hide').hide();
 		$('#backup_box__qty_edit').hide();
-		$('#backup_box_qty_show').append('<input name="backup_box_qty" class="form-control" value="<?=$customerProjectArr['odrift_quantity']?>"/>');
+		$('#backup_box_qty_show').append('<input type="number" name="backup_box_qty" class="form-control" value="<?=$customerProjectArr['odrift_quantity']?>"/>');
 	}
 	function optimizer(){
 		$('#optimizer_hide').hide();
@@ -3260,26 +3358,26 @@ $("#aforms").on("submit",function(e){
 	function optimizer_qty(){
 		$('#optimizer_qty_hide').hide();
 		$('#optimizer_qty_edit').hide();
-		$('#optimizer_qty_show').append('<input name="optimizer_qty" class="form-control" value="<?=$customerProjectArr['optimizer_quantity']?>"/>');
+		$('#optimizer_qty_show').append('<input type="number" name="optimizer_qty" class="form-control" value="<?=$customerProjectArr['optimizer_quantity']?>"/>');
 	}
 	function cable_len_inv(){
 		$('#len_inv_hide').hide();
 		$('#len_inv_edit').hide();
-		$('#len_inv_show').append('<input name="cable_len_inv" class="form-control" value="<?php if($customerProjectArr['cable_len_inv']!="" || $customerProjectArr['cable_len_inv']!=null){echo $customerProjectArr['cable_len_inv']; }else {echo $otherDetailsArr['cable_len_inv'];}?>"/>');
+		$('#len_inv_show').append('<input type="number" name="cable_len_inv" class="form-control" value="<?php if($customerProjectArr['cable_len_inv']!="" || $customerProjectArr['cable_len_inv']!=null){echo $customerProjectArr['cable_len_inv']; }else {echo $otherDetailsArr['cable_len_inv'];}?>"/>');
 	}
 	function cable_len_ev(){
 		$('#len_ev_hide').hide();
 		$('#len_ev_edit').hide();
-		$('#len_ev_show').append('<input name="cable_len_ev" class="form-control" value="<?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo $otherDetailsArr['cable_len_ev'];}?>"/>');
+		$('#len_ev_show').append('<input type="number" name="cable_len_ev" class="form-control" value="<?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo $otherDetailsArr['cable_len_ev'];}?>"/>');
 	}
 	function surg_ac(){
 		$('#surg_ac_hide').hide();
 		$('#surg_ac_edit').hide();
-		$('#surg_ac_show').append('<input name="surg_ac" class="form-control" value="<?php if($customerProjectArr['surge_protc_ac']!="" || $customerProjectArr['surge_protc_ac']!=null){ echo $customerProjectArr['surge_protc_ac']; } else{ echo $otherDetailsArr['surge_protc_ac']; }?>"/>');
+		$('#surg_ac_show').append('<input type="number" name="surg_ac" class="form-control" value="<?php if($customerProjectArr['surge_protc_ac']!="" || $customerProjectArr['surge_protc_ac']!=null){ echo $customerProjectArr['surge_protc_ac']; } else{ echo $otherDetailsArr['surge_protc_ac']; }?>"/>');
 	}
 	function surg_dc(){
 		$('#surg_dc_hide').hide();
 		$('#surg_dc_edit').hide();
-		$('#surg_dc_show').append('<input name="surg_dc" class="form-control" value="<?php if($customerProjectArr['surge_protc_dc']!="" || $customerProjectArr['surge_protc_dc']!=null){ echo $customerProjectArr['surge_protc_dc']; } else{ echo $otherDetailsArr['surge_protc_dc']; }?>"/>');
+		$('#surg_dc_show').append('<input type="number" name="surg_dc" class="form-control" value="<?php if($customerProjectArr['surge_protc_dc']!="" || $customerProjectArr['surge_protc_dc']!=null){ echo $customerProjectArr['surge_protc_dc']; } else{ echo $otherDetailsArr['surge_protc_dc']; }?>"/>');
 	}
 </script>

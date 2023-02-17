@@ -45,6 +45,7 @@ $total_consumption = $_POST['annual_electricity_consumption'];
 	$obj_cable_inv = json_decode($customerPriceArr['cable_inv'],true);
 	$obj_ac_protect = json_decode($customerPriceArr['ac_protect'],true);
 	$obj_dc_protect = json_decode($customerPriceArr['dc_protect'],true);
+	$obj_dongle = json_decode($customerPriceArr['wifi_dongle'],true);
 	
 	$ac_price= $obj_ac_protect[0]['price'];
 	$dc_price= $obj_dc_protect[0]['price'];
@@ -227,7 +228,16 @@ $total_consumption = $_POST['annual_electricity_consumption'];
 		$inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
 		foreach ($inverterTyeArray as $ikey => $ivalue) {
 			if($ivalue["name"] == $_POST['inverter_type']){
-				$_POST['inverter_cost'] = $ivalue["price"];
+				if($ivalue["dongle_model"]!="dongle_include"){
+					foreach($obj_dongle as $dkey=> $dval){
+						if($dval["dongle_status"]==1){
+					if($ivalue["dongle_model"]== $dval["dongle_model"]){
+						$dongle_cost = $dval["dongle_cost"];
+					}}
+						
+				}
+				$_POST['inverter_cost'] = $ivalue["price"]+$dongle_cost; }
+				else{ $_POST['inverter_cost'] = $ivalue["price"]; }					   
 				$_POST['warranty_inverter'] = $ivalue["invwarranty"];
 				$_POST['inverter_brand'] = $ivalue["invbrand"];
 				$_POST['inverter_img1'] = $ivalue["inverter_img"];
@@ -255,7 +265,16 @@ $total_consumption = $_POST['annual_electricity_consumption'];
 		$inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
 		foreach ($inverterTyeArray as $ikey => $ivalue) {
 			if($ivalue["name"] == $_POST['inverter_type2']){
-				$_POST['inverter_cost2'] = $ivalue["price"];
+				if($ivalue["dongle_model"]!="dongle_include"){
+					foreach($obj_dongle as $dkey=> $dval){
+						if($dval["dongle_status"]==1){
+					if($ivalue["dongle_model"]== $dval["dongle_model"]){
+						$dongle_cost = $dval["dongle_cost"];
+					}}
+						
+				}
+				$_POST['inverter_cost2'] = $ivalue["price"]+$dongle_cost; }
+				else{$_POST['inverter_cost2'] = $ivalue["price"];}
 				$_POST['warranty_inverter2'] = $ivalue["invwarranty"];
 				$_POST['inverter_brand2'] = $ivalue["invbrand"];
 				$_POST['inverter_img2'] = $ivalue["inverter_img"];
@@ -287,7 +306,16 @@ $total_consumption = $_POST['annual_electricity_consumption'];
 		$inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
 		foreach ($inverterTyeArray as $ikey => $ivalue) {
 			if($ivalue["name"] == $_POST['inverter_type3']){
-				$_POST['inverter_cost3'] = $ivalue["price"];
+				if($ivalue["dongle_model"]!="dongle_include"){
+					foreach($obj_dongle as $dkey=> $dval){
+						if($dval["dongle_status"]==1){
+					if($ivalue["dongle_model"]== $dval["dongle_model"]){
+						$dongle_cost = $dval["dongle_cost"];
+					}}
+						
+				}
+				$_POST['inverter_cost3'] = $ivalue["price"]+$dongle_cost; }
+				else{$_POST['inverter_cost3'] = $ivalue["price"];}
 				$_POST['warranty_inverter3'] = $ivalue["invwarranty"];
 				$_POST['inverter_brand3'] = $ivalue["invbrand"];
 				$_POST['inverter_img3'] = $ivalue["inverter_img"];

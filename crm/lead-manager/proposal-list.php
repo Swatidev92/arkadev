@@ -319,6 +319,7 @@ if($proposalQry->num_rows==0){
 	$prapsl_with_no_roof = 0;
 	if(mysqli_num_rows($roofFetchDetailsQry)>0){$prapsl_with_no_roof = 1;}else{$prapsl_with_no_roof = 0;}
 	if(mysqli_num_rows($roofFetchDetailsQry)>0){
+		$roofFetchDetailsQry1 = $cms->db_query("SELECT * FROM #_roof_details where lead_id='".$pid."' AND status=0 AND is_deleted=0 ");
 	while($arrRoof =$roofFetchDetailsQry->fetch_array()){
 		if($arrRoof['total_panel'] == null || $arrRoof['total_panel'] == '' || $arrRoof['total_panel'] == 0 ){ $a=1; break;  }
 		if($arrRoof['roofing_material'] == null || $arrRoof['roofing_material'] == ''){ $b=1; break; }
@@ -497,7 +498,7 @@ if($proposalQry->num_rows==0){
 										$disabled = '';
 									}
 								?>
-								<input data-size="small" type="checkbox" onChange="updateStatus('<?=$id?>','<?=$pid?>','<?=$status?>','<?=$old_status?>')" <?=$checked?> class="js-switch"  data-toggle="tooltip" title="Change Status" data-color="#99d683" data-secondary-color="#f96262" <?=$disabled?> />
+								<input data-size="small" type="checkbox" id="checkbox" onChange="updateStatus('<?=$id?>','<?=$pid?>','<?=$status?>','<?=$old_status?>')" <?=$checked?> class="js-switch"  data-toggle="tooltip" title="Change Status" data-color="#99d683" data-secondary-color="#f96262" <?=$disabled?> />
 								<?php }else{?>
 								<?=$leadsStatusArr[$status]?$leadsStatusArr[$status]:'Not signed'?>
 								<?php }	?>
@@ -564,9 +565,12 @@ function searchAction(){
 
 <script type="text/javascript">
 function updateStatus(id,leadid,current_status,old_status){
+			var checked_count=$('#checkbox:checked').length;
+	// action= 0-> insert, 1-> delete:
+		if(checked_count>0){
 	$.ajax({
 		url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus.php",
-		data:"id="+id+"&leadid="+leadid+"&status="+current_status+"&old_status="+old_status,
+		data:"id="+id+"&leadid="+leadid+"&status="+current_status+"&old_status="+old_status+"&action=0",
 		method:"post",
 		beforeSend:function(){
 			$(".admin-ajax-loader").show();
@@ -578,6 +582,27 @@ function updateStatus(id,leadid,current_status,old_status){
 			}
         }
 	})
+}
+	else{
+			if(confirm("Do you want to delete?")){ 
+			$.ajax({
+				url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus.php",
+				data:"id="+id+"&leadid="+leadid+"&status="+current_status+"&old_status="+old_status+"&action=1",
+				method:"post",
+				beforeSend:function(){
+					$(".admin-ajax-loader").show();
+				},
+				success: function(result) {
+						if(result==1){
+							// $(".admin-ajax-loader").hide();
+							location.reload();
+						}
+					}
+			})
+		}else{
+			location.reload();
+		}
+	}
 }
 </script>
   

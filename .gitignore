@@ -1,5 +1,5 @@
 
-lib/tcpdf/
+lib/
 uploaded_files-old/
 
 lib/opin.inc.rs.php
@@ -11,3 +11,8 @@ lib/config.inc.php
 lib/config.inc.php
 lib/opin.inc.mk.php
 lib/opin.inc.php
+
+Highcharts-6.1.1/
+uploaded_files/
+
+lib/config.inc.php

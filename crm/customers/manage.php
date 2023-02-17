@@ -2,6 +2,25 @@
 <?php 
 	if($action=='del'){
 		$cms->db_query("update #_customer_project set is_deleted='1' where cust_id in ($id)");
+		$cms->db_query("update #_leads set status='0' where id in ($id)");
+		$lead_id = $cms->getSingleResult("SELECT lead_id FROM #_customer_project WHERE cust_id=".$id." ");
+		$cms->db_query("update #_leads set status='0' where id in ($lead_id)");			
+		$old_status = $cms->getSingleResult("SELECT new_status From #_lead_tracker WHERE lead_id = ".$lead_id." ORDER BY id DESC");
+		$new_status = 0;
+		// lead tracker
+		$leadsStatusArr = getAllStatus();
+		$action_message="Status Changed from <b>".$leadsStatusArr[$old_status]."</b> to <b>".$leadsStatusArr[$new_status]."</b>";	
+		// echo "$action_message";die;
+		$StatusPOSTS["lead_id"] = $leadid;
+		$StatusPOSTS["action_message"] = $action_message;
+		$StatusPOSTS["action_date"] = date('Y-m-d h:i:s');
+		$StatusPOSTS["action_by"] = $_SESSION["ses_adm_id"];
+		$StatusPOSTS["activity_for"] = $_SESSION["ses_adm_id"];
+		$StatusPOSTS["new_status"] = $new_status;
+		$StatusPOSTS["lead_status"] = $old_status;
+		//print_r($StatusPOSTS);die;
+		$cms->sqlquery("rs","lead_tracker",$StatusPOSTS);			
+		
 		$adm->sessset('Record has been deleted', 'e');
 		$cms->redir(SITE_PATH_ADM.CPAGE, true);
 		exit;
@@ -12,7 +31,8 @@
 			if($_POST['project_manager']!=''){			
 				$str_adm_ids = implode(",",$arr_ids);
 				$cms->db_query("update #_leads set project_manager=".$_POST['project_manager'].", project_assigned_date='".date("Y-m-d")."', lead_type=3 where id in ($str_adm_ids)");
-			
+			$prodid = $cms->getSingleResult("SELECT id FROM #_customer_project where cust_id in ($str_adm_ids) and is_deleted = 0");
+			$cms->db_query("update #_customer_project set project_manager_id=".$_POST['project_manager']." where cust_id=".$str_adm_ids." and is_deleted = 0");
 				//new status added on tracker
 				$str_adm_idsArr = explode(',',$str_adm_ids);
 				foreach($str_adm_idsArr as $lid){
@@ -178,15 +198,16 @@
 					/*$invoice_Arr = array("report_no"=>$uids);
 					$name  = generateReport($invoice_Arr);*/
 
-			/*
-					$customerQry = $cms->db_query("SELECT customer_name, quotation_number FROM #_leads where id=".$_POST['cust_id']." AND status=4 and is_deleted=0 ");
+			
+					$proj_id = $cms->getSingleResult("SELECT id FROM #_customer_project where cust_id=".$lid." and is_deleted=0");
+
+					$customerQry = $cms->db_query("SELECT customer_name, quotation_number FROM #_leads where id=".$lid." AND status=4 and is_deleted=0 ");
 					$customerArr = $customerQry->fetch_array();
 					$project_customer = $customerArr['customer_name'];
-					$data_Arr = array("report_no"=>$proj_id,"project_num"=>$_POST['project_name'],"project_customer"=>$project_customer);
-					//print_r($data_Arr);die;
+					$data_Arr = array("report_no"=>$proj_id,"project_num"=>$customerArr['quotation_number'],"project_customer"=>$project_customer);
+					// print_r($data_Arr);die;
 					$ReportArr['project_report_name'] = generateReport($data_Arr);
-					$cms->sqlquery("rs","customer_project",$ReportArr,'id',$proj_id);
-				*/
+					$cms->sqlquery("rs","customer_project",$ReportArr,'id',$proj_id);				
 					
 					//insert steps for projects
 					/*if($proj_id){
@@ -383,9 +404,9 @@
 		
 		$start = intval($start);
 		$pagesize = intval($pagesize)==0?$pagesize=DEF_PAGE_SIZE:$pagesize;		
-		$columns = "select p.system_size, p.status as pstatus, p.project_report_name, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
-		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND l.status=4 $conditionsQr ";		
-		$order_by == '' ? $order_by = 'l.post_date' : true;
+		$columns = "select p.system_size, p.status as pstatus, p.project_report_name,p.sale_rep_id as psales, p.project_manager_id, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
+		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND p.is_deleted=0 AND l.status=4 $conditionsQr ";		
+		$order_by == '' ? $order_by = 'p.project_date' : true;
 		$order_by2 == '' ? $order_by2 = 'desc' : true;
 		$sql_count = "select count(*) ".$sql; 
 		$sql .= "order by $order_by $order_by2 ";
@@ -396,9 +417,9 @@
 	}else{
 		$start = intval($start);
 		$pagesize = intval($pagesize)==0?$pagesize=DEF_PAGE_SIZE:$pagesize;
-		$columns = "select p.system_size, p.status as pstatus, p.project_report_name, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
-		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND l.status=4 ";
-		$order_by == '' ? $order_by = 'l.post_date' : true;
+		$columns = "select p.system_size, p.status as pstatus, p.project_report_name,p.project_date, p.modified_date,p.sale_rep_id as psales, p.project_manager_id, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
+		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND p.is_deleted=0 AND  l.status=4 ";
+		$order_by == '' ? $order_by = 'p.project_date' : true;
 		$order_by2 == '' ? $order_by2 = 'desc' : true;
 		$sql_count = "select count(*) ".$sql; 
 		$sql .= "order by $order_by $order_by2 ";
@@ -648,11 +669,12 @@
 								</div>
 							</th>
 							<th class="text-nowrap">Readiness</th>
-							<th class="text-nowrap">Date <a href="<?=$url?>&sortby=post_date&sorting=<?=$sortVar?>"><i class="fa fa-sort"></i></a></th>
+							<th class="text-nowrap">Contract Signed <a href="<?=$url?>&sortby=post_date&sorting=<?=$sortVar?>"><i class="fa fa-sort"></i></a></th>
 							<th class="text-nowrap">Customer Name</th>
 							<th class="text-nowrap">Address</th>
 							<th class="text-nowrap">Status</th>
 							<th class="text-nowrap">Project Manager</th>
+							<th class="text-nowrap">Sales Rep</th>
 							<th class="text-nowrap">Panel</th>
 							<th class="text-nowrap">Panel Count</th>
 							<th class="text-nowrap">Inverter</th>
@@ -694,19 +716,25 @@
 									} ?>
 									&nbsp;&nbsp;
 									<?php if($project_report_name && file_exists(FILES_PATH.UP_FILES_REPORTS.'/'.$project_report_name)){?>
-									<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_REPORTS.'/'.$project_report_name?>" download title="Report"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+									<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_REPORTS.'/'.$project_report_name?>" download title="Report">
+									<i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 									<?php } } ?>
 								</div>
 							</td>
 							<td class="table-center text-nowrap"><span class="<?=$clr?>"></span></td>
-							<td class="table-center text-nowrap"><?=date("Y-m-d",strtotime($post_date))?></td>
+							<td class="table-center text-nowrap"><?=date("Y-m-d",strtotime($project_date))?></td>
 							<td class="table-center text-nowrap">
 								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=add&start=&id=<?=$id?>" data-toggle="tooltip" data-original-title="Edit"><?=$customer_name?>&nbsp;<?php if(!empty($aggrement_note)){echo "<sup style='color:red;'><i class='fa fa-info-circle' aria-hidden='true'></i></sup>";}?></a>
 							</td>
 							<td class="table-center text-nowrap"><?=$proposal_address?></td>
 							<td class="table-center text-nowrap"><?=($project_id>0)?$proposalStatus[$pstatus]:''?></td>
 							<td class="text-nowrap table-center">
-								<?=($project_id>0)?($project_manager?$cms->getSingleResult("SELECT customer_name FROM #_users where id=$project_manager "):''):''?>
+								<?=($project_id>0)?($project_manager_id?$cms->getSingleResult("SELECT customer_name FROM #_users where id=$project_manager "):''):''?>
+							</td>
+							<td class="text-nowrap table-center">
+								<?//=$sale_rep_id?> 
+								<?=($project_id>0)?($psales?$cms->getSingleResult("SELECT customer_name FROM #_users where id=$psales"):''):''?>
+								
 							</td>
 							<td class="table-center text-nowrap"><?=$panel_model?$panel_model:'NA'?></td>
 							<td class="table-center text-nowrap"><?=$panel_count?$panel_count:'NA'?></td>

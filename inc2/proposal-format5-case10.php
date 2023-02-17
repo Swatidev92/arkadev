@@ -10,6 +10,8 @@ $arrAdmin = $rsAdmin->fetch_array();
 $customerPriceQry = $cms->db_query("SELECT * FROM #_customer_price where id=1 ");
 $customerPriceArr = $customerPriceQry->fetch_array();
 
+$obj_inverter = json_decode($customerPriceArr['inverter_types'],true);
+
 $obj_ac =json_decode($customerPriceArr['ac_protect'],true);
 $obj_dc = json_decode($customerPriceArr['dc_protect'],true);
 $ac_brand= $obj_ac[0]['brand'];
@@ -265,12 +267,36 @@ $otherDetailsArr = $otherDetailsQry->fetch_array();
 										<td style="text-align:center;font-size:12px;"><?=$inverter_type1_qty?></td>
 										<td style="text-align:center;font-size:12px;">st</td>
 									</tr>
+									<?php 
+										foreach ($obj_inverter as $ikey => $ivalue) {
+											if($ivalue["name"] == $inverter_type){
+												if($ivalue["dongle_model"]!="dongle_include"){
+									?>				
+									<tr>
+										<td style="text-align:left;font-size:12px;">Wifi Dongle: <?=$ivalue["dongle_model"]?></td>
+										<td style="text-align:center;font-size:12px;"><?=$inverter_type1_qty?></td>
+										<td style="text-align:center;font-size:12px;">st</td>		
+									</tr>					
+									<?php 
+											} } } ?>
 									<?php if($inverter_type2){?>
 									<tr>
 										<td style="text-align:left;font-size:12px;">Växelriktare 2: <?=$inverter_brand2?> (eller en motsvarig)</td>
 										<td style="text-align:center;font-size:12px;"><?=$inverter_type2_qty?></td>
 										<td style="text-align:center;font-size:12px;">st</td>
 									</tr>
+									<?php 
+										foreach ($obj_inverter as $ikey => $ivalue) {
+											if($ivalue["name"] == $inverter_type2){
+												if($ivalue["dongle_model"]!="dongle_include"){
+									?>				
+									<tr>
+										<td style="text-align:left;font-size:12px;">Wifi Dongle: <?=$ivalue["dongle_model"]?></td>
+										<td style="text-align:center;font-size:12px;"><?=$inverter_type2_qty?></td>
+										<td style="text-align:center;font-size:12px;">st</td>		
+									</tr>					
+									<?php 
+											} } } ?>
 									<?php } ?>
 									<?php if($inverter_type3){?>
 									<tr>
@@ -278,6 +304,18 @@ $otherDetailsArr = $otherDetailsQry->fetch_array();
 										<td style="text-align:center;font-size:12px;"><?=$inverter_type3_qty?></td>
 										<td style="text-align:center;font-size:12px;">st</td>
 									</tr>
+									<?php 
+										foreach ($obj_inverter as $ikey => $ivalue) {
+											if($ivalue["name"] == $inverter_type3){
+												if($ivalue["dongle_model"]!="dongle_include"){
+									?>				
+									<tr>
+										<td style="text-align:left;font-size:12px;">Wifi Dongle: <?=$ivalue["dongle_model"]?></td>
+										<td style="text-align:center;font-size:12px;"><?=$inverter_type3_qty?></td>
+										<td style="text-align:center;font-size:12px;">st</td>		
+									</tr>					
+									<?php 
+											} } } ?>
 									<?php } ?>
 									<tr>
 										<td style="text-align:left;font-size:12px;">Monteringssystem</td>

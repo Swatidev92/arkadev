@@ -216,6 +216,8 @@ $_POSTS['cable_ev'] = json_encode($_POST['cables_ev']);
 $_POSTS['ac_protect'] = json_encode($_POST['ac_protect']);
 $_POSTS['dc_protect'] = json_encode($_POST['dc_protect']);
 
+$_POSTS['wifi_dongle'] = json_encode($_POST['wifi_dongle']);
+
 //print_r($_POSTS);
 
 //echo $field_values_array[0][0];
@@ -563,6 +565,51 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 										</div>
 										<div class="clearfix"></div>
 									</div>
+									<hr>
+									<!-- S:Wifi-Dongle-mk-19 -->
+									<div class="panel-body">
+										<div class="list_wrapper list_wrapper_wifiDongle">
+										<h3>Wifi Dongle</h3>
+										<?php $obj_wifi_dongle = json_decode($wifi_dongle);
+										$obj_wifi_cnt = count($obj_wifi_dongle);
+										if(count($obj_wifi_dongle)>0){
+											$i=0;
+											foreach($obj_wifi_dongle as $val){?>
+											<div class="row" id="rev<?=$i?>">
+												<div class="status-checkbox">
+													<input class="form-check-input" type="checkbox" name="wifi_dongle[<?=$i?>][dongle_status]" value="1" <?=$val->dongle_status==1?'checked':''?>>
+												</div>
+												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+													Brand
+													<input name="wifi_dongle[<?=$i?>][dongle_brand]" type="text" placeholder="Brand Name" class="form-control" value="<?=$val->dongle_brand?>"/>
+												</div>
+												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+													Model
+													<input name="wifi_dongle[<?=$i?>][dongle_model]" type="text" placeholder="Model Name" class="form-control" value="<?=$val->dongle_model?>"/>
+												</div>
+												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+													Cost
+													<input name="wifi_dongle[<?=$i?>][dongle_cost]" type="text" placeholder="Cost" class="form-control" value="<?=$val->dongle_cost?>"/>
+												</div>
+												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+													Warranty
+													<input name="wifi_dongle[<?=$i?>][dongle_warranty]" type="text" placeholder="Warranty" class="form-control" value="<?=$val->dongle_warranty?>"/>
+												</div>
+												<div class="col-xs-1 col-sm-1 col-md-1">
+													<br>
+													<button class="" onclick='revrcrd("rev<?=$i?>")' type="button"><i class="fa fa-close text-danger"></i></button>
+												</div>
+												<?php $i++; 
+											echo '</div>'; } } ?>
+											<div class="row">
+												<div class="col-xs-4 col-sm-4 col-md-4">
+													<h3>Add New <button class="btn btn-primary list_add_button12" type="button">+</button></h3>
+												</div>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<!-- E:wifi-Dongle-mk19 -->
 									<!-- S:cable-mk-19 -->
 									<hr>
 									<div class="panel-body">
@@ -605,7 +652,7 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 												<div class="status-checkbox">
 													<input class="form-check-input" type="checkbox" name="ac_protect[<?=$i?>][status]" value="1" <?=$val1->status==1?'checked':''?>>
 												</div>
-												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+												<div class="form-group col-xs-4 col-sm-4 col-md-4">
 													Brand
 													<input name="ac_protect[<?=$i?>][brand]" type="text" placeholder="Name" class="form-control" value="<?=$obj_ac_protect[$i]->brand?>"/>
 												</div>
@@ -645,7 +692,7 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 												<div class="status-checkbox">
 													<input class="form-check-input" type="checkbox" name="dc_protect[<?=$i?>][status]" value="1" <?=$val1->status==1?'checked':''?>>
 												</div>
-												<div class="form-group col-xs-2 col-sm-2 col-md-2">
+												<div class="form-group col-xs-4 col-sm-4 col-md-4">
 													Brand
 													<input name="dc_protect[<?=$i?>][brand]" type="text" placeholder="Name" class="form-control" value="<?=$obj_dc_protect[$i]->brand?>"/>
 												</div>
@@ -825,7 +872,26 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 														<input id="checkbox<?=$i?>" type="checkbox" name="invt[<?=$i?>][compatible]" value="1" <?=$val->compatible==1?'checked':''?>>
 														<label for="checkbox<?=$i?>">Battery Compatible</label>
 													</div>
-												</div>
+												</div></div>
+											<div class="col-xs-3 col-sm-3 col-md-3">
+												Wifi Dongle
+												<select class="form-control" id="model<?=$i?>" name="invt[<?=$i?>][dongle_model]" <?=$readonly_field?>>
+													<!-- <option value="">Select Dongle type</option> -->
+														<option value="dongle_include">Wifi Dongle Included</option>
+														<?php $dongleTypePriceArr = json_decode($wifi_dongle, true);
+															foreach ($dongleTypePriceArr as $dkey => $dvalue) {
+																if($dvalue["dongle_status"]==1){
+																	if($val->dongle_model==$dvalue["dongle_model"]){
+																			$dsel = 'selected';
+																		}else{
+																			$dsel = '';
+																		}
+																	echo '<option value="'.$dvalue["dongle_model"].'" '.$dsel.'>'.$dvalue["dongle_brand"].'&nbsp'.$dvalue["dongle_model"].'</option>';
+																} 
+															}
+														?>
+														</select>
+											</div>
 											</div>
 											<div class="col-xs-1 col-sm-1 col-md-1">
 												<br>
@@ -1506,8 +1572,8 @@ $(document).ready(function()
 	    //Check maximum number of input fields
 	    if(x3 < list_maxField){ 
 	        x3++; //Increment field counter
-	        var list_fieldHTML = '<div class="row"><div class="status-checkbox"><input class="form-check-input" type="checkbox" name="invt['+x3+'][invstatus]" value="1"></div><div class="col-xs-4 col-sm-4 col-md-4"><div class="form-group"><input name="invt['+x3+'][name]" type="text" placeholder="Name" class="form-control"/></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input name="invt['+x3+'][inveffect]" type="text" placeholder="Effect" class="form-control" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input name="invt['+x3+'][invbrand]" type="text" placeholder="Brand" class="form-control" /></div></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input name="invt['+x3+'][price]" type="text" placeholder="Cost" class="form-control"/></div></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input autocomplete="off" name="invt['+x3+'][invwarranty]" type="text" placeholder="Warranty" class="form-control" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input type="file" name="invt['+x3+'][inverter_img]" id="drop_inverter'+x3+'" class="dropify dropify-inverter" data-max-file-size="1M" data-height="150" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><div class="checkbox checkbox-success"><input id="checkbox'+x3+'" type="checkbox" name="invt['+x3+'][compatible]" value="1"><label for="checkbox'+x3+'">Battery Compatible</label></div></div></div> <div class="col-xs-1 col-sm-7 col-md-1"><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>'; //New input field html 
-	        $('.list_wrapper3').append(list_fieldHTML); //Add field html
+	        var list_fieldHTML = '<div class="row"><div class="status-checkbox"><input class="form-check-input" type="checkbox" name="invt['+x3+'][invstatus]" value="1"></div><div class="col-xs-4 col-sm-4 col-md-4"><div class="form-group"><input name="invt['+x3+'][name]" type="text" placeholder="Name" class="form-control"/></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input name="invt['+x3+'][inveffect]" type="text" placeholder="Effect" class="form-control" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input name="invt['+x3+'][invbrand]" type="text" placeholder="Brand" class="form-control" /></div></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input name="invt['+x3+'][price]" type="text" placeholder="Cost" class="form-control"/></div></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input autocomplete="off" name="invt['+x3+'][invwarranty]" type="text" placeholder="Warranty" class="form-control" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><input type="file" name="invt['+x3+'][inverter_img]" id="drop_inverter'+x3+'" class="dropify dropify-inverter" data-max-file-size="1M" data-height="150" /></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><div class="checkbox checkbox-success"><input id="checkbox'+x3+'" type="checkbox" name="invt['+x3+'][compatible]" value="1"><label for="checkbox'+x3+'">Battery Compatible</label></div></div></div><div class="col-xs-3 col-sm-3 col-md-3"><div class="form-group"><div class="checkbox checkbox-success"><input id="dongle'+x3+'" type="checkbox" name="invt['+x3+'][dongle]" value="1"><label for="checkbox'+x3+'">Dongle</label></div></div></div><div class="col-xs-3 col-sm-3 col-md-3"><select class="form-control" id="model'+x3+'" name="invt['+x3+'][dongle_model]" <?=$readonly_field?>><option value="">Select Dongle type</option><?php $dongleTypePriceArr = json_decode($wifi_dongle, true);foreach ($dongleTypePriceArr as $dkey => $dvalue) { if($dvalue["dongle_status"]==1){ echo '<option value="'.$dvalue["dongle_model"].'">'.$dvalue["dongle_brand"].'&nbsp'.$dvalue["dongle_model"].'</option>';} }?></select></div> <div class="col-xs-1 col-sm-7 col-md-1"><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>'; //New input field html 
+			$('.list_wrapper3').append(list_fieldHTML); //Add field html
 	    }
         });	
 	// sec4
@@ -1618,6 +1684,16 @@ $(document).ready(function()
 	        $('.list_wrapper_dc').append(list_fieldHTML); //Add field html
 	    }
     });
+		var x12 = "<?=$obj_wifi_cnt-1?>"; //Initial field counter	
+	$('.list_add_button12').click(function(){
+			
+	    //Check maximum number of input fields
+	    if(x12 < list_maxField){ 
+	        x12++; //Increment field counter
+	        var list_fieldHTML = '<div class="row"><div class="status-checkbox1" style="float:left"><input class="form-check-input" type="checkbox" name="wifi_dongle['+x12+'][dongle_status]" value="1"></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input name="wifi_dongle['+x12+'][dongle_brand]" type="text" placeholder="Brand Name" class="form-control"/></div></div><div class="col-xs-2 col-sm-2 col-md-2"><div class="form-group"><input name="wifi_dongle['+x12+'][dongle_model]" type="text" placeholder="Model Name" class="form-control"/></div></div><div class="form-group col-xs-2 col-sm-2 col-md-2"><input name="wifi_dongle['+x12+'][dongle_cost]" type="text" placeholder="Cost" class="form-control" /></div><div class="form-group col-xs-2 col-sm-2 col-md-2"><input name="wifi_dongle['+x12+'][dongle_warranty]" type="text" placeholder="Warranty" class="form-control" /></div><div class="col-xs-1 col-sm-7 col-md-1"><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>'; //New input field html 
+	        $('.list_wrapper_wifiDongle').append(list_fieldHTML); //Add field html
+	    }
+        });
 });
 function revrcrd(rid){
 	$("#"+rid).remove();

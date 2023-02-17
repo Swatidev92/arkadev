@@ -21,6 +21,7 @@ if($cms->is_post_back()){
 		$_POST['automatic'] = 0;
 	}
 	$_POST["selected_reasons"] = implode("$#",$_POST["selected_reasons"]);
+	
 	$_POST['proposal_address'] = $_POST['address_input'];
 	
 	//if user assigned but lead status not changed to assigned
@@ -130,6 +131,9 @@ if($cms->is_post_back()){
                     $roofDetails['roofing_material'] = $_POST['roofing_material'][$i];
                     $roofDetails['roof_support'] = $_POST['roof_support'][$i];
                     $roofDetails['roof_angle'] = $_POST['roof_angle'][$i];
+					// if($_POST['roofing_material'][$i] == 'TrapetsKorrugerad Plåt (screws/ skruv)' || $_POST['roofing_material'][$i] == 'TrapetsKorrugerad Aluminium (rivets/popnit)' || $_POST['roofing_material'][$i] ==  'VågKorrugerad Plåt (rivet/popnit)' || $_POST['roofing_material'][$i] == 'VågKorrugerad Aluminium (rivets/popnit)' || $_POST['roofing_material'][$i] == 'Plegel tak (rivets/popnits)' ){
+					// $roofDetails['roof_thickness'] =$_POST['roof_thickness'][$i];
+					// $roofDetails['roof_material'] =$_POST['roof_material'][$i]; }
 					$roofDetails['roof_breath'] =$_POST['roof_breath'][$i];
 					$roofDetails['roof_length'] =$_POST['roof_length'][$i];
 					$roofDetails['roof_height'] = $_POST['roof_height'][$i];
@@ -157,10 +161,13 @@ if($cms->is_post_back()){
                     $roofDetails['roofing_material'] = $_POST['roofing_material'];
                     $roofDetails['roof_support'] = $_POST['roof_support'];
                     $roofDetails['roof_angle'] = $_POST['roof_angle'];
+					// $roofDetails['roof_thickness'] =$_POST['roof_thickness'];
+					// $roofDetails['roof_material'] =$_POST['roof_material'];
 					$roofDetails['roof_breath'] =$_POST['roof_breath'];
 					$roofDetails['roof_length'] =$_POST['roof_length'];
-					$roofDetails['roof_height'] = $_POST['roof_height'];$roofDetails['lead_id'] = $pid;
-					$roofDetails['form_type'] = 'lead';
+					$roofDetails['roof_height'] = $_POST['roof_height'];
+                    $roofDetails['lead_id'] = $pid;
+                    $roofDetails['form_type'] = 'lead';
                     $roofDetails['status'] = 0;
                     if(empty($_POST['rec_id'][$i]))
                     { 
@@ -746,7 +753,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
 			?>
 			<div class="form-group col-sm-4 show-reason" style="<?=$rstyle?>">
 				<label for="title" class="control-label">Select Reason*</label>
-				<select class="form-control-new select2" name="selected_reasons[]" id="select1" onChange="select()"  multiple required <?=$readonly_field?>>
+				<select class="form-control-new select2" name="selected_reasons[]" id="select1" onChange="select()" multiple required <?=$readonly_field?>>
 					<?php $reasonsArr = $cms->getSingleResult("SELECT reasons FROM #_lead_type_status where id=5 and lead_type=1 ");
 					$obj = json_decode($reasonsArr);
 					if(count($obj)>0){
@@ -759,13 +766,15 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
 								$rsel = '';
 							}
 							if(in_array("Others",$selected_reasonsArr)){
+								  $cls=$val->name;}
+
 					?>
 					<option value="<?=$val->name?>" <?=$rsel?>><?=$val->name?></option>
 					<?php } } } ?>
 				</select>
 				<div class="help-block with-errors"></div>
 			</div>
-				 <!-- mk-19 -->
+			<!-- mk-19 -->
 			<div class="form-group col-sm-4" id="others" style="<?php if($cls == 'Others' ){echo 'display:block;';}else{ echo 'display:none;';}?>">
 				<label for="others" class="control-label" >Others</label><br>
 				<textarea class="form-control" cols="30" rows="2" name="faculty" placeholder="Your resaon here." <?=$readonly_field?>><?=$faculty?></textarea>
@@ -982,11 +991,11 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                             </div>
                             <div class="form-group col-md-1">
                                 <label for="total-pannel" class="control-label">Total Panel</label>
-                                <input type="number" min="1" class="form-control" name="total_panel[<?=$j?>]" id="total_panel[<?=$j?>]" value="<?=$total_panel?>">
+                                <input type="number" min="1" class="form-control" name="total_panel[<?=$j?>]" id="total_panel<?=$j?>" value="<?=$total_panel?>">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-3" id="roof">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
-                                <select class="form-control" id="roofing_material[<?=$j?>]" name="roofing_material[<?=$j?>]" <?= $readonly_field ?>>
+                                <select class="form-control" id="roofing_material<?=$j?>" name="roofing_material[<?=$j?>]" <?= $readonly_field ?> onchange="roof_material()">
                                     <option value="">Select Roof type</option>
                                     <?php $roofTypePriceArr = json_decode($customerPriceArr["roof_type_price"], true);
                                     foreach ($roofTypePriceArr as $rkey => $rvalue) {
@@ -1002,9 +1011,18 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
-                                <label for="roof-support" class="control-label">Roof Support</label><br>
-                                <select class="form-control" id="roof_support[<?=$j?>]" name="roof_support[<?=$j?>]">
+							<!-- <div id="roof_related<?=$j?>">
+								<div class="form-group col-md-1" id="thickness">
+									<label for="roof_thickness" class="control-label">Thickness</label>
+									<input type="text" class="form-control" name="roof_thickness[<?=$j?>]" id="roof_thickness<?=$j?>" value="<?= $roof_thickness ?>" <?= $readonly_field ?>>
+								</div>
+								<div class="form-group col-md-1" id="material">
+									<label for="roof_material" class="control-label">Material</label>
+									<input type="text" class="form-control" name="roof_material[<?=$j?>]" id="roof_material<?=$j?>" value="<?= $roof_material ?>" <?= $readonly_field ?>>
+								</div>
+							</div> -->
+                            <div class="form-group col-md-2"><label for="roof-support" class="control-label">Roof Support</label><br>
+                                <select class="form-control" id="roof_support<?=$j?>" name="roof_support[<?=$j?>]">
                                     <option value="">Select Roof Support</option>
                                         <option value="1" <?php if($roof_support == 1){ echo 'Selected';}?>>Råspont</option>
                                         <option value="2" <?php if($roof_support == 2){ echo 'Selected';}?>>No Råspont</option>
@@ -1026,7 +1044,8 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                                 <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_breath[<?=$j?>]" id="roof_breath<?=$j?>" value="<?= $roof_breath ?>" <?= $readonly_field ?>>
                             </div>
-                            <input type="hidden" name="rec_id[<?=$j?>]" value="<?= $id ?>">
+							
+							<input type="hidden" name="rec_id[<?=$j?>]" value="<?= $id ?>">
                             
                             <div class="col-xs-1 col-sm-7 col-md-1">
                                 <label for="remove" class="control-label">Action</label>
@@ -1043,9 +1062,9 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                                 <label for="total-pannel" class="control-label">Total Panel</label>
                                 <input type="number" class="form-control" name="total_panel[<?=$j?>]" id="total_panel[<?=$j?>]" min="1">
                              </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-3" id="roof">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
-                                <select class="form-control" id="roofing_material[<?=$j?>]" name="roofing_material[<?=$j?>]" <?= $readonly_field ?>>
+                                <select class="form-control" id="roofing_materiall" name="roofing_material[<?=$j?>]" <?=$readonly_field ?>>
                                     <option value="">Select Roof type</option>
                                     <?php $roofTypePriceArr = json_decode($customerPriceArr["roof_type_price"], true);
                                     foreach ($roofTypePriceArr as $rkey => $rvalue) {
@@ -1061,9 +1080,19 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                                     ?>
                                 </select>
                             </div>
-                            <div class="form-group col-md-2">
+                            <!-- <div id="roof_related<?=$j?>">
+								<div class="form-group col-md-1" id="thickness">
+									<label for="roof_thickness" class="control-label">Thickness</label>
+									<input type="text" class="form-control" name="roof_thickness[<?=$j?>]" id="roof_thickness<?=$j?>" value="<?= $roof_thickness ?>" <?= $readonly_field ?>>
+								</div>
+								<div class="form-group col-md-1" id="material">
+									<label for="roof_material" class="control-label">Material</label>
+									<input type="text" class="form-control" name="roof_material[<?=$j?>]" id="roof_material<?=$j?>" value="<?= $roof_material ?>" <?= $readonly_field ?>>
+								</div>
+							</div> -->
+							<div class="form-group col-md-2">
                                 <label for="roof-support" class="control-label">Roof Support</label><br>
-                                <select class="form-control" id="roof_support[<?=$j?>]" name="roof_support[<?=$j?>]">
+                                <select class="form-control" id="roof_support<?=$j?>" name="roof_support[<?=$j?>]">
                                     <option value="">Select Roof Support</option>
                                         <option value="1">Råspont</option>
                                         <option value="2">No Råspont</option>
@@ -1085,6 +1114,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
                                 <label for="roof_breath" class="control-label">Breath<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_breath[<?=$j?>]" id="roof_breath<?=$j?>" <?= $readonly_field ?>>
                             </div>
+							 
                         </div>
                                     
                         <!-- E:create new -->
@@ -1140,7 +1170,7 @@ if(in_array(11,$act_arr) && !in_array(3,$act_arr)){
 
 <script>
 $("#leadstatus").change(function(){
-	var lstatus = $(this).val();
+	var lstatus = $(this).val();			  
 	//alert(lstatus);
 	if(lstatus=="2"){
 		if($('#assigned_to').val()==""){
@@ -1205,7 +1235,7 @@ $("#activity_message").blur(function(){
 </script>
 
 <script>
-function remove_img_file(id,name){
+	function remove_img_file(id,name){
 	if (confirm("Are you sure to delete?")) {
 		$.ajax({
 			type:"post",
@@ -1220,8 +1250,8 @@ function remove_img_file(id,name){
 				}
 			}
 		})
-	}
-}	
+		}
+	}	
 </script>
 <!-- delete roof details-->
 <script>
@@ -1245,33 +1275,61 @@ function remove_img_file(id,name){
 <script type="text/javascript">
     $(document).ready(function()
     {
-
-        var list_maxField = 50; //Input fields increment limitation
-    var x5 = "<?=$roof_details_count?>"; //Initial field counter
-    if(<?=$roof_details_count?> !== 0)
-    { x5 = x5-1; }
-    // else{ x5= x5+1; }
-    			 
-	$('.list_add_button5').click(function()
+		var list_maxField = 50; //Input fields increment limitation
+		var x5 = "<?=$roof_details_count?>"; //Initial field counter
+		
+		// var roof = $('select#roofing_material' + x5).val();
+		
+		
+		if(<?=$roof_details_count?> !== 0){ x5 = x5-1; }
+		//else{ x5= x5+1; }
+		
+		$('.list_add_button5').click(function()
 	    {
-            // alert(x5);
-	    //Check maximum number of input fields
-	    if(x5 < list_maxField){ 
-	        x5++; //Increment field counter
-	        var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true);foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){ if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" ></div><div class="form-group col-md-2"><label for="roof_length" class="control-label">Roof Height</label><input type="text" class="form-control" name="roof_height['+x5+']" id="roof_height['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Breath</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
-	        $('.list_wrapper5').append(list_fieldHTML); //Add field html
-            //var total_rec= $("#total_rec").val();
-            var total_rec = parseInt($("#total_rec").val());
-            total_rec = total_rec+1;
-            //alert(total_rec);
-            // total_rec =  parseInt('total_rec')+1;
-             console.log(total_rec);
-             $("#total_rec").val(total_rec);
+			// alert(x5);
+			//Check maximum number of input fields
+			if(x5 < list_maxField){ 
+				x5++; //Increment field counter
+				//var hello = roof_material1();
+	    		//s:mk-19-add-feild02-02-2023
+				// var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true); foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?> </select></div><div id="roof_related'+x5+'"><div class="form-group col-md-1 col-sm-4 col-xs-6" id="thickness"><label for="roof_thickness" class="control-label">Thickness</label><input type="text" class="form-control" name="roof_thickness['+x5+']" id="roof_thickness['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6" id="material"><label for="roof_material" class="control-label">Material</label><input type="text" class="form-control" name="roof_material['+x5+']" id="roof_material['+x5+']" <?= $readonly_field ?>></div></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" value=""></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Breath</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
+				var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true);foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){ if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" ></div><div class="form-group col-md-2"><label for="roof_length" class="control-label">Roof Height</label><input type="text" class="form-control" name="roof_height['+x5+']" id="roof_height['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Breath</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
+			
+				// e:mk-19-add-feild
+				$('.list_wrapper5').append(list_fieldHTML); //Add field html
+				
+				var roof = $('select#roofing_material' + x5).val();
+				console.log(roof)
+				$('#roof_related'+x5).hide();
+			
+			
+
+				//var total_rec= $("#total_rec").val();
+				var total_rec = parseInt($("#total_rec").val());
+				total_rec = total_rec+1;
+				//alert(total_rec);
+				// total_rec =  parseInt('total_rec')+1;
+				//  console.log(total_rec);
+				$("#total_rec").val(total_rec);
             
-	    }
+	    	}
+			$('select#roofing_material'+x5).change(function (){
+				var ids= $(this).attr('id');
+				var x2 = ids.charAt(ids.length-1);
+				var end_x5= parseInt($("#total_rec").val());
+				var roof = $('select#roofing_material'+x2).val();
+					console.log(roof);
+					if(roof == 'TrapetsKorrugerad Plåt (screws/ skruv)' || roof == 'TrapetsKorrugerad Aluminium (rivets/popnit)' || roof ==  'VågKorrugerad Plåt (rivet/popnit)' || roof == 'VågKorrugerad Aluminium (rivets/popnit)' || roof == 'Plegel tak (rivets/popnits)'){
+					$('#roof_related' + x2).show(); 
+					}else{ 
+						$('#roof_related' + x2).hide();
+					}
+					
+			});
 
         });
 
+		
         //Once remove button is clicked
         $('.list_wrapper').on('click', '.list_remove_button', function()
         {
@@ -1281,10 +1339,66 @@ function remove_img_file(id,name){
             total_rec = total_rec-1;
             // alert(total_rec);
             // total_rec =  parseInt('total_rec')+1;
-             console.log(total_rec);
+             //console.log(total_rec);
              $("#total_rec").val(total_rec);
         });
 
     });
+	
 </script>
+<!-- S:mk-19 roof_details -->
+<script>
+	$(document).ready(function(){
+		$('#roof_related').hide();
+		$('select#roofing_materiall').change(function(){
+			var roof = $('select#roofing_materiall').val();
+			console.log(roof);
+			if(roof == 'TrapetsKorrugerad Plåt (screws/ skruv)' || roof == 'TrapetsKorrugerad Aluminium (rivets/popnit)' || roof ==  'VågKorrugerad Plåt (rivet/popnit)' || roof == 'VågKorrugerad Aluminium (rivets/popnit)' || roof == 'Plegel tak (rivets/popnits)'){
+				$('#roof_related').show(); 
+				}else{ 
+					$('#roof_related').hide();
+				}
+		});
+	});
+</script>
+<script>
+	$(document).ready(function() { 
+		var x1 = 0;
+		var end_x1= parseInt($("#total_rec").val());
+		// console.log(end_x1);
+		while(x1 < end_x1){ 
+		var roof = $('select#roofing_material' + x1).val();
+		if(roof == 'TrapetsKorrugerad Plåt (screws/ skruv)' || roof == 'TrapetsKorrugerad Aluminium (rivets/popnit)' || roof ==  'VågKorrugerad Plåt (rivet/popnit)' || roof == 'VågKorrugerad Aluminium (rivets/popnit)' || roof == 'Plegel tak (rivets/popnits)'){
+			$('#roof_related'+x1).show();
+			}else{ 
+				$('#roof_related'+x1).hide();
+			}
+			x1++;
+		}
+	});
+
+
+	
+	function roof_material()
+	{
+		var x2 = 0; 
+		var end_x2= parseInt($("#total_rec").val());
+		while(x2 <end_x2){
+			var roof = $('select#roofing_material'+x2).val();
+			//console.log(x2);
+			if(roof == 'TrapetsKorrugerad Plåt (screws/ skruv)' || roof == 'TrapetsKorrugerad Aluminium (rivets/popnit)' || roof ==  'VågKorrugerad Plåt (rivet/popnit)' || roof == 'VågKorrugerad Aluminium (rivets/popnit)' || roof == 'Plegel tak (rivets/popnits)'){
+			$('#roof_related' + x2).show(); 
+			}else{ 
+				$('#roof_related' + x2).hide();
+			}
+			//var roof = $("#roofing_material[0]").val();
+			//console.log(roof); 	
+			x2++;
+		}
+
+		
+	}
+	
+</script>
+
 
