@@ -892,7 +892,7 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 														?>
 														</select>
 											</div>
-											</div>
+											
 											<div class="col-xs-1 col-sm-1 col-md-1">
 												<br>
 												<button class="" onclick='revrcrd("invm<?=$i?>")' type="button"><i class="fa fa-close text-danger"></i></button>
