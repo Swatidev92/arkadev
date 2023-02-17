@@ -30,6 +30,9 @@
 					$roofDetails['roofing_material'] = $_POST['roofing_material'][$i];
 					$roofDetails['roof_support'] = $_POST['roof_support'][$i];
 					$roofDetails['roof_angle'] = $_POST['roof_angle'][$i];
+					$roofDetails['roof_breath'] =$_POST['roof_breath'][$i];
+					$roofDetails['roof_length'] =$_POST['roof_length'][$i];
+					$roofDetails['roof_height'] = $_POST['roof_height'][$i];
 					$roofDetails['lead_id'] = $pid;
 					$roofDetails['form_type'] = 'proposal';
 					$roofDetails['proposal_id'] = $parentId;
@@ -59,7 +62,9 @@
             $roofDetails['roofing_material'] = $_POST['roofing_material'];
             $roofDetails['roof_support'] = $_POST['roof_support'];
             $roofDetails['roof_angle'] = $_POST['roof_angle'];
-            $roofDetails['lead_id'] = $pid;
+			$roofDetails['roof_breath'] =$_POST['roof_breath'];
+			$roofDetails['roof_length'] =$_POST['roof_length'];
+			$roofDetails['roof_height'] = $_POST['roof_height'];$roofDetails['lead_id'] = $pid;
             $roofDetails['form_type'] = 'lead';
             $roofDetails['status'] = 0;
             if(empty($_POST['rec_id'][$i]))
