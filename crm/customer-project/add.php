@@ -1793,7 +1793,7 @@ $leadsArr = $leadsQry->fetch_array();
 				</div>
 				
 				
-				<div role="tabpanel" class="tab-pane <?php echo $active9;?>" id="documentation">
+				<!-- <div role="tabpanel" class="tab-pane <?php echo $active9;?>" id="documentation">
 					<div class="row">
 						<div class="col-md-2" align="right">Egenkontroll</div>
 						
@@ -1874,7 +1874,7 @@ $leadsArr = $leadsQry->fetch_array();
 					</div>	
 					<div class="clearfix"></div>
 
-				</div>
+				</div> -->
 				
 				
 				<!-- s:communication mk-19 24-01-2023 -->
@@ -2125,7 +2125,7 @@ $leadsArr = $leadsQry->fetch_array();
 				
 				
 				<div role="tabpanel" class="tab-pane <?php echo $active5;?>" id="project_checklist">
-						<div class="">
+					<div class="">
 							
 							<div class="row">
 							<div class="form-group col-sm-1"><h4>Sales</h4></div><div class="form-group col-sm-11"></div>
