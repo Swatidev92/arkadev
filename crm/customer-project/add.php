@@ -904,7 +904,7 @@ $leadsArr = $leadsQry->fetch_array();
 				$lnk6="?mode=add&t=roof_details&id=".$pid;
 				$lnk7="?mode=add&t=inventory&id=".$pid;
 				$lnk8="?mode=add&t=communication&id=".$pid;
-				$lnk9="?mode=add&t=documentation&id=".$pid;
+				//$lnk9="?mode=add&t=documentation&id=".$pid;
 			}					
 			
 			if($t=='proj_info' || $t=='' ){
@@ -941,10 +941,11 @@ $leadsArr = $leadsQry->fetch_array();
 			elseif($t=='project_checklist'){
 				$active="active";
 				$active5="active";
-			}elseif($t=='documentation'){
-				$active="active";
-				$active9="active";
-			}	
+			}
+			//elseif($t=='documentation'){
+			//	$active="active";
+				//$active9="active";
+			//}	
 			else{
 				
 			}
@@ -953,7 +954,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<input type="hidden" name="lead_id" id="lead_id" value="<?=$lead_id?>">
 				<li role="presentation" class="<?php echo $active1;?>"><a href="<?PHP echo $lnk1 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Project Info</span></a></li>
 				<!-- mk-19 -->
-				<li role="presentation" class="<?php echo $active9;?>"><a href="<?PHP echo $lnk9 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Documentation</span></a></li>
+				<!--<li role="presentation" class="<?php echo $active9;?>"><a href="<?PHP echo $lnk9 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Documentation</span></a></li>-->
 				<li role="presentation" class="<?php echo $active8;?>"><a href="<?PHP echo $lnk8 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Communication</span></a></li>
 				<li role="presentation" class="<?php echo $active6;?>"><a href="<?PHP echo $lnk6 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Roof Details</span></a></li>
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
@@ -2656,7 +2657,70 @@ $leadsArr = $leadsQry->fetch_array();
 </div>
 <!-- /.row -->
 
-
+<script>
+function generate(){
+	var grid_template = $("#grid_template").val();
+	if(grid_template){
+		if(grid_template==2){ //EON
+			$("#plant_id").attr("required", true);
+			$("#project_address").attr("required", true);
+			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/eon.php");
+			//alert($(".filter_form").attr("action"));
+			$("#aforms").submit();
+		}
+		else if(grid_template==1){	//Ellevio
+			if($("#enskild_firma").is(":checked")) {
+				$("#company_name").attr("required", false);
+				$("#org_number").attr("required", false);
+			}else{			
+				$("#company_name").attr("required", true);
+				$("#org_number").attr("required", true);
+			}
+			$("#plant_id").attr("required", true);
+			$("#project_address").attr("required", true);
+			if($("#personnummer").val()==''){
+				$("#personnummer").attr("readonly", false);
+				$("#personnummer_error").addClass("has-error");
+				$("#personnummer").attr("required", true);
+			}
+			$("#project_postal_code").attr("required", true);
+			$("#project_city").attr("required", true);
+			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/ellivio.php");
+			//alert($(".filter_form").attr("action"));
+			$("#aforms").submit();
+		}
+		else if(grid_template==3){ //Föranmälan.nu
+			$("#battery_size").attr("required", true);
+			$("#effektfaktor").attr("required", true);
+			$("#short_circuit").attr("required", true);
+			$("#main_fuse").attr("required", true);
+			$("#plant_id").attr("required", true);
+			$("#project_address").attr("required", true);
+			$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/gridTemplate/foranmlan.php");
+			//alert($(".filter_form").attr("action"));
+			$("#aforms").submit();
+		}else{
+			alert("Something went wrong");
+		}
+	}else{
+		alert("Please select grid template");
+	}
+	
+	/*$.ajax({
+		url:"<?=SITE_PATH_ADM.CPAGE?>/certificate/index.php",
+		data:"custID=1",
+		method:"post",
+		beforeSend:function(){
+			$(".admin-ajax-loader").show();
+		},
+		success:function(result){
+			$(".admin-ajax-loader").hide();
+			
+		}
+	})*/
+	
+}
+</script>
 <script>
 function generate_egenkontroll(){
 		$("#plant_id").attr("required", true);

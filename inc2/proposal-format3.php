@@ -122,35 +122,35 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth" modulebg="edit" style="background:#fff">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											Systembeskrivning:
 										</td>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											<?=$proposal_address?>   
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											Antal paneler:
 										</td>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											<?=$panel_count?>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											Antal växelriktare:
 										</td>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											<?//=$inverter_type2?'2':'1'?>
 											<?php if($inverter_type3){ echo '3'; }else{ if($inverter_type2){ echo '2'; } else{ echo '1';}} ?> 
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											Tak-area:
 										</td>
-										<td valign="middle" style="text-align:left;font-size:16px;border:none; padding:15px;">
+										<td valign="middle" style="text-align:left;font-size:15px;border:none; padding:15px;">
 											<?=$panel_area_dimension?>
 											<br>  
 										</td>
@@ -176,7 +176,7 @@ $k =1;
 					<hr>
 					<tr><td></td></tr>
 					<tr>
-						<td valign="middle" colspan="2" style="text-align:left;font-size:16px;border:none; padding:15px;">
+						<td valign="middle" colspan="2" style="text-align:left;font-size:15px;border:none; padding:15px;">
 							Anläggningen kopplas in i fastighetens elcentral och monteras enligt nedanstående bild.
 						</td>
 						<br>
@@ -188,10 +188,10 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" class="devicewidth" modulebg="edit" style="background:#ffffff; ">
 								<tbody>
 									<tr>
-										<td width="50%" valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td width="50%" valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Dimensionering
 										</td>
-										<td width="50%" valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td width="50%" valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Uppskattad Produktionsberäkning
 										</td>
 									</tr>
@@ -252,7 +252,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" class="devicewidth" modulebg="edit" style="background:#ffffff; ">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Paneltyp
 										</td>
 									</tr>
@@ -269,7 +269,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" class="devicewidth" modulebg="edit" style="background:#ffffff; ">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Växelriktare 1
 										</td>
 									</tr>
@@ -293,7 +293,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" border="0" class="devicewidth" modulebg="edit" style="background:#ffffff; ">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Växelriktare 2
 										</td>
 									</tr>
@@ -310,7 +310,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" border="0" class="devicewidth" modulebg="edit" style="background:#ffffff; ">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Växelriktare 3
 										</td>
 									</tr>
@@ -330,7 +330,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" border="0" class="devicewidth" modulebg="edit" style="background:#ffffff">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Billaddare
 										</td>
 									</tr>
@@ -347,7 +347,7 @@ $k =1;
 							<table width="100%" align="center" cellspacing="0" cellpadding="4" border="0" class="devicewidth" modulebg="edit" style="background:#ffffff">
 								<tbody>
 									<tr>
-										<td valign="middle" style="text-align:center;font-size:16px;border:none; color:#22914f;">
+										<td valign="middle" style="text-align:center;font-size:15px;border:none; color:#22914f;">
 											Batteri
 										</td>
 									</tr>
