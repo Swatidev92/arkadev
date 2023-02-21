@@ -904,7 +904,7 @@ $leadsArr = $leadsQry->fetch_array();
 				$lnk6="?mode=add&t=roof_details&id=".$pid;
 				$lnk7="?mode=add&t=inventory&id=".$pid;
 				$lnk8="?mode=add&t=communication&id=".$pid;
-				//$lnk9="?mode=add&t=documentation&id=".$pid;
+				$lnk9="?mode=add&t=documentation&id=".$pid;
 			}					
 			
 			if($t=='proj_info' || $t=='' ){
@@ -942,10 +942,10 @@ $leadsArr = $leadsQry->fetch_array();
 				$active="active";
 				$active5="active";
 			}
-			//elseif($t=='documentation'){
-			//	$active="active";
-				//$active9="active";
-			//}	
+			elseif($t=='documentation'){
+				$active="active";
+				$active9="active";
+			}		
 			else{
 				
 			}
@@ -954,7 +954,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<input type="hidden" name="lead_id" id="lead_id" value="<?=$lead_id?>">
 				<li role="presentation" class="<?php echo $active1;?>"><a href="<?PHP echo $lnk1 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Project Info</span></a></li>
 				<!-- mk-19 -->
-				<!--<li role="presentation" class="<?php echo $active9;?>"><a href="<?PHP echo $lnk9 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Documentation</span></a></li>-->
+				<li role="presentation" class="<?php echo $active9;?>"><a href="<?PHP echo $lnk9 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Documentation</span></a></li>
 				<li role="presentation" class="<?php echo $active8;?>"><a href="<?PHP echo $lnk8 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Communication</span></a></li>
 				<li role="presentation" class="<?php echo $active6;?>"><a href="<?PHP echo $lnk6 ?>"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs">Roof Details</span></a></li>
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
@@ -1793,20 +1793,20 @@ $leadsArr = $leadsQry->fetch_array();
 				</div>
 				
 				
-				<!-- <div role="tabpanel" class="tab-pane <?php echo $active9;?>" id="documentation">
+				<div role="tabpanel" class="tab-pane <?php echo $active9;?>" id="documentation">
 					<div class="row">
 						<div class="col-md-2" align="right">Egenkontroll</div>
 						
-						<?php if(!$egenkontroll_document){?>
+						<?php if($egenkontroll_document){?>
 					<div class="form-group col-sm-1 text-center">						
-						<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_Egenkontroll.'/'.$egenkontroll_document?>" class="btn btn-success btn-circle" download><i class="fa fa-file-pdf-o"></i> </a>
+						<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_EGENKONTROLL.'/'.$egenkontroll_document?>" class="btn btn-success btn-circle" download><i class="fa fa-file-pdf-o"></i> </a>
 					</div>
 					<?php } ?>
 					
 					
 						<div class="col-md-3">
 							<div class="form-group col-sm-3">
-								<a class="fcbtn btn btn-primary btn-outline btn-1c" href="javascript:void()" onclick="generate()">Generate </a>
+								<a class="fcbtn btn btn-primary btn-outline btn-1c" href="javascript:void()" onclick="generate_egenkontroll()">Generate </a>
 							</div>
 						
 						</div>
@@ -1874,7 +1874,7 @@ $leadsArr = $leadsQry->fetch_array();
 					</div>	
 					<div class="clearfix"></div>
 
-				</div> -->
+				</div>
 				
 				
 				<!-- s:communication mk-19 24-01-2023 -->
@@ -1989,12 +1989,12 @@ $leadsArr = $leadsQry->fetch_array();
 				<!--S:Roof Details Tab -->
                 <div role="tabpanel" class="tab-pane <?php echo $active6;?>" id="roof_details">
                     <div class="list_wrapper list_wrapper5">
-                    <?php if($numRowsRoof>0) {
+						<?php if($numRowsRoof>0) {
                         $i=0;
                         while($roofFetchDetailsArr = $roofFetchDetailsQry->fetch_array())
                         { @extract($roofFetchDetailsArr); 
                     ?>
-                    <!-- S:Edit-->
+                    	<!-- S:Edit-->
                         <div class="row" id="btrow<?=$i?>">
                             <div class="form-group col-md-12">
                                 <h3>Roof Details:&nbsp;<?= $i+1;?></h3>
@@ -2106,9 +2106,10 @@ $leadsArr = $leadsQry->fetch_array();
                                 <label for="roof_breath" class="control-label">Width<span style="font-size:9px;">[in m]</span></label>
                                 <input type="text" class="form-control" name="roof_breath[<?=$i?>]" id="roof_breath<?=$i?>" <?= $readonly_field ?>>
                             </div>
-                        <!-- E:create new -->
+                        	<!-- E:create new -->
+						</div>
                         <?php } ?>
-                    </div>
+					</div>
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4">
                             <h3>Add New <button class="btn btn-primary list_add_button5" type="button">+</button></h3>
