@@ -27,7 +27,7 @@ else{
 	$customer_name = $leadRes['customer_name'];
 	$personnummer = $leadRes['personnummer'];
 	$email = $leadRes['email'];
-	$phone = $projectRes['phone_bill'];
+	$phone = $leadRes['phone'];
 }
 						
 use setasign\Fpdi;
