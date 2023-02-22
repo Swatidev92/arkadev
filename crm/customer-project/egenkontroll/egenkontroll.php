@@ -36,11 +36,15 @@ $pdf->useTemplate($tplIdx, 10, 10, 200);
 $pdf->SetFont('Arial', '', '7');
 $pdf->SetTextColor(0,0,0);
 $pdf->Text(148,50,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['project_name'])));
-
+if($projectRes['inverter1']!=''){
 $pdf->Text(92,230,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter1_qty'].'x '.$projectRes['inverter1'])));
+}
+if($projectRes['inverter2']!=''){
 $pdf->Text(92,233,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter2_qty'].'x '.$projectRes['inverter2'])));
+}
+if($projectRes['inverter3']!=''){
 $pdf->Text(92,235,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter3_qty'].'x '.$projectRes['inverter3'])));
-
+}
 
 $system_size = $projectRes['system_size']/1000;
 
@@ -55,8 +59,8 @@ $pdf->useTemplate($tplIdx, 10, 10, 200); // dynamic parameter based on your page
 
 $pdf->SetFont('Arial', '', '8');
 $pdf->SetTextColor(0,0,0);
-$pdf->Text(92,121,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' W')));
-$pdf->Text(92,45,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' W')));
+$pdf->Text(92,121,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
+$pdf->Text(92,45,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
 $pdf->Text(92,59,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['main_fuse'])));
 
 
@@ -81,10 +85,22 @@ $pdf->useTemplate($tplIdx, 10, 10, 200); // dynamic parameter based on your page
 $pdf->SetFont('Arial', '', '7');
 $pdf->SetTextColor(0,0,0);
 $pdf->Text(95,117,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
-$pdf->Text(95,124,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['panel_name'])));
+if($projectRes['panel_name']!=''){
+	if($projectRes['panel_count']==''){
+	$panel_count=$cms->getSingleResult("SELECT panel_count FROM #_leads WHERE id=".$_POST['lead_id']." ");}
+	else{$panel_count=$projectRes['panel_count'];}
+									
+$pdf->Text(95,124,iconv('UTF-8', 'windows-1252', html_entity_decode($panel_count.'x '.$projectRes['panel_name'])));
+}
+if($projectRes['inverter1']!=''){
 $pdf->Text(95,127,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter1_qty'].'x '.$projectRes['inverter1'])));
+}
+if($projectRes['inverter2']!=''){
 $pdf->Text(95,130,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter2_qty'].'x '.$projectRes['inverter2'])));
+}
+if($projectRes['inverter3']!=''){
 $pdf->Text(95,133,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter3_qty'].'x '.$projectRes['inverter3'])));
+}
 $pdf->Text(95,148,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['project_address'].', ')));
 $pdf->Text(95,151,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['project_city'].', '.$projectRes['project_postal_code'].', '.$projectRes['project_country'])));
 
@@ -96,6 +112,10 @@ $tplIdx = $pdf->importPage(6);
 
 $pdf->useTemplate($tplIdx, 10, 10, 200); // dynamic parameter based on your page
 
+$pdf->SetFont('Arial', '', '8');
+$pdf->Text(112,57,iconv('UTF-8', 'windows-1252', html_entity_decode("Företag:
+:")));
+$pdf->Text(112,60,iconv('UTF-8', 'windows-1252', html_entity_decode("Arka Energy AB")));
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(7);
 
@@ -132,7 +152,14 @@ $pdf->Output(SITE_FS_PATH.'/'.UPLOAD_FILES_PTH.'/'.UP_FILES_EGENKONTROLL.'/'.$fi
 
 $FILE_UPLOAD['egenkontroll_document'] = $file_name;
 $cms->sqlquery("rs","customer_project",$FILE_UPLOAD,'id',$_POST['project_id']);
-
+// update log
+$log =array();
+		$log['cust_id'] = $_POST['cust_id'];
+		$log['lead_id'] = $_POST['lead_id'];
+		$log['user'] = $_POST['user'];
+		$log['user'] = $_POST['user'];
+		$cms->sqlquery("rs","egenkontroll_logs",$log);
+		
 $path = SITE_PATH_ADM."customer-project/?mode=add&t=documentation&start=&id=".$_POST['project_id']."#documentation";
 $cms->redir($path, true);
 exit();
