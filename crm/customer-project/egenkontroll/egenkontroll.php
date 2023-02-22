@@ -61,7 +61,7 @@ $pdf->SetFont('Arial', '', '8');
 $pdf->SetTextColor(0,0,0);
 $pdf->Text(92,121,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
 $pdf->Text(92,45,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
-$pdf->Text(92,59,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['main_fuse'])));
+$pdf->Text(92,59,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['main_fuse'].' A')));
 
 
 $pdf->AddPage();
@@ -113,8 +113,7 @@ $tplIdx = $pdf->importPage(6);
 $pdf->useTemplate($tplIdx, 10, 10, 200); // dynamic parameter based on your page
 
 $pdf->SetFont('Arial', '', '8');
-$pdf->Text(112,57,iconv('UTF-8', 'windows-1252', html_entity_decode("Företag:
-:")));
+
 $pdf->Text(112,60,iconv('UTF-8', 'windows-1252', html_entity_decode("Arka Energy AB")));
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(7);
