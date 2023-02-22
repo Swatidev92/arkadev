@@ -53,7 +53,7 @@ if($_POST){
                     }
                 }
                 $_POST['system_size'] = $custRes['system_size'];
-                
+                $_POST['panel_count'] =$custRes['panel_count'];
                 if($custRes['inverter_type']){
                     $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
                     foreach ($inverterTyeArray as $ikey => $ivalue) {

@@ -27,6 +27,7 @@
 					<?php if($_SESSION["ses_adm_role"]==1){?>
 					<li><a href="<?=SITE_PATH_ADM?>user-manager"><i class="ti-support fa-fw"></i> User Manager</a></li>
 					<li><a href="<?=SITE_PATH_ADM?>customer-price-manager"><i class="ti-support fa-fw"></i> Customer Price Manager</a></li>	
+					<li><a href="<?=SITE_PATH_ADM?>new-customer-price-manager"><i class="ti-support fa-fw"></i>New Customer Price Manager</a></li>	
 					<!--<li style="background:#f4b532;"><a style="color:#fff;" href="<?=SITE_PATH_ADM?>lead-manager-v1"><i class="ti-support fa-fw"></i> Lead Manager V1</a></li>-->
 					<li><a href="<?=SITE_PATH_ADM?>manage-status-type"><i class="ti-support fa-fw"></i> Manage Lead Status & Type</a></li>
 					<!--<li><a href="<?=SITE_PATH_ADM?>contracted-customers" class="waves-effect"><i class="fa fa-group" aria-hidden="true"></i> <span class="hide-menu">Contracted Customer</span></a></li>
