@@ -2412,10 +2412,10 @@ $leadsArr = $leadsQry->fetch_array();
 								</td>
 								<td id="panel_count_show">
 									<span id="panel_count1">
-									<?php
-									if($customerProjectArr['panel_count']==''){
-									echo $leadsArr['panel_count'];}
-									else{$customerProjectArr['panel_count'];}
+									<?php  
+									if($customerProjectArr['panel_count']!="" || $customerProjectArr['panel_count']!= null){
+										echo  $customerProjectArr['panel_count'];  }
+									else{ echo $leadsArr['panel_count']; }
 									?>
 									</span>
 									<a class="pull-right" id="panel_count_edit" onclick="panel_count()">
@@ -3298,7 +3298,7 @@ $("#aforms").on("submit",function(e){
 	function panel_count(){
 		$('#panel_count1').hide();
 		$('#panel_count_edit').hide();
-		$('#panel_count_show').append('<input type="number" name="panel_count1" class="form-control" value="<?php if($customerProjectArr["panel_count"]==""){echo $leadsArr["panel_count"];}else{$customerProjectArr["panel_count"];}?>"/>');
+		$('#panel_count_show').append('<input type="number" name="panel_count1" class="form-control" value="<?php if($customerProjectArr["panel_count"]==""){echo $leadsArr["panel_count"];}else{ echo $customerProjectArr["panel_count"];}?>"/>');
 	}
 	function inverter1(){
 		$('#inverter1_hide').hide();
