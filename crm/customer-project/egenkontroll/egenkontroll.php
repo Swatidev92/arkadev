@@ -33,9 +33,10 @@ $tplIdx = $pdf->importPage(1);
 
 $pdf->useTemplate($tplIdx, 10, 10, 200);
 	
-$pdf->SetFont('Arial', '', '7');
+$pdf->SetFont('Arial', '', '10');
 $pdf->SetTextColor(0,0,0);
 $pdf->Text(148,50,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['project_name'])));
+$pdf->SetFont('Arial', '', '7');
 if($projectRes['inverter1']!=''){
 $pdf->Text(92,230,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['inverter1_qty'].'x '.$projectRes['inverter1'])));
 }
@@ -61,7 +62,7 @@ $pdf->SetFont('Arial', '', '8');
 $pdf->SetTextColor(0,0,0);
 $pdf->Text(92,121,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
 $pdf->Text(92,45,iconv('UTF-8', 'windows-1252', html_entity_decode($system_size.' kW')));
-$pdf->Text(92,59,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['main_fuse'].' A')));
+$pdf->Text(92,59,iconv('UTF-8', 'windows-1252', html_entity_decode($projectRes['main_fuse'])));
 
 
 $pdf->AddPage();
@@ -115,6 +116,9 @@ $pdf->useTemplate($tplIdx, 10, 10, 200); // dynamic parameter based on your page
 $pdf->SetFont('Arial', '', '8');
 
 $pdf->Text(112,60,iconv('UTF-8', 'windows-1252', html_entity_decode("Arka Energy AB")));
+//$pdf->Text(112	,70,iconv('UTF-8', 'windows-1252', html_entity_decode(date("Y-m-d"))));
+$user_name = $cms->getSingleResult("select customer_name from #_users where id='".$_POST['user']."'");
+$pdf->Text(65,57,iconv('UTF-8', 'windows-1252', html_entity_decode($user_name)));
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(7);
 

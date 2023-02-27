@@ -35,7 +35,7 @@ if($cms->is_post_back()){
 	$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=manage-steps&id='.$wid, true);		
 }	
 if(isset($pid)){
-	$rsAdmin=$cms->db_query("select * from #_step_detail where id='".$pid."'");
+	$rsAdmin=$cms->db_query("select * from #_step_detail where step_num='".$pid."' and status=1 AND is_deleted=0");
 	$arrAdmin=$cms->db_fetch_array($rsAdmin);
 	@extract($arrAdmin);
 }
@@ -208,9 +208,9 @@ input[type=number] {
 jQuery(function($) {
 	//$(document.getElementById('fb-editor')).formBuilder();
 	var options = {
-		disableFields: ['autocomplete', 'button', 'paragraph', 'starRating','header','hidden','select','date', 'save','checkbox-group','file','number','textarea'],
+		disableFields: ['autocomplete', 'button', 'paragraph', 'starRating','header','hidden','date', 'save','file','radio-group'],
 		showActionButtons: false,
-		disabledAttrs: ['placeholder', 'access', 'className', 'description', 'name', 'maxlength','subtype','value','rows','multiple','inline','toggle','other','min','max','step']
+		disabledAttrs: ['placeholder', 'access', 'className', 'description', 'name', 'maxlength','subtype','value','rows','inline','toggle','other','min','max','step']
 	};
 		
 	const formBuilder = $(document.getElementById('fb-editor')).formBuilder(options);

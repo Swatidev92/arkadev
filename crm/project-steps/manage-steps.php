@@ -65,7 +65,7 @@
 								<td class="table-center"><?=$step_title?></td>
 								<?php $checked2=($status=="1"?"checked":""); ?>
 								<td class="text-nowrap">
-									<?php echo '<a href="'.SITE_PATH_ADM.CPAGE.'?mode=add&start='.$_GET['start'].'&wid='.$wid.'&id='.$step_num.'" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil text-inverse m-r-10"></i></a>'; ?>&nbsp;&nbsp;
+									<?php echo '<a href="'.SITE_PATH_ADM.CPAGE.'?mode=add&start='.$_GET['start'].'&wid='.$wid.'&id='.$step_num.'&step_num='.$step_num.'" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil text-inverse m-r-10"></i></a>'; ?>&nbsp;&nbsp;
 									<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=manage-steps&id=<?=$id?>&action=del&view=true" onclick="return confirm('Do you want delete this record?');" data-toggle="tooltip" data-original-title="Close"><i class="fa fa-close text-danger"></i></a> 
 									&nbsp;&nbsp;
 									<input data-size="small" type="checkbox" onChange="updateStatus('<?=$step_num?>','<?=$status?>')" <?=$checked2?> class="js-switch" data-toggle="tooltip" data-color="#99d683" data-secondary-color="#f96262" />
