@@ -349,8 +349,8 @@ if($proposalQry->num_rows==0){
 						&nbsp;&nbsp; -->
 				<a href="<?=SITE_PATH_ADM.CPAGE.'/?mode=add-proposal-newgr&start='.$_GET['start'].'&t=prop_details&leadid='.$pid?>" class="ub">
 				<img  src="<?=SITE_PATH_ADM?>images/add_1.svg" width="25" alt=""> Generate Proposal</a>&nbsp;&nbsp;
-				<!--<a href="<?=SITE_PATH_ADM.CPAGE.'/?mode=add-proposal-newgr&start='.$_GET['start'].'&t=prop_details&leadid='.$pid?>" class="ub">
-				<img  src="<?=SITE_PATH_ADM?>images/add_1.svg" width="25" alt=""> Generate Proposal NEW GR</a>-->
+				<a href="<?=SITE_PATH_ADM.CPAGE.'/?mode=add-proposal-newgr-ppp&start='.$_GET['start'].'&t=prop_details&leadid='.$pid?>" class="ub">
+				<img  src="<?=SITE_PATH_ADM?>images/add_1.svg" width="25" alt=""> Generate Proposal NEW PPP</a>
 						
 						<?php } ?>
 				<a href="#uplaod" class="ub"><i class="fa fa-upload" aria-hidden="true"></i> Upload Files</a>
@@ -420,7 +420,8 @@ if($proposalQry->num_rows==0){
 								<?php if(in_array(4,$act_arr) || $_SESSION["ses_adm_id"]==1){ ?>
 								<!-- 1ver : <a href="<?=SITE_PATH_ADM.CPAGE?>?mode=add-proposal&start=<?=$_GET['start']?>&t=prop_details&leadid=<?=$pid?>&id=<?=$id?>" data-toggle="tooltip" title="Edit Proposal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>&nbsp;&nbsp; -->
 								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=add-proposal-newgr&start=<?=$_GET['start']?>&t=prop_details&leadid=<?=$pid?>&id=<?=$id?>" data-toggle="tooltip" title="Edit Proposal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>&nbsp;&nbsp;
-								<!--<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=add-proposal-newgr&start=<?=$_GET['start']?>&t=prop_details&leadid=<?=$pid?>&id=<?=$id?>" data-toggle="tooltip" title="Edit Proposal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>NEW GR</a>&nbsp;&nbsp;-->
+								<!-- 2ver -->
+								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=add-proposal-newgr-ppp&start=<?=$_GET['start']?>&t=prop_details&leadid=<?=$pid?>&id=<?=$id?>" data-toggle="tooltip" title="Edit Proposal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>NEW PPP</a>&nbsp;&nbsp;
 								<?php if($proposal_pdf){ ?>
 								 
 								<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$proposal_pdf?>" download title="Proposal 1"><i class="fa fa-file-pdf-o" aria-hidden="true">1</i></a>
@@ -437,9 +438,9 @@ if($proposalQry->num_rows==0){
 								&nbsp;
 								<?php } ?>
 								
-								<?php if($proposal_txt){ ?>
+								<?php if($_SESSION["ses_adm_id"] == 1){if($proposal_txt){ ?>
 								<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/'.UP_FILES_PROPOSAL.'/'.$proposal_txt?>" title="Download TXT" download><i class="fa fa-file"></i></a>&nbsp;&nbsp;
-								<?php } ?>
+								<?php } }?>
 								<?php if($status!=4){?>								
 								<a href="<?=SITE_PATH_ADM.CPAGE?>?mode=proposal-list&id=<?=$pid?>&propId=<?=$propid?>&action=del" onclick="return confirm('Do you want to delete ?');" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i></a>
 								<?php 
