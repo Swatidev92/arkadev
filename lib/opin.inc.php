@@ -685,13 +685,15 @@
 		//$html .= '</ul>';
 		return $html;
     }
-	function getNewPrice($field_const=null)
+	
+	function getNewPrice($field_const=null,$status=null)
 	{
-		$rsNPice=$cms->db_query("select id,content,code,image from #_customer_price_manager where field_const=".$field_const." AND status='0' AND is_deleted='0'");
-		$arrrsNPice=$cms->db_fetch_array($rsNPice);
-		return $arrrsNPice;
+		global $cms;
+		$rsNPice=$cms->db_query("select id,content,code,image from #_customer_price_manager where field_const='$field_const' AND status='$status' AND is_deleted='0'");
+		// $arrrsNPice=$cms->db_fetch_array($rsNPice);
+		return $rsNPice;
 	}
-
+	
 	$proposalStatus = array("1"=>"Project Created","8"=>"Föranmälan Created","2"=>"Föranmälan Sent","3"=>"Föranmälan Approved","4"=>"Installation Planned","5"=>"Roof Installation","6"=>"Elektrik Installation","9"=>"Färdig anmälan sent","7"=>"Handed over to customer","10"=>"Invoiced");
 	$vendorWorkType = array("1"=>"Panel Installation","2"=>"Electrician","3"=>"Both");
 	
