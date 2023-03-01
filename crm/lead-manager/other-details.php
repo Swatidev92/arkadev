@@ -37,8 +37,16 @@
 		else{
 			   $cms->sqlquery("rs","other_details",$otherDetails,'id',$_POST['other_id']);
 		}
+		if(isset($_POST['new-gr-ppp'])){
+			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr-ppp&start=&t=other_details&leadid='.$pid.'&id='.$parentId, true);
 
+		}
+		else{
         $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr&start=&t=other_details&leadid='.$pid.'&id='.$parentId, true);
+        // die;
+	}
+
+       // $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr&start=&t=other_details&leadid='.$pid.'&id='.$parentId, true);
         // die;
 		
 	}

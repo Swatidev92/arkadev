@@ -202,6 +202,25 @@ if($_POST){
 
                     $proj_id = $cms->sqlquery("rs","customer_project",$_POST);
 					
+                    $roofQry = $cms->db_query("SELECT * FROM #_roof_details WHERE proposal_id=".$lid." and form_type='proposal'");
+                    while($roofRes = $roofQry->fetch_array()){
+                        $newRoof['total_panel'] = $roofRes['total_panel'];
+                        $newRoof['roofing_material'] = $roofRes['roofing_material'];
+                        $newRoof['roof_support'] = $roofRes['roof_support'];
+                        $newRoof['roof_angle'] = $roofRes['roof_angle'];
+                        $newRoof['roof_thickness'] = $roofRes['roof_thickness'];
+                        $newRoof['roof_material'] = $roofRes['roof_material'];
+                        $newRoof['roof_breath'] = $roofRes['roof_breath'];
+                        $newRoof['roof_length'] = $roofRes['roof_length'];
+                        $newRoof['roof_height'] = $roofRes['roof_height'];
+                        $newRoof['form_type'] = "customer";
+                        $newRoof['lead_id'] = $roofRes['lead_id'];
+                        $newRoof['proposal_id'] = $roofRes['proposal_id'];
+                   // print_r($newRoof);die;    
+                      $cms->sqlquery("rs","roof_details",$newRoof);
+
+
+                    }
                 // }
                 /*$invoice_Arr = array("report_no"=>$uids);
                 $name  = generateReport($invoice_Arr);*/

@@ -80,12 +80,12 @@
         }
     }
 	// die;
-		if(isset($_POST['new-gr'])){
-			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr&start=&t=roof_details&leadid='.$pid.'&id='.$parentId, true);
+		if(isset($_POST['new-gr-ppp'])){
+			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr-ppp&start=&t=roof_details&leadid='.$pid.'&id='.$parentId, true);
 
 		}
 		else{
-        $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal&start=&t=roof_details&leadid='.$pid.'&id='.$parentId, true);
+        $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr&start=&t=roof_details&leadid='.$pid.'&id='.$parentId, true);
         // die;
 	}
 		

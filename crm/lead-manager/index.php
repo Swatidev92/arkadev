@@ -21,7 +21,7 @@ else if($_GET['mode']=='proposal-list'){
 		$back_btn = SITE_PATH_ADM.CPAGE;
 	}
 }
-else if($_GET['mode']=='add-proposal' || $_GET['mode']=='add-proposal-newgr'){
+else if($_GET['mode']=='add-proposal' || $_GET['mode']=='add-proposal-newgr-ppp'){
 	$hedtitle = "<i class='fa fa-envelope-o fa-fw '></i> Proposal Manager for ".'"'.$cms->getSingleResult("SELECT customer_name FROM #_leads where id=".$_GET['leadid']." ").'"'.' <a href="'.SITE_PATH_ADM.CPAGE.'/?mode=add&start=&id='.$lid.'">(LEAD-'.$lid.')</a>';
 	$back_btn = SITE_PATH_ADM.CPAGE.'/?mode=proposal-list&start=&id='.$lid;
 }
@@ -66,6 +66,7 @@ $act_arr = explode(',',$submoduleAction);
 				<a href="<?=SITE_PATH_ADM.CPAGE.'/?mode=add'?>" class="ub">
 					<img  src="<?=SITE_PATH_ADM?>images/add_1.svg" width="25" alt=""> Add New Lead
 				</a> 
+				
 			<?php } } ?>
 			<?php if(isset($_GET['dis']) !='hide'){ 
 				if(in_array(7,$act_arr) || $_SESSION["ses_adm_id"]==1){ ?>
@@ -127,7 +128,7 @@ $accessUser = $cms->getSingleResult("SELECT GROUP_CONCAT(user_id) FROM #_permiss
 $dimensioningUserArr = explode(',',$accessUser);
 ?>								
   
-<?php if($mode =='add'){include("add.php");}else if($mode =='add-proposal'){include("add-proposal.php");}else if($mode =='add-proposal-newgr'){include("add-proposal-newgr.php");}else if($mode =='proposal-list'){include("proposal-list.php");}else if($mode =='view'){include("view.php");}else if($mode =='view-proposal'){include("view-proposal.php");}else  if($mode == 'upload-lead'){ include('upload-lead.php');}else{include("manage.php");}?>
+<?php if($mode =='add'){include("add-ppp.php");}else if($mode =='add-proposal'){include("add-proposal.php");}else if($mode =='add-proposal-newgr'){include("add-proposal-newgr.php");}else if($mode =='add-proposal-newgr-ppp'){include("add-proposal-newgr-ppp.php");}else if($mode =='proposal-list'){include("proposal-list.php");}else if($mode =='view'){include("view.php");}else if($mode =='view-proposal'){include("view-proposal.php");}else  if($mode == 'upload-lead'){ include('upload-lead.php');}else{include("manage.php");}?>
 <!--<script>
 function changeAction(){
 	$("#aforms").attr("action","<?=SITE_PATH_ADM.CPAGE?>/download.php");
