@@ -474,6 +474,9 @@ if($proposalQry->num_rows==0){
 									<a href="<?=SITE_PATH_ADM.CPAGE?>/generate-pdf2.php?pid=<?=$propid?>" title="Generate Proposal">
 										<i class="fa fa-download" aria-hidden="true"></i>
 									</a>
+									<a href="<?=SITE_PATH_ADM.CPAGE?>/generate-pdf2-ppp.php?pid=<?=$propid?>" title="New Generate Proposal">
+										New<i class="fa fa-download" aria-hidden="true"></i>
+									</a>
 								<?php } } 
 							
 									} else{ ?>&nbsp;&nbsp;

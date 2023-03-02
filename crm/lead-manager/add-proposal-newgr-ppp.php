@@ -166,8 +166,9 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 							<option value="">Select Proposal Type</option>					
 							<?php 
 							//$proposalType = json_decode($customerPriceArr["proposal_type_name"], true);
-							
-							$proposalType = json_decode($customerPriceArr["proposal_type_name_2"], true);
+							$proposalTypeQry = getNewPrice('proposal_type_name_2','0');
+							$proposalTypeAry = $proposalTypeQry->fetch_array();
+							$proposalType = json_decode($proposalTypeAry["content"], true);
 							
 							foreach ($proposalType as $pkey=>$pval){
 								if($pval["status"]==1){

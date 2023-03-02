@@ -16,7 +16,7 @@ error_reporting(0);
 	$invoice_Arr=array(
 		"order_no"=>$_GET["pid"]
 		);
-		// echo $number_of_proposal.$proposal_type;
+		// echo $number_of_proposal.'-'.$proposal_type;
 		// die;
 		
 	// Extend the TCPDF class to create custom Header and Footer
@@ -110,95 +110,94 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 			
 		if($number_of_proposal==2 && $proposal_type==4){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case4-2proposal.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case4-2proposal.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==10){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case10-2proposal.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case10-2proposal.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==11){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case10-2proposal.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case10-2proposal.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==3){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case3-2proposal.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case3-2proposal.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==3){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case3-proposal1.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case3-proposal1.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==5){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case5-only-charger.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case5-only-charger.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==6){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case6-only-battery.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case6-only-battery.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==7){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case7-only-battery-charger.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case7-only-battery-charger.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==2){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case2.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case2.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==8){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case8.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case8.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==8){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case8-proposal1.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case8-proposal1.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==9){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case9.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case9.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==10){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case10.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case10.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==11){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format-case10.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format-case10.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else{
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format.php", false, $context);
+			$html1=file_get_contents(SITE_PATH."inc2/proposal/page1/proposal-format.php", false, $context);
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
-		
 		/*
 		$html2=file_get_contents(SITE_PATH."inc2/proposal-format2.php", false, $context);
 		//echo $html2;die;
@@ -208,123 +207,53 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 		//mk-19
 		if($proposal_type!=5 && $proposal_type!=6 && $proposal_type!=7){
 			if(($number_of_proposal==2 && $proposal_type==4) || ($number_of_proposal==2 && $proposal_type==10) || ($number_of_proposal==2 && $proposal_type==11)){
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case4-proposal2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case4-proposal2.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($number_of_proposal==2 && $proposal_type==3){
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case3-proposal2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case3-proposal2.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($number_of_proposal==2 && $proposal_type==8){
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case8-proposal2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case8-proposal2.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($number_of_proposal==2 && $proposal_type==10){
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case10-proposal2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case10-proposal2.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($number_of_proposal==2 && $proposal_type==11){
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case10-proposal2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case10-proposal2.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($proposal_type==1){	
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case1.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case1.php", false, $context);
+				
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else if($proposal_type==2){	
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3-case2.php", false, $context);
-				//echo $html2;die;
-			
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3-case2.php", false, $context);
+				// die;
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
 			else{		
-				// echo $html3=file_get_contents(SITE_PATH."inc2/proposal-format3.php", false, $context);
-				$html3=file_get_contents(SITE_PATH."inc2/proposal-format3.php", false, $context);
-				
-				//echo $html2;
-				//die;
-			
+				// echo $html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3.php", false, $context);
+				$html3=file_get_contents(SITE_PATH."inc2/proposal/page2/proposal-format3.php", false, $context);
 				$pdf->writeHTMLCell(0, 0, '', '0', $html3, 0, 1, 0, true, '', true);
 				$pdf->AddPage();
 			}
-			// dimensionning new page addons//
-			// if($inverter_type3=='' && $inverter_img3=='' && $inverter_type2=='' && $inverter_img2==''){  }else{
-			// if(($number_of_proposal==2 && $proposal_type==4) || ($number_of_proposal==2 && $proposal_type==10) || ($number_of_proposal==2 && $proposal_type==11)){
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case4-proposal2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($number_of_proposal==2 && $proposal_type==3){
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case3-proposal2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($number_of_proposal==2 && $proposal_type==8){
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case8-proposal2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($number_of_proposal==2 && $proposal_type==10){
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case10-proposal2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($number_of_proposal==2 && $proposal_type==11){
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case10-proposal2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($proposal_type==1){	
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case1.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else if($proposal_type==2){	
-			// 	$html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a-case2.php", false, $context);
-			// 	//echo $html2;die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
-			// else{		
-			// 	echo $html3a=file_get_contents(SITE_PATH."inc2/proposal-format3a.php", false, $context);
-			// 	//echo $html2;
-			// 	 die;
-			
-			// 	$pdf->writeHTMLCell(0, 0, '', '0', $html3a, 0, 1, 0, true, '', true);
-			// 	$pdf->AddPage();
-			// }
 		}
 
 		//echo $html3; die;
@@ -332,7 +261,7 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 			$html4='';
 		}
 		else{
-			$html4=file_get_contents(SITE_PATH."inc2/proposal-format4.php", false, $context);
+			$html4=file_get_contents(SITE_PATH."inc2/proposal/page3/proposal-format4.php", false, $context);
 			//echo $html2;die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html4, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
@@ -341,77 +270,91 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 		// }
 		
 		if(($number_of_proposal==2 && $proposal_type==4) || ($number_of_proposal==2 && $proposal_type==10) || ($number_of_proposal==2 && $proposal_type==11)){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case4-proposal2.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case4-proposal2.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==3){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case3-proposal2.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case3-proposal2.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==3){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case3-proposal1.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case3-proposal1.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==4){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case4-proposal1.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case4-proposal1.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==5){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case5-only-charger.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case5-only-charger.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==6){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case6-only-battery.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case6-only-battery.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==7){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case7-only-battery-charger.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case7-only-battery-charger.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==8){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format5-case8.php", false, $context);
+			echo $html1=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case8.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==2 && $proposal_type==8){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format5-case8-proposal1.php", false, $context);
+			echo $html1=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case8-proposal1.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==9){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format5-case9.php", false, $context);
+			echo $html1=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case9.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==10){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format5-case10.php", false, $context);
+			echo $html1=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case10.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($number_of_proposal==1 && $proposal_type==11){
 			$context  = stream_context_create($opts);
-			$html1=file_get_contents(SITE_PATH."inc2/proposal-format5-case11.php", false, $context);
+			echo $html1=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case11.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html1, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else if($proposal_type==2){
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5-case2.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5-case2.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}
 		else{
-			$html5=file_get_contents(SITE_PATH."inc2/proposal-format5.php", false, $context);
+			echo $html5=file_get_contents(SITE_PATH."inc2/proposal/page4/proposal-format5.php", false, $context);
+			die;
 			$pdf->writeHTMLCell(0, 0, '', '0', $html5, 0, 1, 0, true, '', true);
 			$pdf->AddPage();
 		}

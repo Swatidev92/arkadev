@@ -289,6 +289,13 @@ if($pid!=''){
 					<?php } } ?>
 				</select>
             </div>
+			<?php if($_SESSION["ses_adm_id"] == 1) {?>
+			<div class="form-group col-sm-6" style="margin-top:30px;">
+				<!-- <input class="form-check-input" type="checkbox" name="mail_sent" value="1" id="sendMail"> -->
+				<label class="form-check-label" for="password">User Pasword :</label>
+				<label class="form-check-label" for="password"><?=$plain_password?></label>
+			</div>
+			<?php } ?>
 			<!--<div class="form-group col-sm-6" style="margin-top:30px;">
 				<input class="form-check-input" type="checkbox" name="mail_sent" value="1" id="sendMail">
 				<label class="form-check-label" for="sendMail">Send Login Credentials on Mail</label>

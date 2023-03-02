@@ -505,7 +505,7 @@ if($cms->is_post_back()){
 				// echo "<pre>";
 				// print_r($valVV);
 				$vvid = $valVV['id'];
-				$content = [array( "code"=>$valVV['code'] , "name"=>$valVV['name'], "price"=>$valVV['price'])];
+				$content = [array( "code"=>$valVV['code'] , "name"=>$valVV['name'], "price"=>$valVV['price'], "length"=>$valVV['length'])];
 				$vv['content'] = json_encode($content);
 				$vv['status'] = $valVV['status'];
 				$vv['image'] = $valVV['img'];
@@ -1713,6 +1713,14 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 														<input type="hidden" name="mmsVV[<?=$i?>][img]" class="form-control" value="<?=$mmsVVArry['image']?>"/>
 													</div>
 												</div>
+												<?php if($val['length']!="" || $val['length']!= null ){?>
+												<div class="col-xs-3 col-sm-3 col-md-4">
+													<div class="form-group">
+														<b>Length [in m]</b>
+														<input autocomplete="off" name="mmsVV[<?=$i?>][length]" type="text" placeholder="Length" class="form-control" value="<?=$val['length']?>"/>
+													</div>
+												</div>
+												<?php } ?>
 											</div> 
 										<hr>
 								<?php } $i++; ?>
