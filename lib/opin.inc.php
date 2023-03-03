@@ -694,6 +694,56 @@
 		return $rsNPice;
 	}
 	
+	// get roof mms
+	$roof_for_mms=array(153,157,159,158);
+function get_roof_mms($panel_count_for_mms=null,$panel_model_for_mms=NULL)
+{
+	global $cms;
+	$arr = array(46,6,1,5,13);
+foreach($arr as $key=>$id)
+	{
+		$customerPriceQry = $cms->db_query("select * from #_customer_price_manager where m_id='3' and sub_id='31' and is_deleted = '0' AND id =$id");
+		$mmsVVArry = $customerPriceQry->fetch_array();
+		@extract($mmsVVArry);
+		$objMmsVv = json_decode($mmsVVArry['content'],true);
+		//print_r($obj_evmrg);die;
+		$rf_mms_cost='';
+		if($objMmsVv[0]['code']=='701704670'){
+			// GET PANEL WIDTH
+			$panel_model = $_POST['panel_model'];
+			$obj_evmrg = json_decode($cms->getSingleResult("SELECT content FROM #_customer_price_manager where id=".$panel_model));
+			$no_of_prfl=round((2*$_POST['panel_count']*$obj_evmrg[0]->width/$objMmsVv[0]['length'])*0.1);
+			$no_of_comp[$objMmsVv[0]['code']]['count']=$no_of_prfl;
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		elseif($objMmsVv[0]['code']=='724863'){
+			$no_of_comp[$objMmsVv[0]['code']]['count']=$no_of_prfl*0.2;
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		elseif($objMmsVv[0]['code']=='721550ZW'){
+			$no_of_comp[$objMmsVv[0]['code']]['count']=2*($_POST['panel_count']+1);
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		elseif($objMmsVv[0]['code']=='739052'){
+			$no_of_comp[$objMmsVv[0]['code']]['count']=round($_POST['panel_count']/15);
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		elseif($objMmsVv[0]['code']=='747838'){
+			$no_of_comp[$objMmsVv[0]['code']]['count']=round((2*$_POST['panel_count']*$obj_evmrg[0]->width/1.2)*0.1);
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		elseif($objMmsVv[0]['code']=='774380'){
+			$no_of_comp[$objMmsVv[0]['code']]['count']=round((3*2*$_POST['panel_count']*$obj_evmrg[0]->width/1.2)*0.1);
+			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+		}
+		$MMSDetails[] = [array("mms_item"=>$id,"mms_qty"=>$no_of_comp[$objMmsVv[0]['code']]['count'],"mms_cost"=>$no_of_comp[$objMmsVv[0]['code']]['price'])];
+		$roof_mms_cost+=$no_of_comp[$objMmsVv[0]['code']]['price'];
+	}
+	//return $tot_roof_mms;
+	$MMSDetails = json_encode($MMSDetails);
+	return $MMSDetails."|".$roof_mms_cost;	
+}
+	
 	$proposalStatus = array("1"=>"Project Created","8"=>"Föranmälan Created","2"=>"Föranmälan Sent","3"=>"Föranmälan Approved","4"=>"Installation Planned","5"=>"Roof Installation","6"=>"Elektrik Installation","9"=>"Färdig anmälan sent","7"=>"Handed over to customer","10"=>"Invoiced");
 	$vendorWorkType = array("1"=>"Panel Installation","2"=>"Electrician","3"=>"Both");
 	

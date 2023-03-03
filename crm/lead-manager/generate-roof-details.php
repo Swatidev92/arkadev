@@ -7,7 +7,7 @@
 <!--<script src="<?=SITE_PATH?>lib/Highcharts-6.1.1/examples/column-basic/jquery-3.3.1.min.js"></script>-->
 <?php 
 	// echo "<pre>";
-	// 	print_r( $_POST);
+	 	//print_r( $_POST);die;
 	// 	echo "</pre>";
 	// 	echo "/".$leadid."/";
 	//    die;
@@ -37,6 +37,21 @@
 					$roofDetails['form_type'] = 'proposal';
 					$roofDetails['proposal_id'] = $parentId;
 					$roofDetails['status'] = 0;
+					// get roof mms
+					if(in_array($roofDetails['roofing_material'],$roof_for_mms))
+					{
+						$roof_mms=get_roof_mms($_POST['panel_count_for_mms'],$_POST['panel_model_for_mms']);
+						$roof_mms2=explode("|",$roof_mms);
+						//print_r($roof_mms2[1]);die;
+						//$mms_cost=
+						//$roof_mms_qty
+						$roofDetails['roof_mms'] = $roof_mms2[0];
+						$roofDetails['roof_mms_cost'] = $roof_mms2[1];
+						$tot_mms_cost+=$roof_mms2[1];
+					}else{
+						$roofDetails['roof_mms']=0;
+						$roofDetails['roof_mms_cost']=0;
+					}
 					if(empty($_POST['rec_id'][$i]))
 					{ 
 						$cms->sqlquery("rs","roof_details",$roofDetails); 
@@ -67,6 +82,22 @@
 			$roofDetails['roof_height'] = $_POST['roof_height'];$roofDetails['lead_id'] = $pid;
             $roofDetails['form_type'] = 'lead';
             $roofDetails['status'] = 0;
+			// get roof mms
+					if(in_array($roofDetails['roofing_material'],$roof_for_mms))
+					{
+						$roof_mms=get_roof_mms($_POST['panel_count_for_mms'],$_POST['panel_model_for_mms']);
+						$roof_mms2=explode("|",$roof_mms);
+						//print_r($roof_mms2[1]);die;
+						//$mms_cost=
+						//$roof_mms_qty
+						$roofDetails['roof_mms'] = $roof_mms2[0];
+						$roofDetails['roof_mms_cost'] = $roof_mms2[1];
+						$tot_mms_cost+=$roof_mms2[1];
+					}else{
+						$roofDetails['roof_mms']=0;
+						$roofDetails['roof_mms_cost']=0;
+					}
+					
             if(empty($_POST['rec_id'][$i]))
             { 
                 $cms->sqlquery("rs","roof_details",$roofDetails); 
@@ -79,6 +110,9 @@
             // }
         }
     }
+	// update tottal mms
+	$totmms['proposal_mms_cost']=$tot_mms_cost;
+	$cms->sqlquery("rs","leads",$totmms, 'id', $parentId);
 	// die;
 		if(isset($_POST['new-gr-ppp'])){
 			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-proposal-newgr-ppp&start=&t=roof_details&leadid='.$pid.'&id='.$parentId, true);

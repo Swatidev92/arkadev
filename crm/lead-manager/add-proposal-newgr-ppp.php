@@ -1005,7 +1005,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="roofing_material" class="control-label">Roof Type</label>
-                                <select class="form-control" id="roofing_material[<?=$i?>]" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
+                                <select class="form-control" id="roofing_material<?=$i?>" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
                                     <option value="">Select Roof type</option>
                                     <?php 
 									$roofTypeQry = getNewPrice('roof_type','1');
@@ -1015,6 +1015,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                                     if ($rvalue["rfstatus"] == 1) {
                                         if ($roofing_material == $rvalue["name"] || $roofTypeAry['id'] == $roofing_material ) {
                                             $rsel = 'selected';
+											$roof_sel=1;
                                             } else {
                                             $rsel = '';
                                         }
@@ -1057,7 +1058,19 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                         </div>
                         <input type="hidden" name="edit" value="1">
 						<input type="hidden" name="save" value="1">
+						<input type="hidden" name="panel_count_for_mms" value="<?=($leadid!='' && $pid!='')?$panel_count:''?>">
+						<input type="hidden" name="panel_model_for_mms" value="<?=($leadid!='' && $pid!='')?$panel_model:''?>">
+						<!-- MMS -->
+						<?php
+						if($roof_sel=='1'){ ?>
+						<div class="col-xs-1 col-sm-3 col-md-3">
+                                
+                                <a href="javascript:void(0);" class="btn" onClick="roof_mms('<?= $id ?>','<?=$i?>')">Roof <?= $i+1;?> MMS</a>
+                        </div>
+						<div class="col-md-12" id="mms_roof_<?=$id?>" style="display:none;"></div>
+						<?php } ?>
 						
+						<br>
                         <hr>        
                         <!-- E:Edit -->
                         <?php $i++; } } else{ ?>
@@ -1817,6 +1830,34 @@ function updateMmsCost(){
         })}
     }
 </script>
+
+
+<script>
+function roof_mms(id,i){
+	$('#mms_roof_'+id).toggle();
+	var roof_typ = $('#roofing_material'+i).val();
+	var panel_count = $('#panel_count').val();
+	var panel_model = $('#panel_model').val();
+	if(roof_typ!='')
+	{
+		$.ajax({
+			type:'post',
+			url:"<?=SITE_PATH_ADM.CPAGE?>/roof_mms_cost.php",
+			data:"roof_typ="+roof_typ+"&panel_count="+panel_count+"&panel_model="+panel_model,
+			success:function(response){
+				//alert(response); 
+				if(response){	
+					$('#mms_roof_'+id).html(response);	
+				}
+			}
+		});
+	}else{
+		//alert('');
+	}
+}
+</script>
+
+
 <script type="text/javascript">
     $(document).ready(function()
     {
