@@ -1,5 +1,5 @@
 <?php error_reporting(0); 
-include("../lib/opin.inc.php");
+include("../../../lib/opin.inc.php");
 
 //print_r($_REQUEST);die;
 $rsAdmin = $cms->db_query("select * from #_leads where id='".$_REQUEST['order_no']."'");

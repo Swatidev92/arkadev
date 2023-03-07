@@ -57,7 +57,7 @@ elseif($lead_automatic==1 && $_SESSION["ses_adm_role"]!=1){
 
 $proposalCustomerType = $cms->getSingleResult("SELECT proposal_customer_type FROM #_leads where id=$leadid ");
 
-$roofFetchDetailsQry = $cms->db_query("SELECT * FROM #_roof_details where lead_id='$leadid' AND status=0 AND is_deleted=0 ");
+$roofFetchDetailsQry = $cms->db_query("SELECT * FROM #_roof_details where lead_id='$leadid' AND form_type != 'customer' AND status=0 AND is_deleted=0 ");
 $numRowsRoof = $roofFetchDetailsQry->num_rows;
 if($numRowsRoof>0){
 $roof_details_count = $numRowsRoof;
@@ -111,6 +111,8 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					$lnk1="?mode=add-proposal-newgr-ppp&start=&t=prop_details&leadid=".$leadid."&id=".$pid;
 					$lnk3="?mode=add-proposal-newgr-ppp&start=&t=other_details&leadid=".$leadid."&id=".$pid;
 					$lnk2="?mode=add-proposal-newgr-ppp&start=&t=roof_details&leadid=".$leadid."&id=".$pid;
+					$lnk4="?mode=add-proposal-newgr-ppp&start=&t=bom_calc&leadid=".$leadid."&id=".$pid;
+
 				}					
 				
 				if($t=='prop_details' || $t=='' ){
@@ -125,6 +127,10 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					$active="active";
 					$active2="active";
 				}
+				elseif($t=='bom_calc'){
+					$active="active";
+					$active4="active";
+				}
 				else{}
 				?>
 				<ul class="nav nav-tabs" role="tablist1">
@@ -137,6 +143,9 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 					</li>
 					<li role="presentation" class="<?php echo $active2;?>"><a href="<?PHP echo $lnk2 ?>">
 						<span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Roof Details</span></a>
+					</li>
+					<li role="presentation" class="<?php echo $active4;?>"><a href="<?PHP echo $lnk4 ?>">
+						<span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Bom Calculation</span></a>
 					</li>
 				</ul>
 
@@ -1062,7 +1071,7 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
 						<input type="hidden" name="panel_model_for_mms" value="<?=($leadid!='' && $pid!='')?$panel_model:''?>">
 						<!-- MMS -->
 						<?php
-						if($roof_sel=='1'){ ?>
+						if(($roof_sel=='1' )&& in_array($roofing_material,$roof_for_mms)){ ?>
 						<div class="col-xs-1 col-sm-3 col-md-3">
                                 
                                 <a href="javascript:void(0);" class="btn" onClick="roof_mms('<?= $id ?>','<?=$i?>')">Roof <?= $i+1;?> MMS</a>
@@ -1146,6 +1155,58 @@ $otherDetailsfetch = $otherDetailsQry->fetch_array();
                 </div>
                 <!-- E:Roof Details Form -->
 
+				<!-- s:bom calc mk-19 -->
+				<div role="tabpanel" class="tab-pane <?php echo $active4;?>" id="bom_calc">
+						<?php $i=0; 
+							$customerPriceQry = $cms->db_query("select roof_mms from #_roof_details where proposal_id='$pid' and form_type='proposal'" );
+							$arry = array(46,6,1,5,13); // list of mms profile
+							while($mmsVVArry = $customerPriceQry->fetch_array()){
+									$k=0;
+									foreach($arry as $key=>$ids)
+									{
+										$objMmsVv = json_decode($mmsVVArry['roof_mms'],true);
+										// $ar['mms_code'][$ids]=$objMmsVv[$k][0]['mms_code'];
+										$ar['mms_item'][$ids]=$objMmsVv[$k][0]['mms_item'];
+										$ar['mms_qty'][$ids]=$ar['mms_qty'][$ids]+$objMmsVv[$k][0]['mms_qty'];
+										$ar['mms_cost'][$ids]=$ar['mms_cost'][$ids]+$objMmsVv[$k][0]['mms_cost'];
+										$k++;
+									}
+								}
+						?>
+						<table class="table table-bordered">
+							<tr>
+								<th>S.No.</th>
+								<th>Model</th>
+								<th>Quantity</th>
+								<th>Cost</th>
+							</tr>
+							<?php foreach($ar['mms_qty'] as $key=>$val ){ ?>
+						    <tr>
+								<td><?php $i=$i+1; echo $i;?></td>
+								<td><?php 
+									$keys= $ar['mms_item'][$key];	
+								$ids = getids($keys);
+                                 // print_r($ids);die;
+                                 $panel_model = json_decode($ids['content'],true);
+                                 foreach($panel_model as $cval){
+                                 echo $cval['name']; 
+                                    $cost = $cval['price'];
+                                } 
+								?></td>
+								<td><?=$ar['mms_qty'][$key]?></td>
+								<td><?=$ar['mms_cost'][$key]?></td></tr>
+							<?php } ?>
+                            
+                        <!-- </tr> -->
+						</table>
+						<div class="form-group col-sm-12">
+                            <button type="submit" class="btn add-submit-btn" name="inventory" value="1">Update</button>
+                        </div>
+					<div class="clearfix"></div>					
+					
+				</div>
+				<!-- e:bom calc mk-19 -->
+				
 	</div>
 
 <div class="modal" id="installation_chart">

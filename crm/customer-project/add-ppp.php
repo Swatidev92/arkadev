@@ -309,7 +309,7 @@ if($cms->is_post_back()){
 		
 		$to = $_POST['email'];
 		$resReturn = sendEmail($to, $subject,$email_msg);
-		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=communication&id='.$uids, true);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=communication&id='.$uids, true);
 	}
 	// E:Send-mail mk-19
 					
@@ -500,7 +500,7 @@ if($cms->is_post_back()){
 			}
     // die;
 		}
-		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=roof_details&id='.$pid, true);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=roof_details&id='.$pid, true);
     // die;
     
     }
@@ -585,7 +585,7 @@ if($cms->is_post_back()){
 				$cms->sqlquery("rs","customer_project",$Proj_chkarr,'id',$pid);
 			}
 			
-			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=project_checklist&id='.$pid, true);
+			$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=project_checklist&id='.$pid, true);
 			
 	}
 	
@@ -644,15 +644,107 @@ if($cms->is_post_back()){
 		$cms->sqlquery("rs","customer_project",$inventory,'id',$pid);
 		// echo $pid;
 		// die;
-		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=inventory&id='.$pid, true);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=inventory&id='.$pid, true);
 	}
 	// E:mk-19-inventory
 	
+    // S:Bom calc
+    $action_message ='';
+	if(isset($_FILES['file_upload'])){
+        $customerProjectQry = $cms->db_query("SELECT * FROM #_customer_project where id = '".$pid."'");
+        $customerProjectArr = $customerProjectQry->fetch_array();
+        $mms_vendor = json_decode(($customerProjectArr['mms_vendor']),true);
+		// echo "<script>alert('Success.');</script>";
+       // print_r($mms_vendor);
+		$csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
+		if(!empty($_FILES['file_upload']['name']) && in_array($_FILES['file_upload']['type'], $csvMimes))
+		{
+			$csvFile = fopen($_FILES['file_upload']['tmp_name'], 'r');
+            
+			$duplicate_id = array();
+           // $column= fgetcsv($csvFile);
+            while(($column = fgetcsv($csvFile)) !== FALSE){
+               // echo "<pre>";    
+                
+                $code = $column[1];
+                foreach($mms_vendor['mms_code'] as $key=>$val){
+                if($code == $mms_vendor['mms_code'][$key] ){
+                    $mms_vendor['mms_qty'][$key] = $column[5];
+                    $mms_vendor['mms_cost'][$key] = $column[8];
+                    // print_r($mms_vendor['mms_code']);
+                
+                    // echo "|";
+                // print_r($code);
+                // if($mms_vendor[])
+                } } }
+                $mms['mms_vendor']= json_encode($mms_vendor);
+
+
+                $insert_id = $cms->sqlquery("rs","customer_project",$mms,'id',$pid);
+                // if($q_data->num_rows  == 0 && $email !='')
+                // {
+                    //    print_r($column);
+            		
+						
+					// }
+					// else{
+					// //	$q_id = $q_data->fetch_array();
+					// 	// $dupli_id =array();
+					// //	array_push($duplicate_id,$q_id);
+					// }
+					
+					
+				// }
+                //die;
+				
+				
+			
+				if(!empty($insert_id))
+				{
+					
+					// header('Location: '.SITE_PATH_ADM);
+					// $page = $_SERVER['PHP_SELF'];
+					// echo '<meta http-equiv="Refresh" content="0;' . $page . '">';
+					// $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=upload-lead', true);
+					// $adm->sessset('Record has been Imported', 's');
+			}
+			else
+			{
+				
+				$adm->sessset('Record has been not Imported', 'e');
+			}
+			
+            fclose($csvFile);
+			}
+			
+	
+	}
+    if(isset($_POST['bom_calc'])){
+
+        $customerProjectQry = $cms->db_query("SELECT * FROM #_customer_project where id = '".$pid."'");
+        $customerProjectArr = $customerProjectQry->fetch_array();
+        $mms_vendor = json_decode(($customerProjectArr['mms_vendor']),true);
+
+        $updates = array_replace_recursive($mms_vendor, $_POST['vendor_qty']);
+       
+        $vendor['mms_vendor'] = json_encode($updates);
+    
+        // print_r($updates);
+        $cms->sqlquery("rs","customer_project",$vendor,'id',$pid);
+        $cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=bom_calc&id='.$pid, true);
+        // die;
+
+    //    if()
+    }
+    // E:Bom clac
+
+
+
 	if($t=='proj_info' || $t==''){
-		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=proj_info&id='.$pid, true);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=proj_info&id='.$pid, true);
 	}
 	elseif($t=='upload_info'){
-		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add&t=upload_info&id='.$pid, true);
+		$cms->redir(SITE_PATH_ADM.CPAGE.'?mode=add-ppp&t=upload_info&id='.$pid, true);
 	}
 	else{
 		$cms->redir(SITE_PATH_ADM.CPAGE, true);
@@ -674,7 +766,7 @@ if(isset($pid)){
 	$customerPriceArr = $customerPriceQry->fetch_array(); 
 	$lead_id = $cms->getSingleResult("SELECT lead_id FROM #_leads WHERE id=".$cust_id." ");
 	//echo $lead_id;die;
-	$roofFetchDetailsQry = $cms->db_query("SELECT * FROM #_roof_details where lead_id='$lead_id' AND status=0 AND is_deleted=0 ");
+	$roofFetchDetailsQry = $cms->db_query("SELECT * FROM #_roof_details where lead_id='$lead_id' AND form_type='customer' AND status=0 AND is_deleted=0 ");
 	$numRowsRoof = $roofFetchDetailsQry->num_rows;
 	if($numRowsRoof>0){
 	$roof_details_count = $numRowsRoof;
@@ -895,16 +987,18 @@ $leadsArr = $leadsQry->fetch_array();
 			$lnk1="#";
 			$lnk2="#";
 			if($pid>0){
-				$lnk1="?mode=add&t=proj_info&id=".$pid;
-				$lnk2="?mode=add&t=upload_info&id=".$pid;
-				$lnk3="?mode=add&t=project_steps&id=".$pid;
-				$lnk4="?mode=add&t=project_logs&id=".$pid;
-				$lnk5="?mode=add&t=project_checklist&id=".$pid;
+				$lnk1="?mode=add-ppp&t=proj_info&id=".$pid;
+				$lnk2="?mode=add-ppp&t=upload_info&id=".$pid;
+				$lnk3="?mode=add-ppp&t=project_steps&id=".$pid;
+				$lnk4="?mode=add-ppp&t=project_logs&id=".$pid;
+				$lnk5="?mode=add-ppp&t=project_checklist&id=".$pid;
 				// mk-19
-				$lnk6="?mode=add&t=roof_details&id=".$pid;
-				$lnk7="?mode=add&t=inventory&id=".$pid;
-				$lnk8="?mode=add&t=communication&id=".$pid;
-				$lnk9="?mode=add&t=documentation&id=".$pid;
+				$lnk6="?mode=add-ppp&t=roof_details&id=".$pid;
+				$lnk7="?mode=add-ppp&t=inventory&id=".$pid;
+				$lnk8="?mode=add-ppp&t=communication&id=".$pid;
+				$lnk9="?mode=add-ppp&t=documentation&id=".$pid;
+				$lnk10="?mode=add-ppp&t=bom_calc&id=".$pid;
+
 			}					
 			
 			if($t=='proj_info' || $t=='' ){
@@ -928,6 +1022,10 @@ $leadsArr = $leadsQry->fetch_array();
 			elseif($t=='inventory'){
 				$active="active";
 				$active7="active";
+			}
+            elseif($t=='bom_calc'){
+				$active="active";
+				$active10="active";
 			}
 			// e:mk-19
 			elseif($t=='project_steps'){
@@ -960,6 +1058,7 @@ $leadsArr = $leadsQry->fetch_array();
 				<li role="presentation" class="<?php echo $active5;?>"><a href="<?PHP echo $lnk5 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Checklist</span></a></li>
 				<!-- s:mk-19 -->
 				<li role="presentation" class="<?php echo $active7;?>"><a href="<?PHP echo $lnk7 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Product List</span></a></li>
+                <li role="presentation" class="<?php echo $active10;?>"><a href="<?PHP echo $lnk10 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">BOM Calculation</span></a></li>
 				<!-- e:mk-19 -->
 				<li role="presentation" class="<?php echo $active2;?>"><a href="<?PHP echo $lnk2 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Uploads</span></a></li>				
 				<li role="presentation" class="<?php echo $active3;?>"><a href="<?PHP echo $lnk3 ?>"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Steps</span></a></li>				
@@ -1173,7 +1272,12 @@ $leadsArr = $leadsQry->fetch_array();
 					<div class="col-sm-12"><h2 class="form-section-heading">Other Info -</h2></div>
 					<div class="form-group col-sm-3">
 						<label class="control-label">Panel Type</label>
-						<input type="text" class="form-control" name="panel_name" id="panel_name" readonly value="<?=$panel_name?>">
+						<input type="text" class="form-control" name="panel_name" id="panel_name" readonly value="<?php $ids = getids($panel_name);
+							// print_r($ids);die;
+							$panel_model = json_decode($ids['content'],true);
+							foreach($panel_model as $cval){
+							echo $cval['name']; }
+						?>">
 						<!-- <select class="form-control select2" id="panel_name" name="panel_name" id="panel_name" disabled readonly>
 							<option value="">Select Panel Type</option>
 							<?php //$panelTyeArray = json_decode($customerPriceArr["panel_types"], true);
@@ -1216,20 +1320,26 @@ $leadsArr = $leadsQry->fetch_array();
 						<div class="form-group">
 							<label class="control-label">Inverter Type 1</label>
 							<select class="form-control select2" id="inverter1" name="inverter1">
-								<option value="">Select Inverter Type</option>
-								<?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
+								
+                                <option value="">Select Inverter Type</option>
+                                <?php 
+                                //$inverter1
+							// print_r($ids);die;
+                                $inverterRes=getNewPrice('inverter_types','1');
+                                while($inverter_types =$cms->db_fetch_array($inverterRes)){
+							    $inverterTyeArray = json_decode($inverter_types['content'],true);
 								usort($inverterTyeArray, function ($a, $b) {
 									return $a['name'] <=> $b['name'];
 								});
 								foreach ($inverterTyeArray as $ikey => $ivalue) {
 									if($ivalue["invstatus"]){
-									if($inverter1==$ivalue["name"]){
+									if($inverter1==$ivalue["name"] || $inverter1==$inverter_types['id']){
 										$invsel = 'selected';
 									}else{
 										$invsel = '';
 									}
-									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
-								} }
+									echo '<option value="'.$inverter_types['ids'].'" '.$invsel.'>'.$ivalue["name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1250,19 +1360,22 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Inverter Type 2</label>
 							<select class="form-control select2" id="inverter2" name="inverter2">
 								<option value="">Select Inverter Type</option>
-								<?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
+								<?php 
+                                $inverterRes=getNewPrice('inverter_types','1');
+                                while($inverter_types =$cms->db_fetch_array($inverterRes)){
+							    $inverterTyeArray = json_decode($inverter_types['content'],true);
 								usort($inverterTyeArray, function ($a, $b) {
 									return $a['name'] <=> $b['name'];
 								});
 								foreach ($inverterTyeArray as $ikey => $ivalue) {
 									if($ivalue["invstatus"]){
-									if($inverter2==$ivalue["name"]){
+									if($inverter2==$ivalue["name"] || $inverter2==$inverter_types['id']){
 										$invsel = 'selected';
 									}else{
 										$invsel = '';
 									}
-									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
-								} }
+									echo '<option value="'.$inverter_types['ids'].'" '.$invsel.'>'.$ivalue["name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1284,19 +1397,21 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Inverter Type 3</label>
 							<select class="form-control select2" id="inverter3" name="inverter3">
 								<option value="">Select Inverter Type</option>
-								<?php $inverterTyeArray = json_decode($customerPriceArr["inverter_types"], true);
+								<?php $inverterRes=getNewPrice('inverter_types','1');
+                                while($inverter_types =$cms->db_fetch_array($inverterRes)){
+							    $inverterTyeArray = json_decode($inverter_types['content'],true);
 								usort($inverterTyeArray, function ($a, $b) {
 									return $a['name'] <=> $b['name'];
 								});
 								foreach ($inverterTyeArray as $ikey => $ivalue) {
 									if($ivalue["invstatus"]){
-									if($inverter3==$ivalue["name"]){
+									if($inverter3==$ivalue["name"] || $inverter3==$inverter_types['id']){
 										$invsel = 'selected';
 									}else{
 										$invsel = '';
 									}
-									echo '<option value="'.$ivalue["name"].'" '.$invsel.'>'.$ivalue["name"].'</option>';
-								} }
+									echo '<option value="'.$inverter_types['ids'].'" '.$invsel.'>'.$ivalue["name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1320,19 +1435,22 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">EV Charger Type</label>
 							<select class="form-control" id="ev_charger" name="ev_charger" required>
 								<option value="">Select EV Charger</option>
-								<?php $chargerTyeArray = json_decode($customerPriceArr["ev_charger_types"], true);
+								<?php
+                                $ev_chargerRes= getNewPrice('ev_charger_types','1');
+                                while($chargerTypes =$cms->db_fetch_array($ev_chargerRes)){ 
+                                $chargerTyeArray = json_decode($chargerTypes["content"], true);
 								usort($chargerTyeArray, function ($a, $b) {
 									return $a['name'] <=> $b['name'];
 								});
 								foreach ($chargerTyeArray as $ckey => $cvalue) {
 									if($cvalue["evstatus"]==1){
-									if($ev_charger==$cvalue["name"]){
+									if($ev_charger==$cvalue["name"] || $ev_charger==$chargerTypes["id"]){
 										$csel = 'selected';
 									}else{
 										$csel = '';
 									}
-									echo '<option value="'.$cvalue["name"].'" '.$csel.'>'.$cvalue["name"].'</option>';
-								} }
+									echo '<option value="'.$chargerTypes["id"].'" '.$csel.'>'.$cvalue["name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1342,7 +1460,7 @@ $leadsArr = $leadsQry->fetch_array();
 							<input type="number" class="form-control" name="ev_quantity" min="1" value="<?=$ev_quantity?>">
 						</div>
 					</div>
-					
+					<?php // echo $battery; die; ?>
 					<?php if($battery){
 						$showbattery = "";
 					}else{
@@ -1353,19 +1471,23 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Battery</label>
 							<select class="form-control" id="battery" name="battery" required>
 								<option value="">Select Battery</option>
-								<?php $batteryTyeArray = json_decode($customerPriceArr["battery_types"], true);
+								<?php 
+                                 $batteryTypRes= getNewPrice('battery_types','1');
+                                 while($batteryTypes =$cms->db_fetch_array($batteryTypRes)){ 
+                                 $batteryTyeArray = json_decode($batteryTypes["content"], true);
+                                //$batteryTyeArray = json_decode($customerPriceArr["battery_types"], true);
 								usort($batteryTyeArray, function ($a, $b) {
 									return $a['name'] <=> $b['name'];
 								});
 								foreach ($batteryTyeArray as $bkey => $bvalue) {
 									if($bvalue["bstatus"]==1){
-									if($battery==$bvalue["name"]){
+									if($battery==$bvalue["name"] || $battery== $batteryTypes["id"]){
 										$bsel = 'selected';
 									}else{
 										$bsel = '';
 									}
-									echo '<option value="'.$bvalue["name"].'" '.$bsel.'>'.$bvalue["name"].'</option>';
-								} }
+									echo '<option value="'.$batteryTypes["id"].'" '.$bsel.'>'.$bvalue["name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1388,19 +1510,23 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Smart Sensor</label>
 							<select class="form-control" id="smart_sensor_name" name="smart_sensor_name">
 								<option value="">Select Smart Sensor</option>
-								<?php $sensorTypeArray = json_decode($customerPriceArr["sensor_type"], true);
+								<?php 
+                                $sensorTypeQry = getNewPrice('sensor_type','1');
+                                while($sensorTypeAry = $sensorTypeQry->fetch_array()){
+                                $sensorTypeArray = json_decode($sensorTypeAry["content"], true);
+                                //$sensorTypeArray = json_decode($customerPriceArr["sensor_type"], true);
 								usort($sensorTypeArray, function ($a, $b) {
 									return $a['sensor_name'] <=> $b['sensor_name'];
 								});
 								foreach ($sensorTypeArray as $snkey => $snvalue) {
 									if($snvalue["sensor_status"]==1){
-									if($smart_sensor_name==$snvalue["sensor_name"]){
+									if($smart_sensor_name==$snvalue["sensor_name"] || $smart_sensor_name==$sensorTypeAry['id']){
 										$snsel = 'selected';
 									}else{
 										$snsel = '';
 									}
-									echo '<option value="'.$snvalue["sensor_name"].'" '.$snsel.'>'.$snvalue["sensor_name"].'</option>';
-								} }
+									echo '<option value="'.$sensorTypeAry['id'].'" '.$snsel.'>'.$snvalue["sensor_name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1421,19 +1547,23 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Backup Box</label>
 							<select class="form-control" id="odrift_name" name="odrift_name">
 								<option value="">Select Backup Box</option>
-								<?php $odriftTypeArray = json_decode($customerPriceArr["odrift_type"], true);
+								<?php
+                                 $odriftTypeQry = getNewPrice('odrift_type','1');
+                                 while($odriftTypeAry = $odriftTypeQry->fetch_array()){
+                                 $odriftTypeArray = json_decode($odriftTypeAry["content"], true); 
+                                //$odriftTypeArray = json_decode($customerPriceArr["odrift_type"], true);
 								usort($odriftTypeArray, function ($a, $b) {
 									return $a['odrift_name'] <=> $b['odrift_name'];
 								});
 								foreach ($odriftTypeArray as $odkey => $odvalue) {
 									if($odvalue["odrift_status"]==1){
-									if($odrift_name==$odvalue["odrift_name"]){
+									if($odrift_name==$odvalue["odrift_name"] || $odrift_name==$odriftTypeAry["id"]){
 										$snsel = 'selected';
 									}else{
 										$snsel = '';
 									}
-									echo '<option value="'.$odvalue["odrift_name"].'" '.$snsel.'>'.$odvalue["odrift_name"].'</option>';
-								} }
+									echo '<option value="'.$odriftTypeAry["id"].'" '.$snsel.'>'.$odvalue["odrift_name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1454,19 +1584,23 @@ $leadsArr = $leadsQry->fetch_array();
 							<label class="control-label">Optimizer</label>
 							<select class="form-control" id="optimizer_name" name="optimizer_name">
 								<option value="">Select Optimizer</option>
-								<?php $optimizerTypeArray = json_decode($customerPriceArr["optimizer_type"], true);
+								<?php 
+                                $optimizerTypeQry = getNewPrice('optimizer_type','1');
+                                while($optimizerTypeAry = $optimizerTypeQry->fetch_array()){
+                                $optimizerTypeArray = json_decode($optimizerTypeAry["content"], true);
+                                //$optimizerTypeArray = json_decode($customerPriceArr["optimizer_type"], true);
 								usort($optimizerTypeArray, function ($a, $b) {
 									return $a['optimizer_name'] <=> $b['optimizer_name'];
 								});
 								foreach ($optimizerTypeArray as $odkey => $odvalue) {
 									if($odvalue["optimizer_status"]==1){
-									if($optimizer_name==$odvalue["optimizer_name"]){
+									if($optimizer_name==$odvalue["optimizer_name"] || $optimizer_name==$optimizerTypeAry["id"]){
 										$snsel = 'selected';
 									}else{
 										$snsel = '';
 									}
-									echo '<option value="'.$odvalue["optimizer_name"].'" '.$snsel.'>'.$odvalue["optimizer_name"].'</option>';
-								} }
+									echo '<option value="'.$optimizerTypeAry["id"].'" '.$snsel.'>'.$odvalue["optimizer_name"].'</option>';
+								} } }
 								?>
 							</select>
 						</div>
@@ -1977,17 +2111,21 @@ $leadsArr = $leadsQry->fetch_array();
                                 <label for="roofing_material" class="control-label">Roof Type</label>
                                 <select class="form-control" id="roofing_material[<?=$i?>]" name="roofing_material[<?=$i?>]" <?= $readonly_field ?>>
                                     <option value="">Select Roof type</option>
-                                    <?php $roofTypePriceArr = json_decode($customerPriceArr["roof_type_price"], true);
+                                    <?php 
+                                    $roofTypeQry = getNewPrice('roof_type','1');
+									while($roofTypeAry = $roofTypeQry->fetch_array() ){
+									$roofTypePriceArr = json_decode($roofTypeAry["content"], true);
+                                    //$roofTypePriceArr = json_decode($customerPriceArr["roof_type_price"], true);
                                     foreach ($roofTypePriceArr as $rkey => $rvalue) {
                                     if ($rvalue["rfstatus"] == 1) {
-                                        if ($roofing_material == $rvalue["name"]) {
+                                        if ($roofing_material == $rvalue["name"] || $roofTypeAry['id'] == $roofing_material) {
                                             $rsel = 'selected';
                                             } else {
                                             $rsel = '';
                                         }
-                                            echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';
+                                            echo '<option value="' . $roofTypeAry['id'] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';
                                         }
-                                    }
+                                    } }
                                     ?>
                                 </select>
                             </div>
@@ -2394,7 +2532,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>EV Charger</td>
 								<td id="ev_charger_show">
-									<span id="ev_charger1"><?=$customerProjectArr['ev_charger']?></span>
+									<span id="ev_charger1">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['ev_charger']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>
+                                    <?//=$customerProjectArr['ev_charger']?></span>
 									<a class="pull-right" id="ev_charger_edit" onclick="ev_charg()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="ev_quan_num">
@@ -2407,7 +2553,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Panels</td>
 								<td id="panel_nam_show">
-									<span id="panel_nam1"><?=$customerProjectArr['panel_name']?></span>
+									<span id="panel_nam1">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['panel_name']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>
+                                    <?//=$customerProjectArr['panel_name']?></span>
 									<a class="pull-right" id="panel_nam_edit" onclick="panel_nam()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="panel_count_show">
@@ -2428,7 +2582,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 1</td>
 								<td id="inverter1_show">
-									<span id="inverter1_hide"><?=$customerProjectArr['inverter1']?></span>
+									<span id="inverter1_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['inverter1']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>  
+                                    <?//=$customerProjectArr['inverter1']?></span>
 									<a class="pull-right" id="inverter1_edit" onclick="inverter1()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="inverter1_qty_show">
@@ -2457,11 +2619,20 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 							 	<td>Inverter 2</td>
 								<td id="inverter2_show">
-									<span id="inverter2_hide"><?=$customerProjectArr['inverter2']?></span>
+									<span id="inverter2_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['inverter2']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>    
+                                    <?//=$customerProjectArr['inverter2']?></span>
 									<a class="pull-right" id="inverter2_edit" onclick="inverter2()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="inverter2_qty_show">
-									<span id="inverter2_qty_hide"><?=$customerProjectArr['inverter2_qty']?></span>
+									<span id="inverter2_qty_hide">
+                                        <?=$customerProjectArr['inverter2_qty']?></span>
 									<a class="pull-right" id="inverter2_qty_edit" onclick="inverter2_qty()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 							</tr>
@@ -2485,7 +2656,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Inverter 3</td>
 								<td id="inverter3_show">
-									<span id="inverter3_hide"><?=$customerProjectArr['inverter3']?></span>
+									<span id="inverter3_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['inverter3']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>   
+                                    <?//=$customerProjectArr['inverter3']?></span>
 									<a class="pull-right" id="inverter3_edit" onclick="inverter3()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="inverter3_qty_show">
@@ -2513,7 +2692,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Battery</td>
 								<td id="battery_show">
-									<span id="battery_hide"><?=$customerProjectArr['battery']?></span>
+									<span id="battery_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['battery']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['name']; }
+                                   ?>     
+                                    <?//=$customerProjectArr['battery']?></span>
 									<a class="pull-right" id="battery_edit" onclick="battery()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="battery_qty_show">
@@ -2526,7 +2713,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Smart Senor</td>
 								<td id="smart_senor_show">
-									<span id="smart_senor_hide"><?=$customerProjectArr['smart_sensor_name']?></span>
+									<span id="smart_senor_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['smart_sensor_name']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['sensor_name']; }
+                                   ?>     
+                                    <?//=$customerProjectArr['smart_sensor_name']?></span>
 								<a class="pull-right" id="smart_senor_edit" onclick="smart_senor()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 								<td id="smart_senor_qty_show">
 									<span id="smart_senor_qty_hide"><?=$customerProjectArr['smart_sensor_qty']?></span>
@@ -2540,7 +2735,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Backup Box</td>
 								<td id="backup_box_show">
-									<span id="backup_box_hide"><?=$customerProjectArr['odrift_name']?></span>
+									<span id="backup_box_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['odrift_name']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['odrift_name']; }
+                                   ?>     
+                                    <?//=$customerProjectArr['odrift_name']?></span>
 									<a class="pull-right" id="backup_box_edit" onclick="backup_box()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								</td>
 								<td id="backup_box_qty_show">
@@ -2552,7 +2755,15 @@ $leadsArr = $leadsQry->fetch_array();
 								<td><?php $i=$i+1; echo $i;?></td>
 								<td>Optimizer</td>
 								<td id="optimizer_show">
-									<span id="optimizer_hide"><?=$customerProjectArr['optimizer_name']?></span>
+									<span id="optimizer_hide">
+                                    <?php 
+                                        $ids = getids($customerProjectArr['optimizer_name']);
+                                        // print_r($ids);die;
+                                        $panel_model = json_decode($ids['content'],true);
+                                        foreach($panel_model as $cval){
+                                        echo $cval['optimizer_name']; }
+                                   ?>     
+                                    <?//=$customerProjectArr['optimizer_name']?></span>
 									<a class="pull-right" id="optimizer_edit" onclick="optimizer()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 								<td id="optimizer_qty_show">
 									<span id="optimizer_qty_hide"><?=$customerProjectArr['optimizer_quantity']?></span>
@@ -2609,7 +2820,7 @@ $leadsArr = $leadsQry->fetch_array();
 									<span id="len_ev_hide"><?php if($customerProjectArr['cable_len_ev']!="" || $customerProjectArr['cable_len_ev']!=null){echo $customerProjectArr['cable_len_ev']; }else {echo "10";}?> m</span><a class="pull-right" id="len_ev_edit" onclick="cable_len_ev()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 							<?php } }?>
-
+                        
 						</table>
 						<div class="form-group col-sm-12">
                             <button type="submit" class="btn add-submit-btn" name="inventory" value="1">Update</button>
@@ -2618,6 +2829,71 @@ $leadsArr = $leadsQry->fetch_array();
 					
 				</div>
 				<!-- e:inventory mk-19 -->
+
+                <!-- s:bom calc mk-19 -->
+				<div role="tabpanel" class="tab-pane <?php echo $active10;?>" id="bom_calc">
+						<?php $i=0; 
+                        
+                        ?>
+                        <div class="form-group col-sm-12">
+					        <label for="file_upload" class="control-label">Upload File*</label>
+					        <input type="file" id="file_upload" name="file_upload" >
+					<a href="<?=SITE_PATH.UPLOAD_FILES_PTH.'/format/sample1.csv'?>" style="font-size:12px;"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;<b>Sample CSV file.</b></a>
+
+                            <!-- <button type="submit" class="btn add-submit-btn" name="bom_calc" value="1">Update</button> -->
+					        <br>
+				        </div>
+						<table class="table table-bordered">
+							<tr>
+								<th>S.No.</th>
+								<th>Product Name</th>
+								<th>System Price</th>
+								<th>System Quantity</th>
+                                <th>Vendor Price</th>
+								<th>Vendor Quantity</th>
+							</tr>
+                            <tr>
+                                <?php 
+                               $mms_services = json_decode(($customerProjectArr['mms_service']),true); 
+                               $mms_vendor = json_decode(($customerProjectArr['mms_vendor']),true); 
+                                
+                                  //print_r($mms_services); //die;
+                               $cnt = count($mms_vendor['mms_qty']);
+                               foreach($mms_vendor['mms_qty'] as $key=>$mServ){
+                                // echo "|";    
+                                // print_r($mServ);
+                                    ?>                            
+                                <td><?php $i=$i+1; echo $i;?></td>
+                                <td><?php
+                                 $ids = getids($key);
+                                 // print_r($ids);die;
+                                 $panel_model = json_decode($ids['content'],true);
+                                 foreach($panel_model as $cval){
+                                 echo $cval['name']; 
+                                    $cost = $cval['price'];
+                                } 
+                                ?></td>
+                                <td><?=$mms_services['mms_cost'][$key]?></td> 
+                                <td><?=$mms_services['mms_qty'][$key]?></td>
+                                <td><?=$mServ*$cost?></td>
+                                <td id="vendor_qty_show<?=$i?>">
+                                    <span id="vendor_qty_hide<?=$i?>"><?=$mServ?></span>
+                                    <input type="hidden" id="val<?=$i?>" name="vendor_qty[mms_item][<?=$key?>]" value="<?=$mms_services['mms_item'][$key]?>"/> 
+                                    <input type="hidden" id="val<?=$i?>" name="vendor_qty[mms_cost][<?=$key?>]" value="<?=$mms_services['mms_cost'][$key]?>"/> 
+                                    <a class="pull-right" id="vendor_qty_edit<?=$i?>" onclick="vendor_qty(<?=$i?>)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td></tr>
+                                
+                            <?php  echo "</tr>"; } ?>
+
+                        <!-- </tr> -->
+						</table>
+						<div class="form-group col-sm-12">
+                            <input type="submit" class="btn add-submit-btn" name="bom_calc" value="Update" placeholder="Update">
+                        </div>
+					<div class="clearfix"></div>					
+					
+				</div>
+				<!-- e:bom calc mk-19 -->
 				
 				<div role="tabpanel" class="tab-pane <?php echo $active3;?>" id="project_steps">
 					<?php //include('project-steps.php');?>
@@ -3177,7 +3453,7 @@ function revrcrd(rid){
 	    //Check maximum number of input fields
 	    if(x5 < list_maxField){ 
 	        x5++; //Increment field counter
-	        var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypePriceArr=json_decode($customerPriceArr["roof_type_price"], true);foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){ if ($roofing_material==$rvalue["name"]){$rsel='';}else{$rsel='';}echo '<option value="' . $rvalue["name"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}?></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" ></div><div class="form-group col-md-2"><label for="roof_length" class="control-label">Roof Height</label><input type="text" class="form-control" name="roof_height['+x5+']" id="roof_height['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Width</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
+	        var list_fieldHTML = '<div class="row"><div class="form-group col-md-1 "><label for="total-panel" class="control-label">Total Pannel</label><input type="number" class="form-control" name="total_panel['+x5+']" id="total_panel['+x5+']"></div><div class="form-group col-md-3 col-sm-4 col-xs-6"><label for="roofing_material" class="control-label">Roof Type</label><select class="form-control roof" id="roofing_material'+x5+'" name="roofing_material['+x5+']"  <?=$readonly_field ?>  ><option value="">Select Roof type</option><?php $roofTypeQry = getNewPrice('roof_type','1'); while($roofTypeAry = $roofTypeQry->fetch_array() ){ $roofTypePriceArr = json_decode($roofTypeAry["content"], true); foreach ($roofTypePriceArr as $rkey=> $rvalue){if ($rvalue["rfstatus"]==1){ if ($roofing_material==$rvalue["name"] || $roofing_material==$roofTypeAry['id']){$rsel='';}else{$rsel='';}echo '<option value="' . $roofTypeAry["id"] . '" ' . $rsel . '>' . $rvalue["name"] . '</option>';}}}?></select></div><div class="form-group col-md-2 col-sm-4 col-xs-6"><label for="roof-support" class="control-label">Roof Support</label><br><select class="form-control" id="roof_support['+x5+']" name="roof_support['+x5+']"><option value="">Select Roof Support</option><option value="1">Råspont</option><option value="2">No Råspont</option></select></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_angle" class="control-label">Roof Angle</label><input type="text" class="form-control" name="roof_angle['+x5+']" id="roof_angle['+x5+']" ></div><div class="form-group col-md-2"><label for="roof_length" class="control-label">Roof Height</label><input type="text" class="form-control" name="roof_height['+x5+']" id="roof_height['+x5+']"  <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_length" class="control-label">Length</label><input type="text" class="form-control" name="roof_length['+x5+']" id="roof_length['+x5+']" <?= $readonly_field ?>></div><div class="form-group col-md-1 col-sm-4 col-xs-6"><label for="roof_breath" class="control-label">Width</label><input type="text" class="form-control" name="roof_breath['+x5+']" id="roof_breath['+x5+']"  <?= $readonly_field ?>></div><div class="col-xs-1 col-sm-7 col-md-1"><label for="remove" class="control-label">Action</label><br><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>';
 	        $('.list_wrapper5').append(list_fieldHTML); //Add field html
             //var total_rec= $("#total_rec").val();
             var total_rec = parseInt($("#total_rec").val());
@@ -3423,4 +3699,19 @@ $("#aforms").on("submit",function(e){
 		$('#surg_dc_edit').hide();
 		$('#surg_dc_show').append('<input type="number" name="surg_dc" class="form-control" value="<?php if($customerProjectArr['surge_protc_dc']!="" || $customerProjectArr['surge_protc_dc']!=null){ echo $customerProjectArr['surge_protc_dc']; } else{ echo $otherDetailsArr['surge_protc_dc']; }?>"/>');
 	}
+    function vendor_qty(inx){
+        // alert(inx);
+        var x = "<?=$cnt?>";
+        var i = inx;
+        if(i < x){
+        var values = document.getElementById('val'+i).value;
+        // var contents = $('#val');
+        //console.log(values);
+              
+		    $('#vendor_qty_hide'+i).hide();
+		    $('#vendor_qty_edit'+i).hide();
+		    $('#vendor_qty_show'+i).append('<input type="number" name="vendor_qty[mms_qty]['+values+']" class="form-control" value=""/>');
+        i++;
+        }
+    }
 </script>

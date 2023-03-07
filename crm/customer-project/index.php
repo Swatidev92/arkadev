@@ -42,6 +42,6 @@ $Sys_Gl_module_id ="1";
 <div class="clearfix"></div>
 <?php } ?>
 	
-<?php if($mode=="add"){include("add.php");}else if($mode=="view"){include("view.php");}else if($mode=="edit-step"){include("edit-step.php");}else{include("manage.php");}?>
+<?php if($mode=="add"){include("add.php");}else if($mode=="add-ppp"){include("add-ppp.php");}else if($mode=="view"){include("view.php");}else if($mode=="edit-step"){include("edit-step.php");}else{include("manage.php");}?>
 <?php include("../inc/footer.inc.php");?>
 <?php include("../inc/footer.php");?>

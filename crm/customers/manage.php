@@ -406,7 +406,7 @@
 		$pagesize = intval($pagesize)==0?$pagesize=DEF_PAGE_SIZE:$pagesize;		
 		$columns = "select p.system_size, p.status as pstatus, p.project_report_name,p.sale_rep_id as psales, p.project_manager_id,p.project_date, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
 		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND p.is_deleted=0 AND l.status=4 $conditionsQr ";		
-		$order_by == '' ? $order_by = 'p.project_date' : true;
+		$order_by == '' ? $order_by = 'p.id' : true;
 		$order_by2 == '' ? $order_by2 = 'desc' : true;
 		$sql_count = "select count(*) ".$sql; 
 		$sql .= "order by $order_by $order_by2 ";
@@ -419,7 +419,7 @@
 		$pagesize = intval($pagesize)==0?$pagesize=DEF_PAGE_SIZE:$pagesize;
 		$columns = "select p.system_size, p.status as pstatus, p.project_report_name,p.project_date, p.modified_date,p.sale_rep_id as psales, p.project_manager_id, l.price_including_vat,l.charger_price_including_vat,l.battery_price_including_vat, p.is_all_checked, l.* ";
 		$sql = " from #_leads l LEFT JOIN #_customer_project p on l.id=p.cust_id where 1=1 AND l.lead_id>0 AND l.is_deleted=0 AND p.is_deleted=0 AND  l.status=4 ";
-		$order_by == '' ? $order_by = 'p.project_date' : true;
+		$order_by == '' ? $order_by = 'p.id' : true;
 		$order_by2 == '' ? $order_by2 = 'desc' : true;
 		$sql_count = "select count(*) ".$sql; 
 		$sql .= "order by $order_by $order_by2 ";
@@ -710,6 +710,8 @@
 									
 									if($project_id>0){
 										echo '&nbsp;&nbsp;'.$adm->action_e(SITE_PATH_ADM."customer-project?mode=add&start=".$_GET['start'],$project_id);
+										echo '&nbsp;&nbsp;New'.$adm->action_e(SITE_PATH_ADM."customer-project?mode=add-ppp&start=".$_GET['start'],$project_id);
+
 									?>								
 									<?php if($_SESSION["ses_adm_role"]=="1"){
 									echo $adm->action_d(SITE_PATH_ADM.CPAGE."?mode=add&start=".$_GET['start'],$id);

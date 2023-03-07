@@ -693,7 +693,14 @@
 		// $arrrsNPice=$cms->db_fetch_array($rsNPice);
 		return $rsNPice;
 	}
-	
+	function getids($id=null){
+		//echo $id;
+		//die;
+		global $cms;
+		$rsNId=$cms->db_query("select content,code,image from #_customer_price_manager where id='$id' AND is_deleted='0'");
+		$arrsNId=$cms->db_fetch_array($rsNId);
+		return $arrsNId;
+	}
 	// get roof mms
 	$roof_for_mms=array(153,157,159,158);
 function get_roof_mms($panel_count_for_mms=null,$panel_model_for_mms=NULL)
@@ -713,30 +720,37 @@ foreach($arr as $key=>$id)
 			$panel_model = $_POST['panel_model'];
 			$obj_evmrg = json_decode($cms->getSingleResult("SELECT content FROM #_customer_price_manager where id=".$panel_model));
 			$no_of_prfl=round((2*$_POST['panel_count']*$obj_evmrg[0]->width/$objMmsVv[0]['length'])*0.1);
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=$no_of_prfl;
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
 		}
 		elseif($objMmsVv[0]['code']=='724863'){
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=$no_of_prfl*0.2;
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
 		}
 		elseif($objMmsVv[0]['code']=='721550ZW'){
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=2*($_POST['panel_count']+1);
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
 		}
 		elseif($objMmsVv[0]['code']=='739052'){
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=round($_POST['panel_count']/15);
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
 		}
 		elseif($objMmsVv[0]['code']=='747838'){
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=round((2*$_POST['panel_count']*$obj_evmrg[0]->width/1.2)*0.1);
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
 		}
 		elseif($objMmsVv[0]['code']=='774380'){
+			$no_of_comp[$objMmsVv[0]['code']]['mms_code']=$objMmsVv[0]['code'];
 			$no_of_comp[$objMmsVv[0]['code']]['count']=round((3*2*$_POST['panel_count']*$obj_evmrg[0]->width/1.2)*0.1);
 			$no_of_comp[$objMmsVv[0]['code']]['price']=$no_of_comp[$objMmsVv[0]['code']]['count']*$objMmsVv[0]['price'];
+			
 		}
-		$MMSDetails[] = [array("mms_item"=>$id,"mms_qty"=>$no_of_comp[$objMmsVv[0]['code']]['count'],"mms_cost"=>$no_of_comp[$objMmsVv[0]['code']]['price'])];
+		$MMSDetails[] = [array("mms_code"=>$no_of_comp[$objMmsVv[0]['code']]['mms_code'],"mms_item"=>$id,"mms_qty"=>$no_of_comp[$objMmsVv[0]['code']]['count'],"mms_cost"=>$no_of_comp[$objMmsVv[0]['code']]['price'])];
 		$roof_mms_cost+=$no_of_comp[$objMmsVv[0]['code']]['price'];
 	}
 	//return $tot_roof_mms;

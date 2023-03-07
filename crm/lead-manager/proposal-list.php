@@ -573,7 +573,7 @@ function updateStatus(id,leadid,current_status,old_status){
 	// action= 0-> insert, 1-> delete:
 		if(checked_count>0){
 	$.ajax({
-		url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus.php",
+		url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus-ppp.php",
 		data:"id="+id+"&leadid="+leadid+"&status="+current_status+"&old_status="+old_status+"&action=0",
 		method:"post",
 		beforeSend:function(){
@@ -590,7 +590,7 @@ function updateStatus(id,leadid,current_status,old_status){
 	else{
 			if(confirm("Please remember that unsigning of contract will delete the project created for this contract. Do you still want to delete ?")){ 
 			$.ajax({
-				url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus.php",
+				url:"<?=SITE_PATH_ADM.CPAGE?>/ajaxChangeStatus-ppp.php",
 				data:"id="+id+"&leadid="+leadid+"&status="+current_status+"&old_status="+old_status+"&action=1",
 				method:"post",
 				beforeSend:function(){

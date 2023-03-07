@@ -266,27 +266,7 @@ if($cms->is_post_back()){
 				$cms->sqlquery("rs","customer_price_manager",$evc,'id',$evcId); }
 			}
 		}
-		//roof
-		if($_POST['roof']){
-			$roofData= $_POST['roof'];
-			//print_r($roofData);die;
-			foreach($roofData as  $valroof){
-				// print_r($valevc);
-				$roof['m_id'] = "1";
-				$roof['sub_id'] = "15";
-				$roof['field_const'] = "roof_type";
-				$roofId = $valroof['id'];
-				$content = [array( "rfstatus"=>$valroof['rfstatus'] , "name"=>$valroof['name'])];
-				$roof['content'] = json_encode($content);
-				$roof['status'] = $valroof['rfstatus'];
-				$roof['last_updated_by'] = $_SESSION["ses_adm_id"];
-				if(empty($roofId))
-				{
-					$cms->sqlquery("rs","customer_price_manager",$roof); 
-				}else{
-				$cms->sqlquery("rs","customer_price_manager",$roof,'id',$roofId); }
-			}
-		}
+		
 		
 		$adm->sessset('Record has been updated '.$msg, 's');
 		$cms->redir(SITE_PATH_ADM.CPAGE.'/?val='.$_GET['val'], true);
@@ -597,6 +577,27 @@ if($cms->is_post_back()){
 			}
 			
 		}
+		//S:roof
+		if($_POST['roof']){
+			$roofData= $_POST['roof'];
+			//print_r($roofData);die;
+			foreach($roofData as  $valroof){
+				// print_r($valevc);
+				$roof['m_id'] = "1";
+				$roof['sub_id'] = "15";
+				$roof['field_const'] = "roof_type";
+				$roofId = $valroof['id'];
+				$content = [array( "rfstatus"=>$valroof['rfstatus'] , "name"=>$valroof['name'])];
+				$roof['content'] = json_encode($content);
+				$roof['status'] = $valroof['rfstatus'];
+				$roof['last_updated_by'] = $_SESSION["ses_adm_id"];
+				if(empty($roofId))
+				{
+					$cms->sqlquery("rs","customer_price_manager",$roof); 
+				}else{
+				$cms->sqlquery("rs","customer_price_manager",$roof,'id',$roofId); }
+			}
+		}
 		$adm->sessset('Record has been updated '.$msg, 's');
 		$cms->redir(SITE_PATH_ADM.CPAGE.'/?val='.$_GET['val'], true);
 	}
@@ -860,14 +861,14 @@ if($_GET['val']=='1'){
 $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_id='2' and sub_id='27' and is_deleted = '0' ");
 ?>
 <style>
-.status-checkbox{
-	margin-top:25px;
-	margin-right:10px;
-	float:left;
-}
-.mgtp0{
-	margin-top:0px;
-}
+	.status-checkbox{
+		margin-top:25px;
+		margin-right:10px;
+		float:left;
+	}
+	.mgtp0{
+		margin-top:0px;
+	}
 </style>
 
 <div class="row">
@@ -899,7 +900,7 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 						<li><a data-toggle="tab" href="#inverter">Inverter</a></li>
 						<li><a data-toggle="tab" href="#battery">Battery</a></li>
 						<li><a data-toggle="tab" href="#ev">EV Charger</a></li>
-						<li><a data-toggle="tab" href="#roof-type">Roof Type</a></li>
+						
 					</ul>
 
 					<div class="tab-content">
@@ -1291,48 +1292,7 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 							<div class="clearfix"></div>				
 
 						</div>
-						<!-- S:Roof Type -->
-						<div id="roof-type" class="tab-pane fade">
-							
-							<div class="list_wrapper ">  
-								<?php
-									$roof_typesQry=$cms->db_query("select * from #_customer_price_manager where m_id='1' and sub_id='15' and is_deleted = '0' ");
-									$i=0;
-									
-									while($roof_typesAry = $roof_typesQry->fetch_array()){ 
-									$obj = json_decode($roof_typesAry['content']);
-									$roof_cnt = $roof_typesQry->num_rows;
-										if(count($obj)>0){
-											foreach($obj as $val){?>
-											<div class="row" id="rev<?=$i?>">
-												<div class="status-checkbox">
-													<input type="hidden" name="roof[<?=$i?>][id]" value="<?=$roof_typesAry['id']?>">
-													<input class="form-check-input" type="checkbox" name="roof[<?=$i?>][rfstatus]" value="1" <?=$val->rfstatus==1?'checked':''?>>
-												</div>
-												<div class="col-xs-3 col-sm-3 col-md-3">
-													<div class="form-group">
-														Roof Type
-														<input name="roof[<?=$i?>][name]" type="text" placeholder="Name" class="form-control" value="<?=$val->name?>"/>
-													</div>
-												</div>
-													
-												<div class="col-xs-1 col-sm-1 col-md-1">
-													<button class="" onClick='remove_details("<?=$roof_typesAry['id']?>")' type="button"><i class="fa fa-close text-danger"></i></button>
-												</div>
-												<!-- <div class="clearfix"></div> -->
-											<?php  ?>
-										</div>
-										<hr>
-									<?php } } $i++; }?>
-								<div class="row">
-									<div class="col-xs-4 col-sm-4 col-md-4">
-										<h3>Add New <button class="btn btn-primary list_add_button1" type="button">+</button></h3>
-									</div>
-								</div>
-							</div>
-							<div class="clearfix"></div>				
-
-						</div>
+						
 					</div>
 
 
@@ -1667,6 +1627,7 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 						<li class="active"><a data-toggle="tab" href="#vander-valk">Vander Valk</a></li>
 						<li><a data-toggle="tab" href="#k2s">K2 System</a></li>
 						<li><a data-toggle="tab" href="#mmswb">Warranty</a></li>
+						<li><a data-toggle="tab" href="#roof-type">Roof Type</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -1733,7 +1694,7 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 
 						</div>
 						<div id="k2s" class="tab-pane fade">
-						<div class="list_wrapper list_wrapper2" style="font-size:12px;">  
+							<div class="list_wrapper list_wrapper2" style="font-size:12px;">  
 								<?php 
 									$mmsKPQry=$cms->db_query("select * from #_customer_price_manager where m_id='3' and sub_id='32' and is_deleted = '0' "); 
 									$i=0;
@@ -1803,6 +1764,48 @@ $wifi_dongleQry=$cms->db_query("select * from #_customer_price_manager where m_i
 									
 							</div>
 							<div class="clearfix"></div>
+						</div>
+						<!-- S:Roof Type -->
+						<div id="roof-type" class="tab-pane fade">
+							
+							<div class="list_wrapper ">  
+								<?php
+									$roof_typesQry=$cms->db_query("select * from #_customer_price_manager where m_id='1' and sub_id='15' and is_deleted = '0' ");
+									$i=0;
+									
+									while($roof_typesAry = $roof_typesQry->fetch_array()){ 
+									$obj = json_decode($roof_typesAry['content']);
+									$roof_cnt = $roof_typesQry->num_rows;
+										if(count($obj)>0){
+											foreach($obj as $val){?>
+											<div class="row" id="rev<?=$i?>">
+												<div class="status-checkbox">
+													<input type="hidden" name="roof[<?=$i?>][id]" value="<?=$roof_typesAry['id']?>">
+													<input class="form-check-input" type="checkbox" name="roof[<?=$i?>][rfstatus]" value="1" <?=$val->rfstatus==1?'checked':''?>>
+												</div>
+												<div class="col-xs-3 col-sm-3 col-md-3">
+													<div class="form-group">
+														Roof Type
+														<input name="roof[<?=$i?>][name]" type="text" placeholder="Name" class="form-control" value="<?=$val->name?>"/>
+													</div>
+												</div>
+													
+												<div class="col-xs-1 col-sm-1 col-md-1">
+													<button class="" onClick='remove_details("<?=$roof_typesAry['id']?>")' type="button"><i class="fa fa-close text-danger"></i></button>
+												</div>
+												<!-- <div class="clearfix"></div> -->
+											<?php  ?>
+										</div>
+										<hr>
+									<?php } } $i++; }?>
+								<!-- <div class="row">
+									<div class="col-xs-4 col-sm-4 col-md-4">
+										<h3>Add New <button class="btn btn-primary list_add_button1" type="button">+</button></h3>
+									</div>
+								</div> -->
+							</div>
+							<div class="clearfix"></div>				
+
 						</div>
 					</div>
 
