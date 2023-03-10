@@ -11,7 +11,7 @@
 	<tr>
 		<td style="text-align: center;"><?php echo $row['total_panel']; ?></td>
 		<td style="text-align: center;"><?php echo $row['roofing_material']; ?></td>
-		<td style="text-align: center;"><?php if($row['roof_support'] == 1){ echo "Råspont"; }else{ echo "No Råspont"; } ?></td>
+		<td style="text-align: center;"><?php if($row['roof_support'] == 1){ echo "Råspont"; }else{ echo "Ej Råspont"; } ?></td>
 		<td style="text-align: center;"><?php echo $row['roof_angle']; ?>&#176;</td>
 	</tr>
 <?php $k++; } ?>
