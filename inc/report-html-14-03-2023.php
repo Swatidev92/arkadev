@@ -56,9 +56,7 @@ $customerRes =  $customerQry->fetch_array();
 		</style>
 	</head>
 	<body>
-		<?php if($not_same_bill == 1){ $cust=$cust_name_bill; }else{ $cust=$customerRes['customer_name']; }?>
-
-		<h2 align="center"><?=$cust.'-'.$_REQUEST["project_num"].'-Föranmälan info';?></h2>
+		<h2 align="center"><?=$_REQUEST["project_customer"].'-'.$_REQUEST["project_num"].'-Föranmälan info';?></h2>
 		<div class="email_main_div" style="padding:10px">
 			<table cellpadding="4" style="border-collapse: collapse; width: 100%;" border="0">
 				<tbody>
